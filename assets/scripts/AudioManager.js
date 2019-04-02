@@ -9,7 +9,9 @@ cc.Class({
         _pauseBgm: true
     },
 
-    onLoad: function() {},
+    onLoad: function() {
+        cc.log("AudioManager OnLoad.....");
+    },
 
     init: function() {
         const bgm = cc.sys.localStorage.getItem("bgmVolume");

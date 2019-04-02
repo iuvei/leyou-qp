@@ -1,6 +1,6 @@
 "use strict";
 cc._RF.push(module, '49eabkSZJVCNYmReqIl35Mp', 'AudioManager');
-// Script/AudioManager.js
+// scripts/AudioManager.js
 
 "use strict";
 
@@ -15,7 +15,9 @@ cc.Class({
         _pauseBgm: true
     },
 
-    onLoad: function onLoad() {},
+    onLoad: function onLoad() {
+        cc.log("AudioManager OnLoad.....");
+    },
 
     init: function init() {
         var bgm = cc.sys.localStorage.getItem("bgmVolume");

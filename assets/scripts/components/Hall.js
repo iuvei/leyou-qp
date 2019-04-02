@@ -1,11 +1,3 @@
-function initManager() {
-    window.th = window.th || {};
-
-    const AudioManager = require("AudioManager");
-    th.audioManager = new AudioManager();
-    th.audioManager.init();
-}
-
 cc.Class({
     extends: cc.Component,
 
@@ -18,33 +10,40 @@ cc.Class({
         selectZJH: cc.Node
     },
 
-    onLoad: function() {
-        initManager();
-        cc.log("================>>initManager<<=====================");
-    },
+    onLoad: function() {},
+    start: function() {},
 
     update: function(dt) {},
 
     //防作弊
     onFzbChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        cc.log("防作弊");
+        //TODO
     },
     //发送房卡
     onSendFangKaChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        cc.log("发送房卡");
+        //TODO
     },
     //wechat
     onWechatChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        cc.log("wechat");
+        //TODO
     },
     //开关声音
     onVoiceChecked: function(trager) {
-        cc.log(trager.isChecked);
         th.audioManager.playSFX("click.mp3");
+        cc.log("开关声音", trager.isChecked);
+        //TODO
     },
     //复制ID
     onCopyIdChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        cc.log("复制ID");
+        //TODO
     },
 
     //大厅dock按钮点击事件
@@ -82,12 +81,16 @@ cc.Class({
         th.audioManager.playSFX("click.mp3");
         switch (type) {
             case "nn":
-                this.selectNN.getComponent(cc.Animation).play("bottomToTop");
-                //this.selectNN.active = true;
+                this.selectNN.position = cc.v2(0, -th.height);
+                this.selectNN.runAction(
+                    cc.moveTo(0.2, cc.v2(0, 0)).easing(cc.easeSineIn())
+                );
                 break;
             case "zjh":
-                this.selectNN.getComponent(cc.Animation).play("bottomToTop");
-                //this.selectZJH.active = true;
+                this.selectZJH.position = cc.v2(0, -th.height);
+                this.selectZJH.runAction(
+                    cc.moveTo(0.2, cc.v2(0, 0)).easing(cc.easeSineIn())
+                );
                 break;
         }
     }

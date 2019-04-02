@@ -1,246 +1,70 @@
-2019-04-01T16:04:18.400Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-01T16:04:19.654Z - normal: Initializing Asset Database
-2019-04-01T16:04:19.659Z - normal: checking language setting...
-2019-04-01T16:04:19.660Z - normal: Language: zh
-2019-04-01T16:04:20.717Z - success: preview server running at http://localhost:7456
-2019-04-01T16:04:20.720Z - success: protocol editor-framework registered
-2019-04-01T16:04:20.720Z - success: protocol app registered
-2019-04-01T16:04:20.720Z - success: protocol theme registered
-2019-04-01T16:04:20.720Z - success: protocol packages registered
-2019-04-01T16:04:20.721Z - success: protocol uuid registerred
-2019-04-01T16:04:20.721Z - success: protocol db registerred
-2019-04-01T16:04:20.721Z - success: protocol thumbnail registerred
-2019-04-01T16:04:20.721Z - success: protocol unpack registerred
-2019-04-01T16:04:20.721Z - success: protocol disable-commonjs registerred
-2019-04-01T16:04:20.893Z - normal: connected!
-2019-04-01T16:04:20.894Z - normal: Check project D:\Workspaces_CocosCreator\leyou
-2019-04-01T16:04:20.897Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
-2019-04-01T16:04:21.535Z - normal: Initializing Cocos2d
-2019-04-01T16:04:22.582Z - normal: Initializing engine extends
-2019-04-01T16:04:22.619Z - success: asset-db-debugger loaded
-2019-04-01T16:04:22.626Z - success: baidu-adapter loaded
-2019-04-01T16:04:22.633Z - success: code-editor loaded
-2019-04-01T16:04:22.638Z - success: color-picker loaded
-2019-04-01T16:04:22.785Z - success: fb-audience-network loaded
-2019-04-01T16:04:22.909Z - success: fb-live-stream loaded
-2019-04-01T16:04:22.924Z - success: google-play-instant loaded
-2019-04-01T16:04:22.940Z - success: huawei-runtime loaded
-2019-04-01T16:04:22.942Z - success: jsb-adapter loaded
-2019-04-01T16:04:22.948Z - success: oppo-runtime loaded
-2019-04-01T16:04:22.954Z - success: package-manager loaded
-2019-04-01T16:04:23.144Z - success: qqplay-adapter loaded
-2019-04-01T16:04:23.147Z - success: runtime-dev-tools loaded
-2019-04-01T16:04:23.153Z - success: sdkbox loaded
-2019-04-01T16:04:23.159Z - success: tester loaded
-2019-04-01T16:04:23.162Z - success: ui-grid loaded
-2019-04-01T16:04:23.165Z - success: ui-kit-preview-extra loaded
-2019-04-01T16:04:23.168Z - success: ui-kit-preview loaded
-2019-04-01T16:04:23.171Z - success: ui-kit loaded
-2019-04-01T16:04:23.174Z - success: ui-tree loaded
-2019-04-01T16:04:23.180Z - success: vivo-runtime loaded
-2019-04-01T16:04:23.181Z - success: weapp-adapter loaded
-2019-04-01T16:04:23.222Z - success: assets loaded
-2019-04-01T16:04:23.224Z - success: builder loaded
-2019-04-01T16:04:23.623Z - success: cocos-services loaded
-2019-04-01T16:04:23.629Z - success: console loaded
-2019-04-01T16:04:23.674Z - success: fb-instant-games loaded
-2019-04-01T16:04:23.676Z - success: google-instant-games loaded
-2019-04-01T16:04:23.682Z - success: hierarchy loaded
-2019-04-01T16:04:23.685Z - success: inspector loaded
-2019-04-01T16:04:23.686Z - success: keystore loaded
-2019-04-01T16:04:23.692Z - success: node-library loaded
-2019-04-01T16:04:23.695Z - success: package-asset loaded
-2019-04-01T16:04:23.697Z - success: preferences loaded
-2019-04-01T16:04:23.699Z - success: project-exporter loaded
-2019-04-01T16:04:23.701Z - success: project-importer loaded
-2019-04-01T16:04:23.703Z - success: project-settings loaded
-2019-04-01T16:04:23.709Z - success: scene loaded
-2019-04-01T16:04:23.711Z - success: simulator-debugger loaded
-2019-04-01T16:04:23.713Z - success: sprite-editor loaded
-2019-04-01T16:04:23.723Z - success: store loaded
-2019-04-01T16:04:23.727Z - success: timeline loaded
-2019-04-01T16:04:23.732Z - success: bitmap-font loaded
-2019-04-01T16:04:26.432Z - normal: Loading packages
-2019-04-01T16:04:26.470Z - normal: Watching packages
-2019-04-01T16:04:27.329Z - info: Cocos Services load base data!
-2019-04-01T16:04:27.766Z - normal: Run Application
-2019-04-01T16:05:44.345Z - warn: object already destroyed
-2019-04-01T16:05:44.348Z - warn: object already destroyed
-2019-04-01T16:05:44.348Z - warn: object already destroyed
-2019-04-01T16:05:44.348Z - warn: object already destroyed
-2019-04-01T16:05:44.348Z - warn: object already destroyed
-2019-04-01T16:05:44.348Z - warn: object already destroyed
-2019-04-01T16:05:44.348Z - warn: object already destroyed
-2019-04-01T16:05:44.349Z - warn: object already destroyed
-2019-04-01T16:08:39.715Z - normal: Start building with options : {
-  "actualPlatform": "web-mobile",
-  "android-instant": {
-    "REMOTE_SERVER_ROOT": "",
-    "host": "",
-    "pathPattern": "",
-    "recordPath": "",
-    "scheme": "https",
-    "skipRecord": false
-  },
-  "apiLevel": "",
-  "appABIs": [],
-  "appBundle": false,
-  "baidugame": {
-    "REMOTE_SERVER_ROOT": "",
-    "appid": "testappid",
-    "orientation": "portrait",
-    "subContext": ""
-  },
-  "buildPath": "D:\\Workspaces_CocosCreator\\leyou\\build",
-  "debug": false,
-  "dest": "D:\\Workspaces_CocosCreator\\leyou\\build\\web-mobile",
-  "embedWebDebugger": false,
-  "encryptJs": true,
-  "excludeScenes": [],
-  "excludedModules": [],
-  "fb-instant-games": {},
-  "includeSDKBox": false,
-  "inlineSpriteFrames": true,
-  "inlineSpriteFrames_native": true,
-  "md5Cache": true,
-  "mergeStartScene": false,
-  "optimizeHotUpdate": false,
-  "orientation": {
-    "landscapeLeft": true,
-    "landscapeRight": true,
-    "portrait": false,
-    "upsideDown": false
-  },
-  "packageName": "org.cocos2d.helloworld",
-  "platform": "web-mobile",
-  "previewHeight": "720",
-  "previewWidth": "1280",
-  "qqplay": {
-    "REMOTE_SERVER_ROOT": "",
-    "orientation": "portrait",
-    "zip": false
-  },
-  "scenes": [
-    "f27bd7be-6ddd-4428-8210-01720f30c4ef",
-    "2d2f792f-a40c-49bb-a189-ed176a246e49"
-  ],
-  "sourceMaps": false,
-  "startScene": "f27bd7be-6ddd-4428-8210-01720f30c4ef",
-  "template": "link",
-  "title": "leyou",
-  "useDebugKeystore": true,
-  "vsVersion": "auto",
-  "webOrientation": "portrait",
-  "wechatgame": {
-    "REMOTE_SERVER_ROOT": "",
-    "appid": "wx6ac3f5090a6b99c5",
-    "orientation": "portrait",
-    "subContext": ""
-  },
-  "xxteaKey": "b2af0eb4-8086-48",
-  "zipCompressJs": true,
-  "project": "D:\\Workspaces_CocosCreator\\leyou",
-  "projectName": "leyou",
-  "debugBuildWorker": false
-}
-2019-04-01T16:08:39.719Z - normal: Building D:\Workspaces_CocosCreator\leyou
-2019-04-01T16:08:39.719Z - normal: Destination D:\Workspaces_CocosCreator\leyou\build\web-mobile
-2019-04-01T16:08:40.065Z - normal: Delete D:\Workspaces_CocosCreator\leyou\build\web-mobile\subpackages/**/*,D:\Workspaces_CocosCreator\leyou\build\web-mobile\**\*
-2019-04-01T16:09:41.102Z - normal: Start building assets
-2019-04-01T16:09:41.103Z - normal: Start spawn build-worker
-2019-04-01T16:09:42.113Z - normal: Finish spawn build-worker
-2019-04-01T16:09:42.113Z - normal: Start init build-worker
-2019-04-01T16:09:45.996Z - normal: Finish init build-worker
-2019-04-01T16:09:45.996Z - normal: Start build-assets in worker
-2019-04-01T16:09:47.855Z - normal: Finish build-assets in worker
-2019-04-01T16:09:47.863Z - normal: Finish building assets
-2019-04-01T16:09:47.943Z - normal: Start building plugin scripts
-2019-04-01T16:09:47.971Z - normal: Generating main.js from D:\CocosCreator2.0.9\resources\static\build-templates\shares\main.js
-2019-04-01T16:09:47.988Z - normal: Generating html from D:\CocosCreator2.0.9\resources\static\build-templates\web-mobile\template\index.html
-2019-04-01T16:09:48.470Z - normal: Built to "D:\Workspaces_CocosCreator\leyou\build\web-mobile" successfully
-2019-04-01T16:11:32.503Z - normal: Start building with options : {
-  "actualPlatform": "web-mobile",
-  "android-instant": {
-    "REMOTE_SERVER_ROOT": "",
-    "host": "",
-    "pathPattern": "",
-    "recordPath": "",
-    "scheme": "https",
-    "skipRecord": false
-  },
-  "apiLevel": "",
-  "appABIs": [],
-  "appBundle": false,
-  "baidugame": {
-    "REMOTE_SERVER_ROOT": "",
-    "appid": "testappid",
-    "orientation": "portrait",
-    "subContext": ""
-  },
-  "buildPath": "D:\\Workspaces_CocosCreator\\leyou\\build",
-  "debug": false,
-  "dest": "D:\\Workspaces_CocosCreator\\leyou\\build\\web-mobile",
-  "embedWebDebugger": false,
-  "encryptJs": true,
-  "excludeScenes": [],
-  "excludedModules": [],
-  "fb-instant-games": {},
-  "includeSDKBox": false,
-  "inlineSpriteFrames": true,
-  "inlineSpriteFrames_native": true,
-  "md5Cache": true,
-  "mergeStartScene": false,
-  "optimizeHotUpdate": false,
-  "orientation": {
-    "landscapeLeft": true,
-    "landscapeRight": true,
-    "portrait": false,
-    "upsideDown": false
-  },
-  "packageName": "org.cocos2d.helloworld",
-  "platform": "web-mobile",
-  "previewHeight": "720",
-  "previewWidth": "1280",
-  "qqplay": {
-    "REMOTE_SERVER_ROOT": "",
-    "orientation": "portrait",
-    "zip": false
-  },
-  "scenes": [
-    "f27bd7be-6ddd-4428-8210-01720f30c4ef",
-    "2d2f792f-a40c-49bb-a189-ed176a246e49"
-  ],
-  "sourceMaps": false,
-  "startScene": "f27bd7be-6ddd-4428-8210-01720f30c4ef",
-  "template": "link",
-  "title": "leyou",
-  "useDebugKeystore": true,
-  "vsVersion": "auto",
-  "webOrientation": "portrait",
-  "wechatgame": {
-    "REMOTE_SERVER_ROOT": "",
-    "appid": "wx6ac3f5090a6b99c5",
-    "orientation": "portrait",
-    "subContext": ""
-  },
-  "xxteaKey": "b2af0eb4-8086-48",
-  "zipCompressJs": true,
-  "project": "D:\\Workspaces_CocosCreator\\leyou",
-  "projectName": "leyou",
-  "debugBuildWorker": false
-}
-2019-04-01T16:11:32.505Z - normal: Building D:\Workspaces_CocosCreator\leyou
-2019-04-01T16:11:32.505Z - normal: Destination D:\Workspaces_CocosCreator\leyou\build\web-mobile
-2019-04-01T16:11:32.506Z - normal: Delete D:\Workspaces_CocosCreator\leyou\build\web-mobile\subpackages/**/*,D:\Workspaces_CocosCreator\leyou\build\web-mobile\**\*
-2019-04-01T16:11:36.554Z - normal: Start building assets
-2019-04-01T16:11:36.554Z - normal: Start spawn build-worker
-2019-04-01T16:11:39.066Z - normal: Finish spawn build-worker
-2019-04-01T16:11:39.066Z - normal: Start init build-worker
-2019-04-01T16:11:43.110Z - normal: Finish init build-worker
-2019-04-01T16:11:43.110Z - normal: Start build-assets in worker
-2019-04-01T16:11:44.856Z - normal: Finish build-assets in worker
-2019-04-01T16:11:44.864Z - normal: Finish building assets
-2019-04-01T16:11:44.937Z - normal: Start building plugin scripts
-2019-04-01T16:11:44.947Z - normal: Generating main.js from D:\CocosCreator2.0.9\resources\static\build-templates\shares\main.js
-2019-04-01T16:11:44.962Z - normal: Generating html from D:\CocosCreator2.0.9\resources\static\build-templates\web-mobile\template\index.html
-2019-04-01T16:11:45.492Z - normal: Built to "D:\Workspaces_CocosCreator\leyou\build\web-mobile" successfully
+2019-04-02T12:06:22.821Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-02T12:06:24.255Z - normal: Initializing Asset Database
+2019-04-02T12:06:24.259Z - normal: checking language setting...
+2019-04-02T12:06:24.259Z - normal: Language: zh
+2019-04-02T12:06:26.731Z - success: preview server running at http://localhost:7456
+2019-04-02T12:06:26.734Z - success: protocol editor-framework registered
+2019-04-02T12:06:26.734Z - success: protocol app registered
+2019-04-02T12:06:26.734Z - success: protocol theme registered
+2019-04-02T12:06:26.734Z - success: protocol packages registered
+2019-04-02T12:06:26.735Z - success: protocol uuid registerred
+2019-04-02T12:06:26.735Z - success: protocol db registerred
+2019-04-02T12:06:26.735Z - success: protocol thumbnail registerred
+2019-04-02T12:06:26.735Z - success: protocol unpack registerred
+2019-04-02T12:06:26.735Z - success: protocol disable-commonjs registerred
+2019-04-02T12:06:26.911Z - normal: connected!
+2019-04-02T12:06:26.913Z - normal: Check project D:\Workspaces_CocosCreator\leyou
+2019-04-02T12:06:26.915Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
+2019-04-02T12:06:27.681Z - normal: Initializing Cocos2d
+2019-04-02T12:06:30.270Z - normal: Initializing engine extends
+2019-04-02T12:06:30.647Z - success: asset-db-debugger loaded
+2019-04-02T12:06:30.651Z - success: baidu-adapter loaded
+2019-04-02T12:06:30.676Z - success: code-editor loaded
+2019-04-02T12:06:30.680Z - success: color-picker loaded
+2019-04-02T12:06:30.913Z - success: fb-audience-network loaded
+2019-04-02T12:06:31.074Z - success: fb-live-stream loaded
+2019-04-02T12:06:31.087Z - success: google-play-instant loaded
+2019-04-02T12:06:31.131Z - success: huawei-runtime loaded
+2019-04-02T12:06:31.132Z - success: jsb-adapter loaded
+2019-04-02T12:06:31.163Z - success: oppo-runtime loaded
+2019-04-02T12:06:31.169Z - success: package-manager loaded
+2019-04-02T12:06:31.572Z - success: qqplay-adapter loaded
+2019-04-02T12:06:31.575Z - success: runtime-dev-tools loaded
+2019-04-02T12:06:31.593Z - success: sdkbox loaded
+2019-04-02T12:06:31.599Z - success: tester loaded
+2019-04-02T12:06:31.615Z - success: ui-grid loaded
+2019-04-02T12:06:31.633Z - success: ui-kit-preview-extra loaded
+2019-04-02T12:06:31.647Z - success: ui-kit-preview loaded
+2019-04-02T12:06:31.649Z - success: ui-kit loaded
+2019-04-02T12:06:31.652Z - success: ui-tree loaded
+2019-04-02T12:06:31.684Z - success: vivo-runtime loaded
+2019-04-02T12:06:31.685Z - success: weapp-adapter loaded
+2019-04-02T12:06:31.733Z - success: assets loaded
+2019-04-02T12:06:31.741Z - success: builder loaded
+2019-04-02T12:06:32.265Z - success: cocos-services loaded
+2019-04-02T12:06:32.270Z - success: console loaded
+2019-04-02T12:06:32.311Z - success: fb-instant-games loaded
+2019-04-02T12:06:32.313Z - success: google-instant-games loaded
+2019-04-02T12:06:32.319Z - success: hierarchy loaded
+2019-04-02T12:06:32.332Z - success: inspector loaded
+2019-04-02T12:06:32.334Z - success: keystore loaded
+2019-04-02T12:06:32.340Z - success: node-library loaded
+2019-04-02T12:06:32.342Z - success: package-asset loaded
+2019-04-02T12:06:32.344Z - success: preferences loaded
+2019-04-02T12:06:32.345Z - success: project-exporter loaded
+2019-04-02T12:06:32.348Z - success: project-importer loaded
+2019-04-02T12:06:32.350Z - success: project-settings loaded
+2019-04-02T12:06:32.355Z - success: scene loaded
+2019-04-02T12:06:32.357Z - success: simulator-debugger loaded
+2019-04-02T12:06:32.359Z - success: sprite-editor loaded
+2019-04-02T12:06:32.364Z - success: store loaded
+2019-04-02T12:06:32.368Z - success: timeline loaded
+2019-04-02T12:06:32.377Z - success: bitmap-font loaded
+2019-04-02T12:06:35.281Z - normal: Loading packages
+2019-04-02T12:06:35.291Z - normal: Watching packages
+2019-04-02T12:06:35.609Z - info: Cocos Services load base data!
+2019-04-02T12:06:36.948Z - normal: Run Application
+2019-04-02T14:38:13.351Z - warn: The Asset used by component "cc.Animation" is missing. Detailed information:
+Node path: "Canvas/SelectNN"
+Missing uuid: "007c3950-c4a8-4f53-90da-a258a46ecaa0"
+
