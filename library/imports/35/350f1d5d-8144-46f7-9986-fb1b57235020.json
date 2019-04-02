@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "icon_smrz",
+    "texture": "69389180-fdf5-4d48-89fc-6441e7d00709",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      77,
+      81
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      77,
+      81
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

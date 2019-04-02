@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "icon_zjtj",
+    "texture": "b9ee9ad8-7d26-4638-a1ca-6b5409c93661",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      77,
+      81
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      77,
+      81
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

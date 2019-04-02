@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_phz",
+    "texture": "20cd2cdf-2166-420f-9f69-62d942159719",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      275,
+      305
+    ],
+    "offset": [
+      -9,
+      -0.5
+    ],
+    "originalSize": [
+      295,
+      306
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

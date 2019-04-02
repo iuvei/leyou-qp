@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_tdk",
+    "texture": "03fb04e0-67f9-4a3f-b734-7a562ae2ec20",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      261,
+      303
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      261,
+      303
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

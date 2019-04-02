@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "icon_zhgl",
+    "texture": "2a6bd988-4dea-4157-afca-4292dbdf6ba8",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      77,
+      81
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      77,
+      81
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

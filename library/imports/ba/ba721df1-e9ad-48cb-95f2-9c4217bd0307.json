@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_whnn",
+    "texture": "652466b8-ad70-47cd-9949-35af5b2b14e8",
+    "atlas": "",
+    "rect": [
+      11,
+      12,
+      279,
+      278
+    ],
+    "offset": [
+      3.5,
+      -5.5
+    ],
+    "originalSize": [
+      294,
+      291
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

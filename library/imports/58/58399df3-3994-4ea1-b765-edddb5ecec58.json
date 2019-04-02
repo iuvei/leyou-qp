@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_pdk",
+    "texture": "d20d3922-34ff-4a6c-9ffb-77505c27bdea",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      276,
+      304
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "originalSize": [
+      278,
+      308
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

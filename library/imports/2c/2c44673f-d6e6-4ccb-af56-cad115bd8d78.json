@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_lhd",
+    "texture": "5e47421e-17fb-465d-ba47-d8b695d78c5d",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      285,
+      296
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      285,
+      296
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

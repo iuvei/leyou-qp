@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_nsz",
+    "texture": "283a304a-adde-4a81-9b37-2d9b3462aba6",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      252,
+      258
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      252,
+      258
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
