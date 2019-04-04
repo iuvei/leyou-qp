@@ -1,15 +1,66 @@
-2019-04-04T14:15:48.150Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-04T14:15:49.361Z - normal: Initializing Asset Database
-2019-04-04T14:15:49.365Z - normal: checking language setting...
-2019-04-04T14:15:49.365Z - normal: Language: zh
-2019-04-04T14:15:50.384Z - success: preview server running at http://localhost:7456
-2019-04-04T14:15:50.386Z - success: protocol editor-framework registered
-2019-04-04T14:15:50.386Z - success: protocol app registered
-2019-04-04T14:15:50.386Z - success: protocol theme registered
-2019-04-04T14:15:50.387Z - success: protocol packages registered
-2019-04-04T14:15:50.387Z - success: protocol uuid registerred
-2019-04-04T14:15:50.387Z - success: protocol db registerred
-2019-04-04T14:15:50.387Z - success: protocol thumbnail registerred
-2019-04-04T14:15:50.387Z - success: protocol unpack registerred
-2019-04-04T14:15:50.387Z - success: protocol disable-commonjs registerred
-2019-04-04T14:15:50.577Z - normal: connected!
+2019-04-04T16:50:39.131Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-04T16:50:40.346Z - normal: Initializing Asset Database
+2019-04-04T16:50:40.351Z - normal: checking language setting...
+2019-04-04T16:50:40.352Z - normal: Language: zh
+2019-04-04T16:50:41.455Z - success: preview server running at http://localhost:7456
+2019-04-04T16:50:41.457Z - success: protocol editor-framework registered
+2019-04-04T16:50:41.458Z - success: protocol app registered
+2019-04-04T16:50:41.458Z - success: protocol theme registered
+2019-04-04T16:50:41.458Z - success: protocol packages registered
+2019-04-04T16:50:41.458Z - success: protocol uuid registerred
+2019-04-04T16:50:41.458Z - success: protocol db registerred
+2019-04-04T16:50:41.458Z - success: protocol thumbnail registerred
+2019-04-04T16:50:41.459Z - success: protocol unpack registerred
+2019-04-04T16:50:41.459Z - success: protocol disable-commonjs registerred
+2019-04-04T16:50:41.665Z - normal: connected!
+2019-04-04T16:50:41.666Z - normal: Check project D:\Workspaces_CocosCreator\leyou
+2019-04-04T16:50:41.669Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
+2019-04-04T16:50:42.347Z - normal: Initializing Cocos2d
+2019-04-04T16:50:43.342Z - normal: Initializing engine extends
+2019-04-04T16:50:43.374Z - success: asset-db-debugger loaded
+2019-04-04T16:50:43.376Z - success: baidu-adapter loaded
+2019-04-04T16:50:43.380Z - success: code-editor loaded
+2019-04-04T16:50:43.381Z - success: color-picker loaded
+2019-04-04T16:50:43.525Z - success: fb-audience-network loaded
+2019-04-04T16:50:43.644Z - success: fb-live-stream loaded
+2019-04-04T16:50:43.651Z - success: google-play-instant loaded
+2019-04-04T16:50:43.658Z - success: huawei-runtime loaded
+2019-04-04T16:50:43.659Z - success: jsb-adapter loaded
+2019-04-04T16:50:43.669Z - success: oppo-runtime loaded
+2019-04-04T16:50:43.674Z - success: package-manager loaded
+2019-04-04T16:50:43.858Z - success: qqplay-adapter loaded
+2019-04-04T16:50:43.861Z - success: runtime-dev-tools loaded
+2019-04-04T16:50:43.869Z - success: sdkbox loaded
+2019-04-04T16:50:43.874Z - success: tester loaded
+2019-04-04T16:50:43.878Z - success: ui-grid loaded
+2019-04-04T16:50:43.881Z - success: ui-kit-preview-extra loaded
+2019-04-04T16:50:43.884Z - success: ui-kit-preview loaded
+2019-04-04T16:50:43.887Z - success: ui-kit loaded
+2019-04-04T16:50:43.890Z - success: ui-tree loaded
+2019-04-04T16:50:43.897Z - success: vivo-runtime loaded
+2019-04-04T16:50:43.899Z - success: weapp-adapter loaded
+2019-04-04T16:50:43.943Z - success: assets loaded
+2019-04-04T16:50:43.946Z - success: builder loaded
+2019-04-04T16:50:44.392Z - success: cocos-services loaded
+2019-04-04T16:50:44.397Z - success: console loaded
+2019-04-04T16:50:44.447Z - success: fb-instant-games loaded
+2019-04-04T16:50:44.450Z - success: google-instant-games loaded
+2019-04-04T16:50:44.456Z - success: hierarchy loaded
+2019-04-04T16:50:44.460Z - success: inspector loaded
+2019-04-04T16:50:44.462Z - success: keystore loaded
+2019-04-04T16:50:44.468Z - success: node-library loaded
+2019-04-04T16:50:44.470Z - success: package-asset loaded
+2019-04-04T16:50:44.472Z - success: preferences loaded
+2019-04-04T16:50:44.474Z - success: project-exporter loaded
+2019-04-04T16:50:44.476Z - success: project-importer loaded
+2019-04-04T16:50:44.480Z - success: project-settings loaded
+2019-04-04T16:50:44.485Z - success: scene loaded
+2019-04-04T16:50:44.488Z - success: simulator-debugger loaded
+2019-04-04T16:50:44.490Z - success: sprite-editor loaded
+2019-04-04T16:50:44.495Z - success: store loaded
+2019-04-04T16:50:44.500Z - success: timeline loaded
+2019-04-04T16:50:44.506Z - success: bitmap-font loaded
+2019-04-04T16:50:46.410Z - info: Cocos Services load base data!
+2019-04-04T16:50:48.097Z - normal: Loading packages
+2019-04-04T16:50:48.107Z - normal: Watching packages
+2019-04-04T16:50:49.322Z - normal: Run Application

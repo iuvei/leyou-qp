@@ -16,6 +16,8 @@ cc.Class({
         th.audioManager = new AudioManager();
         th.audioManager.init();
 
+        th.audioManager.playBGM("bg_hall.mp3");
+
         var _node$getContentSize = this.node.getContentSize(),
             width = _node$getContentSize.width,
             height = _node$getContentSize.height;

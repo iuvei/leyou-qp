@@ -7,10 +7,22 @@ cc.Class({
         zhanji: cc.Node,
         gerenzhongxin: cc.Node,
         selectNN: cc.Node,
-        selectZJH: cc.Node
+        selectZJH: cc.Node,
+        voiceToggle: cc.Toggle,
+        fangzuobi: cc.Node,
+        bangdingshouji: cc.Node
     },
 
     onLoad: function() {},
+    onEnable() {
+        const bgm = cc.sys.localStorage.getItem("bgmVolume");
+        if (bgm != "0") {
+            th.audioManager.setBGMVolume(bgm);
+            this.voiceToggle.isChecked = false;
+        } else {
+            this.voiceToggle.isChecked = true;
+        }
+    },
     start: function() {},
 
     update: function(dt) {},
@@ -18,25 +30,49 @@ cc.Class({
     //防作弊
     onFzbChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
-        cc.log("防作弊");
+        this.fangzuobi.active = true;
+    },
+    //防作弊关闭
+    onFzbCloseChecked: function(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.fangzuobi.active = false;
+    },
+    //防作弊提交
+    onFzbYesChecked: function(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.fangzuobi.active = false;
         //TODO
     },
-    //发送房卡
-    onSendFangKaChecked: function(trager) {
+    //绑定手机
+    onBdsjChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
-        cc.log("发送房卡");
-        //TODO
+        this.bangdingshouji.active = true;
     },
-    //wechat
-    onWechatChecked: function(trager) {
+    //绑定手机关闭
+    onBdsjCloseChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
-        cc.log("wechat");
+        this.bangdingshouji.active = false;
+    },
+    //绑定手机提交
+    onBdsjYesChecked: function(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.bangdingshouji.active = false;
         //TODO
     },
     //开关声音
     onVoiceChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
         cc.log("开关声音", trager.isChecked);
+        if (trager.isChecked) {
+            th.audioManager.setBGMVolume(0);
+        } else {
+            th.audioManager.setBGMVolume(0.5);
+        }
+    },
+    //发送房卡
+    onSendFangKaChecked: function(trager) {
+        th.audioManager.playSFX("click.mp3");
+        cc.log("发送房卡");
         //TODO
     },
     //复制ID

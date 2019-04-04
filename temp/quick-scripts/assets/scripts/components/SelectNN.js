@@ -7,11 +7,18 @@ cc._RF.push(module, 'f9be6OCtzFFjb+Jw0VMXcmZ', 'SelectNN', __filename);
 cc.Class({
     extends: cc.Component,
 
-    properties: {},
+    properties: {
+        createNN: cc.Node
+    },
 
     onCloseClicked: function onCloseClicked(target) {
         th.audioManager.playSFX("click.mp3");
         this.node.runAction(cc.moveTo(0.2, cc.v2(0, -th.height)).easing(cc.easeSineIn()));
+    },
+    onCreateCloseClicked: function onCreateCloseClicked(target) {
+        cc.log("AAAAAAAAAAAAAAAAAAAAA");
+        th.audioManager.playSFX("click.mp3");
+        this.createNN.active = false;
     },
     onGameChecked: function onGameChecked(trage, type) {
         cc.log("牛牛选择类别:", type);
@@ -33,6 +40,7 @@ cc.Class({
             case "dcxnn":
                 break;
         }
+        this.createNN.active = true;
     }
 });
 

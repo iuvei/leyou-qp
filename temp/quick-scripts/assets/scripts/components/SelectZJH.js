@@ -7,7 +7,9 @@ cc._RF.push(module, '69681YtmUFJCYNJqaYi8v2w', 'SelectZJH', __filename);
 cc.Class({
     extends: cc.Component,
 
-    properties: {},
+    properties: {
+        createZJH: cc.Node
+    },
 
     start: function start() {},
 
@@ -15,6 +17,10 @@ cc.Class({
     onCloseClicked: function onCloseClicked(target) {
         th.audioManager.playSFX("click.mp3");
         this.node.runAction(cc.moveTo(0.2, cc.v2(0, -th.height)).easing(cc.easeSineIn()));
+    },
+    onCreateCloseClicked: function onCreateCloseClicked(target) {
+        th.audioManager.playSFX("click.mp3");
+        this.createZJH.active = false;
     },
     onGameChecked: function onGameChecked(trage, type) {
         cc.log("炸金花选择类别:", type);
@@ -36,6 +42,7 @@ cc.Class({
             case "mpzjh":
                 break;
         }
+        this.createZJH.active = true;
     }
 });
 
