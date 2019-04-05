@@ -1,31 +1,21 @@
 "use strict";
-cc._RF.push(module, '69681YtmUFJCYNJqaYi8v2w', 'SelectZJH');
-// scripts/components/SelectZJH.js
+cc._RF.push(module, '69681YtmUFJCYNJqaYi8v2w', 'CreateZJH');
+// scripts/components/CreateZJH.js
 
 "use strict";
 
 cc.Class({
     extends: cc.Component,
 
-    properties: {
-        createZJH: cc.Node
-    },
+    properties: {},
 
-    start: function start() {},
-
-
-    onCloseClicked: function onCloseClicked(target) {
-        th.audioManager.playSFX("click.mp3");
-        this.node.runAction(cc.moveTo(0.2, cc.v2(0, -th.height)).easing(cc.easeSineIn()));
+    onLoad: function onLoad() {
+        if (th == null) {
+            return;
+        }
     },
-    onCreateCloseClicked: function onCreateCloseClicked(target) {
-        th.audioManager.playSFX("click.mp3");
-        this.createZJH.active = false;
-    },
-    onGameChecked: function onGameChecked(trage, type) {
-        cc.log("炸金花选择类别:", type);
-        //TODO
-        th.audioManager.playSFX("click.mp3");
+    show: function show(type) {
+        cc.log("CreateZJH:", type);
         switch (type) {
             case "jdzjh":
                 break;
@@ -35,15 +25,14 @@ cc.Class({
                 break;
             case "lzzjh":
                 break;
-            case "hpzjh":
-                break;
-            case "cjzjh":
-                break;
-            case "mpzjh":
-                break;
         }
-        this.createZJH.active = true;
-    }
+        this.node.active = true;
+    },
+
+    onCloseClicked: function onCloseClicked(traget) {
+        this.node.active = false;
+    },
+    start: function start() {}
 });
 
 cc._RF.pop();

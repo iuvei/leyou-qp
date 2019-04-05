@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_zyqz_s",
+    "texture": "161ae969-287b-49cf-9974-f88a8a9c9c8a",
+    "atlas": "",
+    "rect": [
+      0,
+      1,
+      89,
+      22
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      89,
+      23
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

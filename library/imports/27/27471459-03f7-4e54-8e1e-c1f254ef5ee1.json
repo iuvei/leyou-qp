@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_gdnn_s",
+    "texture": "944f46aa-77fa-43f3-b6e2-2f79fcc37de7",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      90,
+      20
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      92,
+      22
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

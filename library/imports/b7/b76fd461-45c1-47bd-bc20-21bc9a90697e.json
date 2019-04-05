@@ -1,7 +1,7 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "btn_yes",
+    "name": "btn_bg",
     "texture": "ceb9ff47-8600-4532-9750-3d818022eb73",
     "atlas": "",
     "rect": [

@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, 'f9be6OCtzFFjb+Jw0VMXcmZ', 'SelectNN');
-// scripts/components/SelectNN.js
+cc._RF.push(module, 'f9be6OCtzFFjb+Jw0VMXcmZ', 'CreateNN');
+// scripts/components/CreateNN.js
 
 "use strict";
 
@@ -8,39 +8,167 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        createNN: cc.Node
+        ghost: cc.Node,
+        ghostLine: cc.Sprite,
+        bankScore: cc.Node,
+        bankScoreLine: cc.Sprite,
+        people: cc.Node,
+        peopleLine: cc.Sprite,
+        createFrom: null
     },
-
-    onCloseClicked: function onCloseClicked(target) {
-        th.audioManager.playSFX("click.mp3");
-        this.node.runAction(cc.moveTo(0.2, cc.v2(0, -th.height)).easing(cc.easeSineIn()));
+    onLoad: function onLoad() {
+        if (th == null) {
+            return;
+        }
+        this.showGhost(false);
+        this.showBankScore(false);
+        this.createFrom = {
+            mode: 1,
+            theme: 1,
+            difeng: 1,
+            ghost: 2,
+            people: 6,
+            rule: 1,
+            paixing: {
+                shn: "shn",
+                sxn: "sxn",
+                whn: "whn",
+                szn: "szn",
+                thn: "thn",
+                hln: "hln",
+                zdn: "zdn",
+                thsn: "thsn",
+                wxn: "wxn"
+            },
+            bankScore: 0,
+            beishu: 1,
+            time: {
+                ready: 3,
+                qiangzhuang: 5,
+                bet: 5,
+                tangpai: 3
+            },
+            fangka: 1,
+            auto: 0
+        };
     },
-    onCreateCloseClicked: function onCreateCloseClicked(target) {
-        cc.log("AAAAAAAAAAAAAAAAAAAAA");
-        th.audioManager.playSFX("click.mp3");
-        this.createNN.active = false;
-    },
-    onGameChecked: function onGameChecked(trage, type) {
-        cc.log("牛牛选择类别:", type);
-        //TODO
-        th.audioManager.playSFX("click.mp3");
+    show: function show(type) {
+        cc.log("CreateNN:", type);
         switch (type) {
             case "jdnn":
+                this.showPeoples(true, 6);
+                this.showGhost(false);
                 break;
-            case "12nn":
+            case "12rnn":
+                this.showPeoples(true, 12);
+                this.showGhost(false);
                 break;
-            case "13nn":
+            case "13rnn":
+                this.showPeoples(true, 13);
+                this.showGhost(false);
                 break;
             case "lznn":
-                break;
-            case "mpmm":
-                break;
-            case "nsz":
-                break;
-            case "dcxnn":
+                this.showPeoples(true, 6);
+                this.showGhost(true);
                 break;
         }
-        this.createNN.active = true;
+        this.node.active = true;
+    },
+    showGhost: function showGhost(show) {
+        this.ghost.active = show;
+        this.ghostLine.node.active = show;
+    },
+    showBankScore: function showBankScore(show) {
+        this.bankScore.active = show;
+        this.bankScoreLine.node.active = show;
+    },
+    showPeoples: function showPeoples(show, people) {
+        this.people.active = show;
+        this.peopleLine.node.active = show;
+        cc.log(this.people.getChildByName("toggle").children[3]);
+        this.people.getChildByName("toggle").getChildByName("btn_" + people + "ren").isChecked = true;
+
+        //cc.log(this.people.getChildByName("toggle"));
+    },
+
+    onModeClicked: function onModeClicked(targer, type) {
+        th.audioManager.playSFX("click.mp3");
+        switch (type) {
+            case "mpqz":
+                this.createFrom.mode = 1;
+                this.showBankScore(false);
+                break;
+            case "zjqz":
+                this.createFrom.mode = 2;
+                this.showBankScore(false);
+                break;
+            case "zznn":
+                this.createFrom.mode = 3;
+                this.showBankScore(false);
+                break;
+            case "tbnn":
+                this.createFrom.mode = 4;
+                this.showBankScore(false);
+                break;
+            case "gdzj":
+                this.createFrom.mode = 5;
+                this.showBankScore(true);
+                break;
+        }
+    },
+    onThemeClicked: function onThemeClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.theme = Number(value);
+    },
+    onDifengClicked: function onDifengClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.difeng = Number(value);
+    },
+    onGhostClicked: function onGhostClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.ghost = Number(value);
+    },
+    onPeopleClicked: function onPeopleClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.people = Number(value);
+    },
+    onRuleClicked: function onRuleClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.rule = Number(value);
+    },
+    onPaixingClicked: function onPaixingClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        if (targer.isChecked) {
+            this.createFrom.paixing[value] = value;
+        } else {
+            Reflect.deleteProperty(this.createFrom.paixing, value);
+        }
+    },
+    onBankScoreClicked: function onBankScoreClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.bankScore = Number(value);
+    },
+    onBeishuClicked: function onBeishuClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.beishu = Number(value);
+    },
+    onShijianClicked: function onShijianClicked(targer) {
+        cc.log("onCreateClicked:", this.createFrom);
+    },
+    onFangkaClicked: function onFangkaClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        this.createFrom.fangka = Number(value);
+    },
+    onAutoClicked: function onAutoClicked(targer, value) {
+        th.audioManager.playSFX("click.mp3");
+        cc.log("onAutoClicked:", targer.isChecked);
+        this.createFrom.auto = targer.isChecked ? 1 : 0;
+    },
+    onCreateClicked: function onCreateClicked(targer) {
+        cc.log("onCreateClicked:", this.createFrom);
+    },
+    onCloseClicked: function onCloseClicked(targer) {
+        this.node.active = false;
     }
 });
 

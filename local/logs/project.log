@@ -1,66 +1,249 @@
-2019-04-04T16:50:39.131Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-04T16:50:40.346Z - normal: Initializing Asset Database
-2019-04-04T16:50:40.351Z - normal: checking language setting...
-2019-04-04T16:50:40.352Z - normal: Language: zh
-2019-04-04T16:50:41.455Z - success: preview server running at http://localhost:7456
-2019-04-04T16:50:41.457Z - success: protocol editor-framework registered
-2019-04-04T16:50:41.458Z - success: protocol app registered
-2019-04-04T16:50:41.458Z - success: protocol theme registered
-2019-04-04T16:50:41.458Z - success: protocol packages registered
-2019-04-04T16:50:41.458Z - success: protocol uuid registerred
-2019-04-04T16:50:41.458Z - success: protocol db registerred
-2019-04-04T16:50:41.458Z - success: protocol thumbnail registerred
-2019-04-04T16:50:41.459Z - success: protocol unpack registerred
-2019-04-04T16:50:41.459Z - success: protocol disable-commonjs registerred
-2019-04-04T16:50:41.665Z - normal: connected!
-2019-04-04T16:50:41.666Z - normal: Check project D:\Workspaces_CocosCreator\leyou
-2019-04-04T16:50:41.669Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
-2019-04-04T16:50:42.347Z - normal: Initializing Cocos2d
-2019-04-04T16:50:43.342Z - normal: Initializing engine extends
-2019-04-04T16:50:43.374Z - success: asset-db-debugger loaded
-2019-04-04T16:50:43.376Z - success: baidu-adapter loaded
-2019-04-04T16:50:43.380Z - success: code-editor loaded
-2019-04-04T16:50:43.381Z - success: color-picker loaded
-2019-04-04T16:50:43.525Z - success: fb-audience-network loaded
-2019-04-04T16:50:43.644Z - success: fb-live-stream loaded
-2019-04-04T16:50:43.651Z - success: google-play-instant loaded
-2019-04-04T16:50:43.658Z - success: huawei-runtime loaded
-2019-04-04T16:50:43.659Z - success: jsb-adapter loaded
-2019-04-04T16:50:43.669Z - success: oppo-runtime loaded
-2019-04-04T16:50:43.674Z - success: package-manager loaded
-2019-04-04T16:50:43.858Z - success: qqplay-adapter loaded
-2019-04-04T16:50:43.861Z - success: runtime-dev-tools loaded
-2019-04-04T16:50:43.869Z - success: sdkbox loaded
-2019-04-04T16:50:43.874Z - success: tester loaded
-2019-04-04T16:50:43.878Z - success: ui-grid loaded
-2019-04-04T16:50:43.881Z - success: ui-kit-preview-extra loaded
-2019-04-04T16:50:43.884Z - success: ui-kit-preview loaded
-2019-04-04T16:50:43.887Z - success: ui-kit loaded
-2019-04-04T16:50:43.890Z - success: ui-tree loaded
-2019-04-04T16:50:43.897Z - success: vivo-runtime loaded
-2019-04-04T16:50:43.899Z - success: weapp-adapter loaded
-2019-04-04T16:50:43.943Z - success: assets loaded
-2019-04-04T16:50:43.946Z - success: builder loaded
-2019-04-04T16:50:44.392Z - success: cocos-services loaded
-2019-04-04T16:50:44.397Z - success: console loaded
-2019-04-04T16:50:44.447Z - success: fb-instant-games loaded
-2019-04-04T16:50:44.450Z - success: google-instant-games loaded
-2019-04-04T16:50:44.456Z - success: hierarchy loaded
-2019-04-04T16:50:44.460Z - success: inspector loaded
-2019-04-04T16:50:44.462Z - success: keystore loaded
-2019-04-04T16:50:44.468Z - success: node-library loaded
-2019-04-04T16:50:44.470Z - success: package-asset loaded
-2019-04-04T16:50:44.472Z - success: preferences loaded
-2019-04-04T16:50:44.474Z - success: project-exporter loaded
-2019-04-04T16:50:44.476Z - success: project-importer loaded
-2019-04-04T16:50:44.480Z - success: project-settings loaded
-2019-04-04T16:50:44.485Z - success: scene loaded
-2019-04-04T16:50:44.488Z - success: simulator-debugger loaded
-2019-04-04T16:50:44.490Z - success: sprite-editor loaded
-2019-04-04T16:50:44.495Z - success: store loaded
-2019-04-04T16:50:44.500Z - success: timeline loaded
-2019-04-04T16:50:44.506Z - success: bitmap-font loaded
-2019-04-04T16:50:46.410Z - info: Cocos Services load base data!
-2019-04-04T16:50:48.097Z - normal: Loading packages
-2019-04-04T16:50:48.107Z - normal: Watching packages
-2019-04-04T16:50:49.322Z - normal: Run Application
+2019-04-05T13:21:05.259Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-05T13:21:06.546Z - normal: Initializing Asset Database
+2019-04-05T13:21:06.552Z - normal: checking language setting...
+2019-04-05T13:21:06.552Z - normal: Language: zh
+2019-04-05T13:21:07.868Z - success: preview server running at http://localhost:7456
+2019-04-05T13:21:07.872Z - success: protocol editor-framework registered
+2019-04-05T13:21:07.872Z - success: protocol app registered
+2019-04-05T13:21:07.872Z - success: protocol theme registered
+2019-04-05T13:21:07.872Z - success: protocol packages registered
+2019-04-05T13:21:07.872Z - success: protocol uuid registerred
+2019-04-05T13:21:07.872Z - success: protocol db registerred
+2019-04-05T13:21:07.872Z - success: protocol thumbnail registerred
+2019-04-05T13:21:07.873Z - success: protocol unpack registerred
+2019-04-05T13:21:07.873Z - success: protocol disable-commonjs registerred
+2019-04-05T13:21:08.053Z - normal: connected!
+2019-04-05T13:21:08.055Z - normal: Check project D:\Workspaces_CocosCreator\leyou
+2019-04-05T13:21:08.058Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
+2019-04-05T13:21:08.804Z - normal: Initializing Cocos2d
+2019-04-05T13:21:09.906Z - normal: Initializing engine extends
+2019-04-05T13:21:09.941Z - success: asset-db-debugger loaded
+2019-04-05T13:21:09.949Z - success: baidu-adapter loaded
+2019-04-05T13:21:09.956Z - success: code-editor loaded
+2019-04-05T13:21:09.961Z - success: color-picker loaded
+2019-04-05T13:21:10.121Z - success: fb-audience-network loaded
+2019-04-05T13:21:10.265Z - success: fb-live-stream loaded
+2019-04-05T13:21:10.278Z - success: google-play-instant loaded
+2019-04-05T13:21:10.296Z - success: huawei-runtime loaded
+2019-04-05T13:21:10.305Z - success: jsb-adapter loaded
+2019-04-05T13:21:10.313Z - success: oppo-runtime loaded
+2019-04-05T13:21:10.319Z - success: package-manager loaded
+2019-04-05T13:21:10.526Z - success: qqplay-adapter loaded
+2019-04-05T13:21:10.529Z - success: runtime-dev-tools loaded
+2019-04-05T13:21:10.536Z - success: sdkbox loaded
+2019-04-05T13:21:10.542Z - success: tester loaded
+2019-04-05T13:21:10.545Z - success: ui-grid loaded
+2019-04-05T13:21:10.548Z - success: ui-kit-preview-extra loaded
+2019-04-05T13:21:10.551Z - success: ui-kit-preview loaded
+2019-04-05T13:21:10.553Z - success: ui-kit loaded
+2019-04-05T13:21:10.556Z - success: ui-tree loaded
+2019-04-05T13:21:10.563Z - success: vivo-runtime loaded
+2019-04-05T13:21:10.565Z - success: weapp-adapter loaded
+2019-04-05T13:21:10.613Z - success: assets loaded
+2019-04-05T13:21:10.617Z - success: builder loaded
+2019-04-05T13:21:11.111Z - success: cocos-services loaded
+2019-04-05T13:21:11.117Z - success: console loaded
+2019-04-05T13:21:11.163Z - success: fb-instant-games loaded
+2019-04-05T13:21:11.165Z - success: google-instant-games loaded
+2019-04-05T13:21:11.171Z - success: hierarchy loaded
+2019-04-05T13:21:11.174Z - success: inspector loaded
+2019-04-05T13:21:11.175Z - success: keystore loaded
+2019-04-05T13:21:11.183Z - success: node-library loaded
+2019-04-05T13:21:11.185Z - success: package-asset loaded
+2019-04-05T13:21:11.187Z - success: preferences loaded
+2019-04-05T13:21:11.189Z - success: project-exporter loaded
+2019-04-05T13:21:11.191Z - success: project-importer loaded
+2019-04-05T13:21:11.196Z - success: project-settings loaded
+2019-04-05T13:21:11.203Z - success: scene loaded
+2019-04-05T13:21:11.205Z - success: simulator-debugger loaded
+2019-04-05T13:21:11.207Z - success: sprite-editor loaded
+2019-04-05T13:21:11.214Z - success: store loaded
+2019-04-05T13:21:11.219Z - success: timeline loaded
+2019-04-05T13:21:11.224Z - success: bitmap-font loaded
+2019-04-05T13:21:14.123Z - normal: Loading packages
+2019-04-05T13:21:14.136Z - normal: Watching packages
+2019-04-05T13:21:14.793Z - info: Cocos Services load base data!
+2019-04-05T13:21:15.548Z - normal: Run Application
+2019-04-05T13:21:25.501Z - error: Property 'CreateNN.createFrom' must define at least one of 'default', 'get' or 'set'.
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.preprocessAttrs (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:215:36)
+    at declareProperties (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:642:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:685:17)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:7:4)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+2019-04-05T13:22:39.675Z - error: Unknown type of CCClass.mode, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.675Z - error: Unknown type of CCClass.theme, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.675Z - error: Unknown type of CCClass.difeng, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.676Z - error: Unknown type of CCClass.ghost, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.676Z - error: Unknown type of CCClass.people, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.680Z - error: Unknown type of CCClass.rule, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.680Z - error: Unknown type of CCClass.paixing, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.680Z - error: Unknown type of CCClass.beishu, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.681Z - error: Unknown type of CCClass.time, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.681Z - error: Unknown type of CCClass.fangka, property should be defined in 'properties' or 'ctor'
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.validateMethodWithProps (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:279:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:706:33)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:17:24)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+2019-04-05T13:22:39.681Z - warn: Can not serialize 'CreateNN.createFrom' because the specified type is anonymous, please provide a class name or set the 'serializable' attribute of 'CreateNN.createFrom' to 'false'.
+2019-04-05T13:23:15.220Z - error: Property 'CreateNN.paixing' must define at least one of 'default', 'get' or 'set'.
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.preprocessAttrs (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:215:36)
+    at declareProperties (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:642:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:685:17)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:11:4)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:105:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:112:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:115:3)
+    at Module._compile (module.js:571:32)
+2019-04-05T13:23:15.221Z - error: Property 'CreateNN.time' must define at least one of 'default', 'get' or 'set'.
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.preprocessAttrs (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:215:36)
+    at declareProperties (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:642:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:685:17)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:11:4)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:105:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:112:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:115:3)
+    at Module._compile (module.js:571:32)
+2019-04-05T13:25:15.091Z - error: Property 'CreateNN.createFrom' must define at least one of 'default', 'get' or 'set'.
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.preprocessAttrs (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:215:36)
+    at declareProperties (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:642:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:685:17)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:7:4)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:111:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:118:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:3)
+    at Module._compile (module.js:571:32)
+2019-04-05T13:27:40.258Z - error: Property 'CreateNN.createFrom' must define at least one of 'default', 'get' or 'set'.
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.preprocessAttrs (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:215:36)
+    at declareProperties (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:642:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:685:17)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:7:4)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:112:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:119:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:122:3)
+    at Module._compile (module.js:571:32)
+2019-04-05T13:29:27.194Z - error: Property 'CreateNN.test' must define at least one of 'default', 'get' or 'set'.
+    at Object.cc.errorID (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\CCDebug.js:167:16)
+    at Object.exports.preprocessAttrs (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\preprocess-class.js:215:36)
+    at declareProperties (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:642:28)
+    at Object.CCClass [as Class] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\platform\CCClass.js:685:17)
+    at __define (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:7:4)
+    at D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:114:13
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:121:11)
+    at Object.<anonymous> (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:124:3)
+    at Module._compile (module.js:571:32)
+2019-04-05T15:34:19.800Z - warn: Failed to set property btn_9ren<Toggle> to true at isChecked, ReferenceError: th is not defined
+    at CreateNN.onPeopleClicked (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:131:9)
+    at cc_ClickEvent.emit (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCComponentEventHandler.js:70:25)
+    at Function.emitEvents (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCComponentEventHandler.js:50:31)
+    at cc_Toggle._emitToggleEvents (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCToggle.js:127:47)
+    at cc_Toggle.set [as isChecked] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCToggle.js:44:30)
+    at u (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:2055)
+    at y (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:3802)
+    at Object.b [as setPropertyByPath] (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:5028)
+    at Object.setProperty (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\scene.js:1:8276)
+    at HTMLElement.set-property (D:\CocosCreator2.0.9\resources\app.asar\editor\builtin\scene\panel\messages\scene-operation.js:1:782)
+2019-04-05T15:34:32.489Z - warn: Failed to set property btn_6ren<Toggle> to true at isChecked, ReferenceError: th is not defined
+    at CreateNN.onPeopleClicked (D:\Workspaces_CocosCreator\leyou\temp\quick-scripts\assets\scripts\components\CreateNN.js:131:9)
+    at cc_ClickEvent.emit (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCComponentEventHandler.js:70:25)
+    at Function.emitEvents (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCComponentEventHandler.js:50:31)
+    at cc_Toggle._emitToggleEvents (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCToggle.js:127:47)
+    at cc_Toggle.set [as isChecked] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCToggle.js:44:30)
+    at u (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:2055)
+    at y (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:3802)
+    at Object.b [as setPropertyByPath] (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:5028)
+    at Object.setProperty (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\scene.js:1:8276)
+    at HTMLElement.set-property (D:\CocosCreator2.0.9\resources\app.asar\editor\builtin\scene\panel\messages\scene-operation.js:1:782)

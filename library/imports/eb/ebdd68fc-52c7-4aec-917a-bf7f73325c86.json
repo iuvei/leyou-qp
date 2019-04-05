@@ -1,7 +1,7 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "txt_create_s",
+    "name": "txt_mycreate_s",
     "texture": "289190bc-7282-4bca-94bf-c8d43332ed12",
     "atlas": "",
     "rect": [

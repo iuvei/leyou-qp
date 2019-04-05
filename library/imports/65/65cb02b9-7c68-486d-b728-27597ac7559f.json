@@ -1,7 +1,7 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "txt_join_n",
+    "name": "txt_myjoin_n",
     "texture": "e6d5e8be-1a7d-4d45-b0fe-690d58e702cc",
     "atlas": "",
     "rect": [

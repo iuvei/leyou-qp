@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_tbnn_s",
+    "texture": "8a20e6bc-bc36-4901-84cb-192f442b4814",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      91,
+      21
+    ],
+    "offset": [
+      0.5,
+      0
+    ],
+    "originalSize": [
+      92,
+      21
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "icon_yes",
+    "name": "txt_yes",
     "texture": "f2036d37-3c09-47fb-bc4f-aad933d92885",
     "atlas": "",
     "rect": [

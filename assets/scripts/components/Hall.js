@@ -10,10 +10,25 @@ cc.Class({
         selectZJH: cc.Node,
         voiceToggle: cc.Toggle,
         fangzuobi: cc.Node,
-        bangdingshouji: cc.Node
+        bangdingshouji: cc.Node,
+
+        //
+
+        createNNComponent: cc.Class,
+        createZJHComponent: cc.Class
     },
 
-    onLoad: function() {},
+    onLoad: function() {
+        if (th == null) {
+            return;
+        }
+        this.createNNComponent = this.node
+            .getChildByName("CreateNN")
+            .getComponent("CreateNN");
+        this.createZJHComponent = this.node
+            .getChildByName("CreateZJH")
+            .getComponent("CreateZJH");
+    },
     onEnable() {
         const bgm = cc.sys.localStorage.getItem("bgmVolume");
         if (bgm != "0") {
@@ -83,7 +98,7 @@ cc.Class({
     },
 
     //大厅dock按钮点击事件
-    onDockChecked: function(traget, type) {
+    onDockChecked: function(targer, type) {
         th.audioManager.playSFX("click.mp3");
         switch (type) {
             case "dating":
@@ -112,22 +127,69 @@ cc.Class({
                 break;
         }
     },
-    //游戏按钮点击
-    onGameChecked: function(trage, type) {
+    //大厅游戏按钮点击
+    onHallGameChecked: function(targer, type) {
         th.audioManager.playSFX("click.mp3");
         switch (type) {
             case "nn":
-                this.selectNN.position = cc.v2(0, -th.height);
-                this.selectNN.runAction(
-                    cc.moveTo(0.2, cc.v2(0, 0)).easing(cc.easeSineIn())
-                );
+                this.bottomToTopAnim(this.selectNN);
                 break;
             case "zjh":
-                this.selectZJH.position = cc.v2(0, -th.height);
-                this.selectZJH.runAction(
-                    cc.moveTo(0.2, cc.v2(0, 0)).easing(cc.easeSineIn())
-                );
+                this.bottomToTopAnim(this.selectZJH);
                 break;
         }
+    },
+    //选择游戏界面关闭按钮点击
+    onSelectGameCloseClicked: function(targer, type) {
+        th.audioManager.playSFX("click.mp3");
+        switch (type) {
+            case "nn":
+                this.topToBottomAnim(this.selectNN);
+                break;
+            case "zjh":
+                this.topToBottomAnim(this.selectZJH);
+                break;
+        }
+    },
+    bottomToTopAnim: function(node) {
+        if (node.isRun) return;
+        node.position = cc.v2(0, -th.height);
+        node.runAction(
+            cc.sequence(
+                cc.callFunc(() => {
+                    node.isRun = true;
+                }),
+                cc.moveTo(0.2, cc.v2(0, 0)).easing(cc.easeSineIn()),
+                cc.callFunc(() => {
+                    node.isRun = false;
+                })
+            )
+        );
+    },
+    topToBottomAnim: function(node) {
+        if (node.isRun) return;
+        node.runAction(
+            cc.sequence(
+                cc.callFunc(() => {
+                    node.isRun = true;
+                }),
+                cc.moveTo(0.2, cc.v2(0, -th.height)).easing(cc.easeSineIn()),
+                cc.callFunc(() => {
+                    node.isRun = false;
+                })
+            )
+        );
+    },
+    //选择牛牛子分类
+    onSelectNNChecked: function(targer, type) {
+        //cc.log("牛牛选择类别:", type);
+        th.audioManager.playSFX("click.mp3");
+        this.createNNComponent.show(type);
+    },
+    //选择炸金花子分类
+    onSelectZJHChecked: function(targer, type) {
+        //cc.log("炸金花选择类别:", type);
+        th.audioManager.playSFX("click.mp3");
+        this.createZJHComponent.show(type);
     }
 });
