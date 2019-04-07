@@ -8,6 +8,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        dock: cc.Node,
         dating: cc.Node,
         yuleting: cc.Node,
         zhanji: cc.Node,
@@ -17,6 +18,9 @@ cc.Class({
         voiceToggle: cc.Toggle,
         fangzuobi: cc.Node,
         bangdingshouji: cc.Node,
+        sendfangka: cc.Node,
+        zhanjitongji: cc.Node,
+        shimingrenzheng: cc.Node,
 
         //
 
@@ -77,6 +81,55 @@ cc.Class({
         this.bangdingshouji.active = false;
         //TODO
     },
+    //历史战绩
+    onZhanjiChecked: function onZhanjiChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.dating.active = false;
+        this.yuleting.active = false;
+        this.zhanji.active = true;
+        this.gerenzhongxin.active = false;
+
+        this.dock.getChildByName("toogle_menu").getComponent("cc.ToggleContainer").allowSwitchOff = true;
+
+        this.dock.getChildByName("toogle_menu").children.forEach(function (toggle, idx) {
+            if (toggle.name === "btn_zhanji") {
+                toggle.getComponent("cc.Toggle").check();
+            } else {
+                toggle.getComponent("cc.Toggle").uncheck();
+            }
+        });
+        this.dock.getChildByName("toogle_menu").getComponent("cc.ToggleContainer").allowSwitchOff = false;
+    },
+    //战绩统计
+    onZhanjitongjiChecked: function onZhanjitongjiChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.zhanjitongji.active = true;
+    },
+    //战绩统计关闭
+    onZhanjitongjiCloseChecked: function onZhanjitongjiCloseChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.zhanjitongji.active = false;
+    },
+    //发送房卡
+    onSendFangkaChecked: function onSendFangkaChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.sendfangka.active = true;
+    },
+    //发送房卡关闭
+    onSendFangkaCloseChecked: function onSendFangkaCloseChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.sendfangka.active = false;
+    },
+    //实名认证房卡
+    onShimingrenzhengChecked: function onShimingrenzhengChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.shimingrenzheng.active = true;
+    },
+    //实名认证关闭
+    onShimingrenzhengCloseChecked: function onShimingrenzhengCloseChecked(trager) {
+        th.audioManager.playSFX("click.mp3");
+        this.shimingrenzheng.active = false;
+    },
     //开关声音
     onVoiceChecked: function onVoiceChecked(trager) {
         th.audioManager.playSFX("click.mp3");
@@ -86,12 +139,6 @@ cc.Class({
         } else {
             th.audioManager.setBGMVolume(0.5);
         }
-    },
-    //发送房卡
-    onSendFangKaChecked: function onSendFangKaChecked(trager) {
-        th.audioManager.playSFX("click.mp3");
-        cc.log("发送房卡");
-        //TODO
     },
     //复制ID
     onCopyIdChecked: function onCopyIdChecked(trager) {
