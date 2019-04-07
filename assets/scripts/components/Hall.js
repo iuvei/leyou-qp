@@ -17,7 +17,8 @@ cc.Class({
         shimingrenzheng: cc.Node,
 
         //
-
+        createNN: cc.Node,
+        createZJH: cc.Node,
         createNNComponent: cc.Class,
         createZJHComponent: cc.Class
     },
@@ -49,6 +50,8 @@ cc.Class({
     //防作弊
     onFzbChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        this.fangzuobi.x = 0;
+        this.fangzuobi.y = 0;
         this.fangzuobi.active = true;
     },
     //防作弊关闭
@@ -65,6 +68,8 @@ cc.Class({
     //绑定手机
     onBdsjChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        this.bangdingshouji.x = 0;
+        this.bangdingshouji.y = 0;
         this.bangdingshouji.active = true;
     },
     //绑定手机关闭
@@ -106,6 +111,8 @@ cc.Class({
     //战绩统计
     onZhanjitongjiChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        this.zhanjitongji.x = 0;
+        this.zhanjitongji.y = 0;
         this.zhanjitongji.active = true;
     },
     //战绩统计关闭
@@ -116,6 +123,8 @@ cc.Class({
     //发送房卡
     onSendFangkaChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        this.sendfangka.x = 0;
+        this.sendfangka.y = 0;
         this.sendfangka.active = true;
     },
     //发送房卡关闭
@@ -126,6 +135,8 @@ cc.Class({
     //实名认证房卡
     onShimingrenzhengChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
+        this.shimingrenzheng.x = 0;
+        this.shimingrenzheng.y = 0;
         this.shimingrenzheng.active = true;
     },
     //实名认证关闭
@@ -237,12 +248,16 @@ cc.Class({
     onSelectNNChecked: function(targer, type) {
         //cc.log("牛牛选择类别:", type);
         th.audioManager.playSFX("click.mp3");
+        this.createNN.x = 0;
+        this.createNN.y = 0;
         this.createNNComponent.show(type);
     },
     //选择炸金花子分类
     onSelectZJHChecked: function(targer, type) {
         //cc.log("炸金花选择类别:", type);
         th.audioManager.playSFX("click.mp3");
+        this.createZJH.x = 0;
+        this.createZJH.y = 0;
         this.createZJHComponent.show(type);
     }
 });

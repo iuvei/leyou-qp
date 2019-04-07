@@ -18,11 +18,12 @@ cc.Class({
         if (th == null) {
             return;
         }
+
         this.dropdown.active = false;
         this.showGhost(false);
         this.showBankScore(false);
         this.createFrom = {
-            banker_mode: 1, // 2转庄牛牛 3 = 明牌抢庄 5 = 固定庄家 1 = 自由抢庄 4 = 通比牛牛
+            banker_mode: 1, // 3=转庄牛牛, 2 = 明牌抢庄 5 = 固定庄家 1 = 自由抢庄 4 = 通比牛牛
             theme: 1,
             score_type: 1, //底分 1=1分 2=2分如此类推
             ghost: 2,
@@ -52,6 +53,7 @@ cc.Class({
     },
     show(type) {
         cc.log("CreateNN:", type);
+        cc.log("createFrom:", this.createFrom);
         switch (type) {
             case "jdnn":
                 this.createFrom.people = 6;
@@ -127,7 +129,7 @@ cc.Class({
         if (targer.isChecked) {
             switch (type) {
                 case "mpqz":
-                    this.createFrom.banker_mode = 3;
+                    this.createFrom.banker_mode = 2;
                     this.showBankScore(false);
                     break;
                 case "zjqz":
@@ -135,7 +137,7 @@ cc.Class({
                     this.showBankScore(false);
                     break;
                 case "zznn":
-                    this.createFrom.banker_mode = 2;
+                    this.createFrom.banker_mode = 3;
                     this.showBankScore(false);
                     break;
                 case "tbnn":

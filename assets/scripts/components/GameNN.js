@@ -1,17 +1,10 @@
 cc.Class({
     extends: cc.Component,
 
-    properties: {
-        label: {
-            default: null,
-            type: cc.Label
-        },
-
-        // defaults, set visually when attaching this script to the Canvas
-        text: "Hello, World!"
-    },
+    properties: {},
 
     onLoad: function() {
+        /*
         const cvs = this.node.getComponent(cc.Canvas);
         const {
             width: designWidth,
@@ -41,6 +34,7 @@ cc.Class({
 
         //cvs.fitHeight = true;
         //cvs.fitWidth = true;
+        */
     },
 
     update: function(dt) {}
