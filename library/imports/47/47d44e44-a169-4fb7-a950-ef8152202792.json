@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "cion_num",
+    "texture": "eae7c91f-d75e-4f9b-9745-22ebffcfb862",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      249,
+      65
+    ],
+    "offset": [
+      -0.5,
+      17.5
+    ],
+    "originalSize": [
+      250,
+      100
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

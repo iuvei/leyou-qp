@@ -30,6 +30,7 @@ cc.Class({
     },
 
     onLoad: function onLoad() {
+        cc.log("Hall onload.");
         if (th == null) {
             return;
         }
@@ -37,6 +38,7 @@ cc.Class({
         this.createZJHComponent = this.node.getChildByName("CreateZJH").getComponent("CreateZJH");
     },
     onEnable: function onEnable() {
+        cc.log("Hall onEnable.");
         var bgm = cc.sys.localStorage.getItem("bgmVolume");
         if (bgm != "0") {
             th.audioManager.setBGMVolume(bgm);
@@ -46,10 +48,30 @@ cc.Class({
         }
     },
 
-    start: function start() {},
+    start: function start() {
+        cc.log("Hall start.");
+    },
 
     update: function update(dt) {},
-
+    //房卡
+    onFangkaChecked: function onFangkaChecked(trager) {
+        /*
+        th.ws.send(
+            JSON.stringify({
+                operation: "getUserInfo",
+                session: "YWQ4MTBlOGM1NzcxZjNmNTJiMTY3ZTMzZmRiZmY4YjI=",
+                data: {
+                    token: ""
+                }
+            })
+        );
+        return;
+        */
+        th.wc.show("正在加载。。。");
+        cc.director.loadScene("GameNN", function () {
+            th.wc.hide();
+        });
+    },
     //防作弊
     onFzbChecked: function onFzbChecked(trager) {
         th.audioManager.playSFX("click.mp3");

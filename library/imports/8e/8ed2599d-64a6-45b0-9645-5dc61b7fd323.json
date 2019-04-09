@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bg_fangka",
+    "texture": "c58cd29c-65fc-40f3-9972-1892c4c72a27",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      117,
+      48
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      117,
+      48
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

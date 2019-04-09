@@ -1,9 +1,16 @@
 cc.Class({
     extends: cc.Component,
 
-    properties: {},
+    properties: {
+        seatPrefab: cc.Prefab
+    },
 
     onLoad: function() {
+        if (th == null) {
+            return;
+        }
+        cc.log("GameNN onLoad");
+
         /*
         const cvs = this.node.getComponent(cc.Canvas);
         const {
@@ -35,6 +42,24 @@ cc.Class({
         //cvs.fitHeight = true;
         //cvs.fitWidth = true;
         */
+
+        this.initSeat();
+    },
+    initSeat() {
+        const seatsxy = th.getSeatXY();
+        for (let i = 0; i < seatsxy.length; i++) {
+            let [x, y] = seatsxy[i];
+            let seat = cc.instantiate(this.seatPrefab);
+            seat.x = x;
+            seat.y = y;
+            this.node.addChild(seat);
+        }
+    },
+    onBackClicked: function(targer) {
+        th.wc.show("正在加载。。。");
+        cc.director.loadScene("Hall", () => {
+            th.wc.hide();
+        });
     },
 
     update: function(dt) {}

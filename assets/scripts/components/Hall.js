@@ -24,6 +24,7 @@ cc.Class({
     },
 
     onLoad: function() {
+        cc.log("Hall onload.");
         if (th == null) {
             return;
         }
@@ -35,6 +36,7 @@ cc.Class({
             .getComponent("CreateZJH");
     },
     onEnable() {
+        cc.log("Hall onEnable.");
         const bgm = cc.sys.localStorage.getItem("bgmVolume");
         if (bgm != "0") {
             th.audioManager.setBGMVolume(bgm);
@@ -43,10 +45,30 @@ cc.Class({
             this.voiceToggle.isChecked = true;
         }
     },
-    start: function() {},
+    start: function() {
+        cc.log("Hall start.");
+    },
 
     update: function(dt) {},
-
+    //房卡
+    onFangkaChecked: function(trager) {
+        /*
+        th.ws.send(
+            JSON.stringify({
+                operation: "getUserInfo",
+                session: "YWQ4MTBlOGM1NzcxZjNmNTJiMTY3ZTMzZmRiZmY4YjI=",
+                data: {
+                    token: ""
+                }
+            })
+        );
+        return;
+        */
+        th.wc.show("正在加载。。。");
+        cc.director.loadScene("GameNN", () => {
+            th.wc.hide();
+        });
+    },
     //防作弊
     onFzbChecked: function(trager) {
         th.audioManager.playSFX("click.mp3");
