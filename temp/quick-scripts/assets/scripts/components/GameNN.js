@@ -10,7 +10,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        seatPrefab: cc.Prefab
+        seatPrefab: cc.Prefab,
+        seats: [cc.Node],
+        pokersNode: cc.Node
     },
 
     onLoad: function onLoad() {
@@ -49,11 +51,20 @@ cc.Class({
         //cvs.fitWidth = true;
         */
 
-        this.initSeat();
+        //this.initSeat();
+        this.intiPoker();
+    },
+    intiPoker: function intiPoker() {
+        var pokers = ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D0", "E0", "A0", "B0", "C0", "N0", "M0", "F0", "G0", "H0"];
+
+        for (var i = 0; i < pokers.length; i++) {
+            var poker = th.pokerManager.getPokerSpriteById(pokers[i]);
+            this.pokersNode.addChild(poker);
+        }
     },
     initSeat: function initSeat() {
         var seatsxy = th.getSeatXY();
-        for (var i = 0; i < seatsxy.length; i++) {
+        for (var i = 50; i < seatsxy.length; i++) {
             var _seatsxy$i = _slicedToArray(seatsxy[i], 2),
                 x = _seatsxy$i[0],
                 y = _seatsxy$i[1];
@@ -62,6 +73,8 @@ cc.Class({
             seat.x = x;
             seat.y = y;
             this.node.addChild(seat);
+
+            this.seats.push(seat);
         }
     },
 
@@ -71,6 +84,33 @@ cc.Class({
             th.wc.hide();
         });
     },
+
+    onChatClicked: function onChatClicked(targer) {
+        var seat = this.seats[0];
+        seat.x = seat.x * -1;
+    },
+    onMoreClicked: function onMoreClicked(targer) {
+        var seat = this.seats[0].getComponent("Seat");
+        seat.setChat("伙右伙历伙");
+        seat.setReady(true);
+        seat.setOffline(true);
+        seat.setScore("-8888");
+        seat.setUserName("我的名字");
+        seat.setCountdown(10);
+    },
+    onThemeClicked: function onThemeClicked(targer) {
+        var seat = this.seats[0].getComponent("Seat");
+        seat.setChat("伙右伙历伙伙右伙历伙");
+        seat.setReady(false);
+        seat.setOffline(true);
+        seat.setScore("+8888");
+        seat.setCountdown(0);
+    },
+    onLookClicked: function onLookClicked(targer) {
+        var seat = this.seats[0].getComponent("Seat");
+        seat.setCountdown(10);
+    },
+
 
     update: function update(dt) {}
 });

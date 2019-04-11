@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "seat_border",
+    "texture": "d734e9e2-d037-4a24-936b-b22ade7fb5fe",
+    "atlas": "",
+    "rect": [
+      3,
+      3,
+      147,
+      117
+    ],
+    "offset": [
+      0.5,
+      0.5
+    ],
+    "originalSize": [
+      152,
+      124
+    ],
+    "capInsets": [
+      28,
+      30,
+      26,
+      36
+    ]
+  }
+}

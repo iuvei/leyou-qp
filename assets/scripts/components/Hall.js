@@ -16,6 +16,12 @@ cc.Class({
         zhanjitongji: cc.Node,
         shimingrenzheng: cc.Node,
 
+        //用户信息
+        lblId: cc.Label,
+        lblName: cc.Label,
+        lblFangka: cc.Label,
+        lblPhone: cc.Label,
+
         //
         createNN: cc.Node,
         createZJH: cc.Node,
@@ -24,7 +30,7 @@ cc.Class({
     },
 
     onLoad: function() {
-        cc.log("Hall onload.");
+        //cc.log("Hall onload.");
         if (th == null) {
             return;
         }
@@ -34,9 +40,17 @@ cc.Class({
         this.createZJHComponent = this.node
             .getChildByName("CreateZJH")
             .getComponent("CreateZJH");
+
+        this.initUserInfo();
+    },
+    initUserInfo() {
+        this.lblId.string = th.myself.id;
+        this.lblName.string = th.myself.name;
+        this.lblFangka.string = "x" + th.myself.fangka;
+        this.lblPhone.string = th.myself.phone;
     },
     onEnable() {
-        cc.log("Hall onEnable.");
+        //cc.log("Hall onEnable.");
         const bgm = cc.sys.localStorage.getItem("bgmVolume");
         if (bgm != "0") {
             th.audioManager.setBGMVolume(bgm);
@@ -46,7 +60,7 @@ cc.Class({
         }
     },
     start: function() {
-        cc.log("Hall start.");
+        //cc.log("Hall start.");
     },
 
     update: function(dt) {},
