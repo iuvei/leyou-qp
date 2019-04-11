@@ -50,26 +50,22 @@ var WS = cc.Class({
                 this.delay = this.lastRecieveTime - this.lastSendTime;
                 const data = event.data;
                 if ("@" === data) {
-                    cc.log("<<<===pong");
+                    //cc.log("<<<===pong");
                     return;
                 }
                 const json = JSON.parse(data);
                 this.handlers[json.operation](json);
             };
 
-            this.ws.onerror = event => {
+            this.ws.onerror = error => {
                 cc.log("WebSocket instance error.");
                 fnError(error);
             };
             let self = this;
             this.ws.onclose = event => {
-                cc.log(
-                    "WebSocket instance closed.",
-                    self.ws === this.ws,
-                    this.ws
-                );
+                cc.log("WebSocket instance closed.");
                 this.ws.connected = false;
-                this.close();
+                this.isPinging = false;
             };
         },
         heartbeat: function() {
@@ -104,7 +100,6 @@ var WS = cc.Class({
                 this.ws.connected = false;
                 this.ws.close();
             }
-            this.ws = null;
             if (this.fnDisconnect) {
                 this.fnDisconnect();
                 this.fnDisconnect = null;
@@ -122,7 +117,7 @@ var WS = cc.Class({
             if (this.ws) {
                 this.lastSendTime = Date.now();
                 this.send("@");
-                cc.log("===>>>ping");
+                //cc.log("===>>>ping");
             }
         }
     }

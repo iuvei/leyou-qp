@@ -32,7 +32,15 @@ cc.Class({
         createNN: cc.Node,
         createZJH: cc.Node,
         createNNComponent: cc.Class,
-        createZJHComponent: cc.Class
+        createZJHComponent: cc.Class,
+
+        //当前选择游戏的node
+        selectGame: cc.Node,
+        //当前创建游戏的node
+        createGame: cc.Node,
+
+        //观战或者加拉游戏
+        joinOrLook: cc.Node
     },
 
     onLoad: function onLoad() {
@@ -40,10 +48,32 @@ cc.Class({
         if (th == null) {
             return;
         }
+        this.initEventHandlers();
+        this.initUserInfo();
         this.createNNComponent = this.node.getChildByName("CreateNN").getComponent("CreateNN");
         this.createZJHComponent = this.node.getChildByName("CreateZJH").getComponent("CreateZJH");
+    },
+    initEventHandlers: function initEventHandlers() {
+        var _this = this;
 
-        this.initUserInfo();
+        cc.log("Hall initEventHandlers()");
+        th.webSocketManager.dataEventHandler = this.node;
+
+        this.node.on("game_connect_success", function () {
+            //分发给子节点
+            _this.createGame.emit("game_connect_success");
+        });
+
+        this.node.on("CreateRoom", function () {
+            cc.log("<<<===Hall CreateRoom");
+            th.wc.hide();
+            _this.createGame.active = false;
+            _this.topToBottomAnim(_this.selectGame);
+        });
+        this.node.on("PrepareJoinRoom", function () {
+            cc.log("<<<===Hall PrepareJoinRoom");
+            _this.joinOrLook.getComponent("JoinOrLook").show();
+        });
     },
     initUserInfo: function initUserInfo() {
         this.lblId.string = th.myself.id;
@@ -81,10 +111,12 @@ cc.Class({
         );
         return;
         */
+        /*
         th.wc.show("正在加载。。。");
-        cc.director.loadScene("GameNN", function () {
+                cc.director.loadScene("GameNN", () => {
             th.wc.hide();
         });
+        */
     },
     //防作弊
     onFzbChecked: function onFzbChecked(trager) {
@@ -229,9 +261,11 @@ cc.Class({
         th.audioManager.playSFX("click.mp3");
         switch (type) {
             case "nn":
+                this.selectGame = this.selectNN;
                 this.bottomToTopAnim(this.selectNN);
                 break;
             case "zjh":
+                this.selectGame = this.selectZJH;
                 this.bottomToTopAnim(this.selectZJH);
                 break;
         }
@@ -239,6 +273,7 @@ cc.Class({
     //选择游戏界面关闭按钮点击
     onSelectGameCloseClicked: function onSelectGameCloseClicked(targer, type) {
         th.audioManager.playSFX("click.mp3");
+        this.selectGame = null;
         switch (type) {
             case "nn":
                 this.topToBottomAnim(this.selectNN);
@@ -272,6 +307,7 @@ cc.Class({
         this.createNN.x = 0;
         this.createNN.y = 0;
         this.createNNComponent.show(type);
+        this.createGame = this.createNN;
     },
     //选择炸金花子分类
     onSelectZJHChecked: function onSelectZJHChecked(targer, type) {
@@ -280,6 +316,7 @@ cc.Class({
         this.createZJH.x = 0;
         this.createZJH.y = 0;
         this.createZJHComponent.show(type);
+        this.createGame = this.createZJH;
     }
 });
 

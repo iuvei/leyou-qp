@@ -1,22 +1,22 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "btn_bg_green",
-    "texture": "ceb9ff47-8600-4532-9750-3d818022eb73",
+    "name": "txt_look",
+    "texture": "235865ec-58ca-4172-b44e-6687a4d5001b",
     "atlas": "",
     "rect": [
       0,
-      0,
-      178,
-      75
+      1,
+      81,
+      32
     ],
     "offset": [
       0,
-      0
+      -0.5
     ],
     "originalSize": [
-      178,
-      75
+      81,
+      33
     ],
     "capInsets": [
       0,

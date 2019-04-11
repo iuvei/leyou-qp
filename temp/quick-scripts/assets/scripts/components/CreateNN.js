@@ -20,8 +20,12 @@ cc.Class({
         dropdown: cc.Node,
         dropdownContent: cc.Node,
         dropdownPrefab: cc.Prefab,
+        lblTicketRemark1: cc.Label,
+        lblTicketRemark2: cc.Label,
+
         createFrom: null
     },
+
     onLoad: function onLoad() {
         if (th == null) {
             return;
@@ -33,10 +37,10 @@ cc.Class({
         this.createFrom = {
             banker_mode: 1, // 3=转庄牛牛, 2 = 明牌抢庄 5 = 固定庄家 1 = 自由抢庄 4 = 通比牛牛
             theme: 1,
-            score_type: 1, //底分 1=1分 2=2分如此类推
-            ghost: 2,
-            people: 6,
-            rule_type: 1,
+            score_type: 1, //底分：1=1分 2=2分如此类推
+            is_laizi: 0, //赖子：0，2，4，6
+            max_count_type: 1, //人数：1=6人 2=9人 3=10人 4=12人 5=23人
+            rule_type: 1, //规则：1=牛牛*3，牛九*2，牛八*2   2=牛牛*4，牛九*3，牛八*2，牛七*2
 
             is_cardfour: 1, //四花牛4倍
             is_cardfourtiny: 1, //四小牛4倍
@@ -48,41 +52,65 @@ cc.Class({
             is_sequence: 1, //同花顺牛九倍
             is_cardtiny: 1, //五小牛十倍
 
-            bankScore: 0,
-            bet_type: 1,
+            banker_score_type: 1, //上庄分数：1=0分，2=300分，3=500分，4=1000分，
+            bet_type: 1, //倍数 1=1，2，4，5  ， 2=1，3，5，8 ， 3=2，4，5，10 ， 4=2，6，10，15
 
             ready_time: 3, //准备时间
             grab_time: 5, //抢庄时间
             bet_time: 5, //下注时间
             show_time: 3, //摊牌时间
-            fangka: 1,
+            ticket_type: 1, //房卡：1=10局,2=20局
             auto: 0
         };
+        this.initEventHandlers();
+    },
+    initEventHandlers: function initEventHandlers() {
+        var _this = this;
+
+        cc.log("CreateNN initEventHandlers()");
+        this.node.on("game_connect_success", function () {
+            cc.log("<<<===CreateNN game_connect_success");
+            var roomInfo = Object.assign({}, _this.createFrom);
+            roomInfo.data_key = Date.parse(new Date()) + _this.randomString(5);
+            var params = {
+                operation: "CreateRoom", //操作标志
+                account_id: th.myself.id, //用户id};
+                session: th.sign,
+                data: roomInfo
+            };
+            cc.log("===>>>CreateNN CreateRoom:", params);
+            th.ws.send(JSON.stringify(params));
+            th.wc.show("正在创建房间...");
+        });
     },
     show: function show(type) {
         cc.log("CreateNN:", type);
         cc.log("createFrom:", this.createFrom);
         switch (type) {
             case "jdnn":
-                this.createFrom.people = 6;
+                this.createFrom.is_laizi = 0;
+                this.createFrom.max_count_type = 1;
                 this.showPeoples(true, 6, 3);
                 this.showGhost(false);
                 //this.showMode(5);
                 break;
             case "12rnn":
-                this.createFrom.people = 12;
+                this.createFrom.is_laizi = 0;
+                this.createFrom.max_count_type = 4;
                 this.showPeoples(false, 12, 5);
                 this.showGhost(false);
                 //this.showMode(5);
                 break;
             case "13rnn":
-                this.createFrom.people = 13;
+                this.createFrom.is_laizi = 0;
+                this.createFrom.max_count_type = 5;
                 this.showPeoples(false, 13, 5);
                 this.showGhost(false);
                 //this.showMode(5);
                 break;
             case "lznn":
-                this.createFrom.people = 6;
+                this.createFrom.is_laizi = 2;
+                this.createFrom.max_count_type = 1;
                 this.showPeoples(true, 6, 5);
                 this.showGhost(true);
                 this.showMode(2);
@@ -166,14 +194,25 @@ cc.Class({
     },
     onGhostClicked: function onGhostClicked(targer, value) {
         th.audioManager.playSFX("click.mp3");
-        this.createFrom.ghost = Number(value);
+        this.createFrom.is_laizi = Number(value);
     },
     onPeopleGrouplicked: function onPeopleGrouplicked(targer, value) {
         th.audioManager.playSFX("click.mp3");
     },
     onPeopleClicked: function onPeopleClicked(targer, value) {
         if (targer.isChecked) {
-            this.createFrom.people = Number(value);
+            var num = Number(value);
+            this.createFrom.max_count_type = num;
+            if (num == 1) {
+                this.lblTicketRemark1.string = "10局X1房卡";
+                this.lblTicketRemark2.string = "20局X2房卡";
+            } else if (num == 2 || num == 3) {
+                this.lblTicketRemark1.string = "10局X2房卡";
+                this.lblTicketRemark2.string = "20局X4房卡";
+            } else if (num == 4 || num == 5) {
+                this.lblTicketRemark1.string = "10局X3房卡";
+                this.lblTicketRemark2.string = "20局X6房卡";
+            }
         }
     },
     onRuleClicked: function onRuleClicked(targer, value) {
@@ -186,7 +225,7 @@ cc.Class({
     },
     onBankScoreClicked: function onBankScoreClicked(targer, value) {
         th.audioManager.playSFX("click.mp3");
-        this.createFrom.bankScore = Number(value);
+        this.createFrom.banker_score_type = Number(value);
     },
     onBetTypeClicked: function onBetTypeClicked(targer, value) {
         th.audioManager.playSFX("click.mp3");
@@ -197,15 +236,12 @@ cc.Class({
     },
     onFangkaClicked: function onFangkaClicked(targer, value) {
         th.audioManager.playSFX("click.mp3");
-        this.createFrom.fangka = Number(value);
+        this.createFrom.ticket_type = Number(value);
     },
     onAutoClicked: function onAutoClicked(targer, value) {
         th.audioManager.playSFX("click.mp3");
         cc.log("onAutoClicked:", targer.isChecked);
         this.createFrom.auto = targer.isChecked ? 1 : 0;
-    },
-    onCreateClicked: function onCreateClicked(targer) {
-        cc.log("onCreateClicked:", this.createFrom);
     },
     onShowDropDown: function onShowDropDown(targer, val) {
         this.dropdownContent.removeAllChildren();
@@ -278,6 +314,26 @@ cc.Class({
     },
     onCloseClicked: function onCloseClicked(targer) {
         this.node.active = false;
+    },
+    randomString: function randomString(e) {
+        e = e || 32;
+        var t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
+            a = t.length,
+            n = "";
+        for (var i = 0; i < e; i++) {
+            n += t.charAt(Math.floor(Math.random() * a));
+        }
+        return n;
+    },
+
+    onCreateClicked: function onCreateClicked(targer) {
+        cc.log("onCreateClicked:", this.createFrom);
+        //断开大厅连接连接游戏websocket
+        th.webSocketManager.connectGameNNServer({
+            ip: "47.96.177.207",
+            port: 10000,
+            namespace: "gamebdn"
+        });
     }
 });
 

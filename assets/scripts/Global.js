@@ -21,6 +21,12 @@ cc.Class({
             fangka: 0,
             phone: "--------"
         };
+        th.token = null;
+        th.sign = null;
+        th.room = {
+            id: null,
+            number: null
+        };
         th.numberOfPeople = 13; //人数
         //座位坐标
         th.seatxy = {

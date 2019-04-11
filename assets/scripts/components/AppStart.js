@@ -15,14 +15,15 @@ cc.Class({
         this.initEventHandlers();
     },
     initEventHandlers() {
+        cc.log("AppStart initEventHandlers()");
         th.webSocketManager.dataEventHandler = this.node;
-        this.node.on("connect_success", () => {
-            cc.log("AppStart connect_success==============================");
+        this.node.on("api_connect_success", () => {
+            cc.log("<<<===AppStart api_connect_success");
             this.unschedule(this._scheduleId);
         });
     },
     start: function() {
-        th.webSocketManager.connectServer({
+        th.webSocketManager.connectApiServer({
             ip: "47.96.177.207",
             port: 10000,
             namespace: "api"

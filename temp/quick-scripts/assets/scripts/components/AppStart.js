@@ -23,9 +23,10 @@ cc.Class({
     initEventHandlers: function initEventHandlers() {
         var _this = this;
 
+        cc.log("AppStart initEventHandlers()");
         th.webSocketManager.dataEventHandler = this.node;
-        this.node.on("connect_success", function () {
-            cc.log("AppStart connect_success==============================");
+        this.node.on("api_connect_success", function () {
+            cc.log("<<<===AppStart api_connect_success");
             _this.unschedule(_this._scheduleId);
         });
     },
@@ -33,7 +34,7 @@ cc.Class({
     start: function start() {
         var _this2 = this;
 
-        th.webSocketManager.connectServer({
+        th.webSocketManager.connectApiServer({
             ip: "47.96.177.207",
             port: 10000,
             namespace: "api"
