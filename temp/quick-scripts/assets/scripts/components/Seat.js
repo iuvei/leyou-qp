@@ -19,13 +19,18 @@ cc.Class({
         banker: cc.Sprite,
         emoji: cc.Sprite,
         countdown: cc.Sprite,
+        blink: cc.Sprite,
         chat: cc.Label,
         btnNull: cc.Button,
         userNode: cc.Node,
 
+        animWinScore: cc.Label,
+        animLoseScore: cc.Label,
+
         _userId: null,
         _userName: "--",
         _headImgUrl: null,
+        _headSpriteFrame: null,
         _sex: 0,
         _score: 0,
         _countdown: 0,
@@ -43,6 +48,15 @@ cc.Class({
         }
         if (this.emoji) {
             this.emoji.node.active = false;
+        }
+        if (this.blink) {
+            this.blink.node.active = false;
+        }
+        if (this.animWinScore) {
+            this.animWinScore.node.active = false;
+        }
+        if (this.animLoseScore) {
+            this.animLoseScore.node.active = false;
         }
         this.refresh();
     },
@@ -106,35 +120,67 @@ cc.Class({
     },
 
     setHeadImgUrl: function setHeadImgUrl(headImgUrl) {
-        var self = this;
+        var _this = this;
+
         this._headImgUrl = headImgUrl;
         if (this._headImgUrl && this.headImg) {
-            this.headwho.node.active = false;
+            //this.headwho.node.active = false;
             this.headImg.node.active = true;
-            cc.loader.load({ url: this._headImgUrl, type: "jpg" }, function (err, texture) {
-                if (!err) {
-                    var headSpriteFrame = new cc.SpriteFrame(texture, cc.Rect(0, 0, texture.width, texture.height));
-                    self.headImg.spriteFrame = headSpriteFrame;
-                    self.headImg.node.setScale(2 - texture.width / 94);
-                }
-            });
-        } else if (!this._headImgUrl && self.headImg) {
-            this.headwho.node.active = true;
+            if (!this._headSpriteFrame) {
+                cc.loader.load({ url: this._headImgUrl, type: "jpg" }, function (err, texture) {
+                    if (!err) {
+                        cc.log(_this._userName + " 下载头像成功：" + headImgUrl);
+                        var headSpriteFrame = new cc.SpriteFrame(texture, cc.Rect(0, 0, texture.width, texture.height));
+                        _this._headSpriteFrame = headSpriteFrame;
+                        _this.headImg.spriteFrame = headSpriteFrame;
+                        _this.headImg.node.setScale(2 - texture.width / 105);
+                    }
+                });
+            }
+        } else if (!this._headImgUrl && this.headImg) {
+            //this.headwho.node.active = true;
             this.headImg.node.active = false;
+            this._headSpriteFrame = null;
         }
     },
 
-    setScore: function setScore(score) {
-        this._score = score;
+    setScore: function setScore(score, isShow) {
+        var _this2 = this;
+
+        isShow = isShow || false;
         if (this.lblLoseScore && this.lblWinScore) {
-            if (this._score >= 0) {
-                this.lblWinScore.string = this._score;
-                this.lblWinScore.node.active = true;
-                this.lblLoseScore.node.active = false;
+            if (isShow) {
+                if (this._score != score) {
+                    var diff = score - this._score;
+                    var anim = diff >= 0 ? this.animWinScore : this.animLoseScore;
+                    this._score = score;
+                    anim.string = diff >= 0 ? "+" + diff : diff;
+                    anim.node.active = true;
+                    anim.node.runAction(cc.sequence(cc.fadeIn(0), cc.moveBy(0.5, cc.v2(0, 100)), cc.callFunc(function (target) {
+                        if (_this2._score >= 0) {
+                            _this2.lblWinScore.string = _this2._score;
+                            _this2.lblWinScore.node.active = true;
+                            _this2.lblLoseScore.node.active = false;
+                        } else {
+                            _this2.lblLoseScore.string = _this2._score;
+                            _this2.lblLoseScore.node.active = true;
+                            _this2.lblWinScore.node.active = false;
+                        }
+                    }), cc.fadeOut(0.5), cc.callFunc(function (target) {
+                        target.y = diff >= 0 ? _this2.lblWinScore.node.y : _this2.lblLoseScore.node.y;
+                    })));
+                }
             } else {
-                this.lblLoseScore.string = this._score;
-                this.lblLoseScore.node.active = true;
-                this.lblWinScore.node.active = false;
+                this._score = score;
+                if (this._score >= 0) {
+                    this.lblWinScore.string = this._score;
+                    this.lblWinScore.node.active = true;
+                    this.lblLoseScore.node.active = false;
+                } else {
+                    this.lblLoseScore.string = this._score;
+                    this.lblLoseScore.node.active = true;
+                    this.lblWinScore.node.active = false;
+                }
             }
         }
     },
@@ -191,7 +237,6 @@ cc.Class({
             this.emoji.node.active = false;
             this.chat.node.active = true;
             this.chat.getComponent(cc.Label).string = content;
-            cc.log("content:", this.chat.node.getContentSize());
             this.chat.node.getChildByName("lbl_msg").getComponent(cc.Label).string = content;
             this._lastChatTime = 3;
         }
@@ -230,10 +275,14 @@ cc.Class({
             this.setUserName(name);
             this.setScore(score);
             this.setHeadImgUrl(headImgUrl);
+            this.userNode.active = true;
+            this.btnNull.node.active = false;
         } else {
             this.setUserName("--");
             this.setScore("--");
             this.setHeadImgUrl(null);
+            this.userNode.active = false;
+            this.btnNull.node.active = true;
         }
     },
 
@@ -241,6 +290,13 @@ cc.Class({
         this._countdown = Math.max(0, countdown);
         this._lastCountdownTime = this._countdown;
         this.countdown.node.active = countdown > 0 ? true : false;
+    },
+
+    doBlink: function doBlink() {
+        this.blink.node.active = true;
+        this.blink.node.runAction(cc.sequence(cc.blink(0.45, 3), cc.callFunc(function (target) {
+            target.active = false;
+        })));
     },
 
     update: function update(dt) {

@@ -28,7 +28,6 @@ cc.Class({
             port: 10000,
             namespace: "api"
         });
-        //cc.director.loadScene("Hall");
 
         this._scheduleId = this.schedule(() => {
             let x = this._index % 6;

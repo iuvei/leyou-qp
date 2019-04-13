@@ -1,22 +1,22 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "seat_blink",
-    "texture": "807d25b9-c6eb-46f1-9734-3501407ce3b8",
+    "name": "bg_countdown",
+    "texture": "633b4085-00ad-445c-9819-9ff2f572b1a8",
     "atlas": "",
     "rect": [
+      5,
       0,
-      0,
-      85,
-      123
+      174,
+      193
     ],
     "offset": [
-      0,
-      0
+      2.5,
+      1.5
     ],
     "originalSize": [
-      85,
-      123
+      179,
+      196
     ],
     "capInsets": [
       0,

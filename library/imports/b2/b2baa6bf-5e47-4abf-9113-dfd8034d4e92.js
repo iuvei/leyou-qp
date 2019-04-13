@@ -14,6 +14,7 @@ cc.Class({
         pokerNormal: cc.Prefab,
         pokerGhost: cc.Prefab,
         pokerFlower: cc.Prefab,
+        pokerBack: cc.Prefab,
         normalIds: null,
         ghostIds: null,
         flowerIds: null
@@ -152,6 +153,8 @@ cc.Class({
             var _bigSprite = _poker2.getChildByName("flower_big").getComponent("cc.Sprite");
             _bigSprite.spriteFrame = this.pokerAtlas.getSpriteFrame(_flower);
             return _poker2;
+        } else {
+            return cc.instantiate(this.pokerBack);
         }
     },
 

@@ -6,6 +6,7 @@ cc.Class({
         pokerNormal: cc.Prefab,
         pokerGhost: cc.Prefab,
         pokerFlower: cc.Prefab,
+        pokerBack: cc.Prefab,
         normalIds: null,
         ghostIds: null,
         flowerIds: null
@@ -148,6 +149,8 @@ cc.Class({
                 .getComponent("cc.Sprite");
             bigSprite.spriteFrame = this.pokerAtlas.getSpriteFrame(flower);
             return poker;
+        } else {
+            return cc.instantiate(this.pokerBack);
         }
     },
 

@@ -20,8 +20,9 @@ var WS = cc.Class({
         connected: false,
         pingRef: null,
         checkRef: null,
+        msgprefn: null,
         addHandler: function(event, fn) {
-            cc.log("addHandler....", event);
+            cc.log("AddHandler ", event);
             if (this.handlers[event]) {
                 cc.log("event:" + event + "' handler has been registered.");
                 return;
@@ -54,7 +55,15 @@ var WS = cc.Class({
                     return;
                 }
                 const json = JSON.parse(data);
-                this.handlers[json.operation](json);
+                let pass = true;
+                if (this.msgprefn) {
+                    pass = this.msgprefn(json);
+                }
+                if (pass && Reflect.has(this.handlers, json.operation)) {
+                    this.handlers[json.operation](json);
+                } else {
+                    cc.log("<<<===[未处理的]：", json);
+                }
             };
 
             this.ws.onerror = error => {

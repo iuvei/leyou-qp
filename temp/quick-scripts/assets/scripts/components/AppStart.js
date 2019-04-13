@@ -39,7 +39,6 @@ cc.Class({
             port: 10000,
             namespace: "api"
         });
-        //cc.director.loadScene("Hall");
 
         this._scheduleId = this.schedule(function () {
             var x = _this2._index % 6;

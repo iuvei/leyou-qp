@@ -21,6 +21,7 @@ cc.Class({
         lblName: cc.Label,
         lblFangka: cc.Label,
         lblPhone: cc.Label,
+        headImg: cc.Sprite,
 
         //
         createNN: cc.Node,
@@ -50,6 +51,42 @@ cc.Class({
         this.createZJHComponent = this.node
             .getChildByName("CreateZJH")
             .getComponent("CreateZJH");
+
+        if (th.args.roomId && th.args.type) {
+            cc.log(`直接进入房间：${th.args.type}==${th.args.roomId}`);
+            th.room.room_number = th.args.roomId;
+            if (th.args.type == "nn") {
+                th.webSocketManager.connectGameNNServer(
+                    {
+                        ip: "47.96.177.207",
+                        port: 10000,
+                        namespace: "gamebdn"
+                    },
+                    () => {
+                        let params = {
+                            operation: "PrepareJoinRoom",
+                            account_id: th.myself.account_id, //用户id};
+                            session: th.sign,
+                            data: {
+                                room_number: th.args.roomId
+                            }
+                        };
+                        cc.log("===>>>[PrepareJoinRoom] Hall:", params);
+                        th.ws.send(JSON.stringify(params));
+                    }
+                );
+            } else {
+                cc.err("游戏类型错误：" + th.args.type);
+            }
+        }
+    },
+    onEnable() {
+        cc.log("Hall onEnable");
+        cc.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    },
+    start() {
+        cc.log("Hall start");
+        cc.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     },
     initEventHandlers() {
         cc.log("Hall initEventHandlers()");
@@ -57,25 +94,50 @@ cc.Class({
 
         this.node.on("game_connect_success", () => {
             //分发给子节点
-            this.createGame.emit("game_connect_success");
+            if (this.createGame) {
+                this.createGame.emit("game_connect_success");
+            }
         });
 
         this.node.on("CreateRoom", () => {
-            cc.log("<<<===Hall CreateRoom");
+            cc.log("<<<===[CreateRoom] Hall");
             th.wc.hide();
             this.createGame.active = false;
+            this.selectGame.active = false;
             this.topToBottomAnim(this.selectGame);
         });
         this.node.on("PrepareJoinRoom", () => {
-            cc.log("<<<===Hall PrepareJoinRoom");
-            this.joinOrLook.getComponent("JoinOrLook").show();
+            cc.log("<<<===[PrepareJoinRoom],Hall");
+            this.joinOrLook.getComponent("JoinOrLook").show(th.gametype);
         });
     },
     initUserInfo() {
-        this.lblId.string = th.myself.id;
-        this.lblName.string = th.myself.name;
-        this.lblFangka.string = "x" + th.myself.fangka;
+        this.lblId.string = th.myself.account_id;
+        this.lblName.string = th.myself.nickname;
+        this.lblFangka.string = "x" + th.myself.account_ticket;
         this.lblPhone.string = th.myself.phone;
+
+        if (!th.myself.headSpriteFrame && th.myself.headimgurl) {
+            cc.loader.load(
+                { url: th.myself.headimgurl, type: "jpg" },
+                (err, texture) => {
+                    if (!err) {
+                        cc.log(
+                            th.myself.nickname +
+                                " 下载头像成功：" +
+                                th.myself.headimgurl
+                        );
+                        let headSpriteFrame = new cc.SpriteFrame(
+                            texture,
+                            cc.Rect(0, 0, texture.width, texture.height)
+                        );
+                        th.myself.headSpriteFrame = headSpriteFrame;
+                        this.headImg.spriteFrame = headSpriteFrame;
+                        this.headImg.node.setScale(2 - texture.width / 105);
+                    }
+                }
+            );
+        }
     },
     onEnable() {
         //cc.log("Hall onEnable.");
@@ -106,13 +168,10 @@ cc.Class({
         );
         return;
         */
-        /*
         th.wc.show("正在加载。。。");
-       
         cc.director.loadScene("GameNN", () => {
             th.wc.hide();
         });
-        */
     },
     //防作弊
     onFzbChecked: function(trager) {

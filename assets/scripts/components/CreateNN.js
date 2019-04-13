@@ -31,7 +31,7 @@ cc.Class({
             theme: 1,
             score_type: 1, //底分：1=1分 2=2分如此类推
             is_laizi: 0, //赖子：0，2，4，6
-            max_count_type: 1, //人数：1=6人 2=9人 3=10人 4=12人 5=23人
+            max_count_type: 1, //人数：1=6人 2=9人 3=10人 4=12人 5=13人
             rule_type: 1, //规则：1=牛牛*3，牛九*2，牛八*2   2=牛牛*4，牛九*3，牛八*2，牛七*2
 
             is_cardfour: 1, //四花牛4倍
@@ -59,18 +59,7 @@ cc.Class({
     initEventHandlers() {
         cc.log("CreateNN initEventHandlers()");
         this.node.on("game_connect_success", () => {
-            cc.log("<<<===CreateNN game_connect_success");
-            let roomInfo = Object.assign({}, this.createFrom);
-            roomInfo.data_key = Date.parse(new Date()) + this.randomString(5);
-            const params = {
-                operation: "CreateRoom", //操作标志
-                account_id: th.myself.id, //用户id};
-                session: th.sign,
-                data: roomInfo
-            };
-            cc.log("===>>>CreateNN CreateRoom:", params);
-            th.ws.send(JSON.stringify(params));
-            th.wc.show("正在创建房间...");
+            cc.log("<<<===[game_connect_success] CreateNN");
         });
     },
     show(type) {
@@ -322,10 +311,27 @@ cc.Class({
     onCreateClicked: function(targer) {
         cc.log("onCreateClicked:", this.createFrom);
         //断开大厅连接连接游戏websocket
-        th.webSocketManager.connectGameNNServer({
-            ip: "47.96.177.207",
-            port: 10000,
-            namespace: "gamebdn"
-        });
+        th.webSocketManager.connectGameNNServer(
+            {
+                ip: "47.96.177.207",
+                port: 10000,
+                namespace: "gamebdn"
+            },
+            () => {
+                th.wc.show("正在创建房间...");
+                let roomInfo = Object.assign({}, this.createFrom);
+                roomInfo.data_key =
+                    Date.parse(new Date()) + this.randomString(5);
+                const params = {
+                    operation: "CreateRoom", //操作标志
+                    account_id: th.myself.account_id, //用户id};
+                    session: th.sign,
+                    data: roomInfo
+                };
+                Object.assign(th.room, roomInfo);
+                cc.log("===>>>[CreateRoom] CreateNN:", params);
+                th.ws.send(JSON.stringify(params));
+            }
+        );
     }
 });

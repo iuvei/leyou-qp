@@ -12,122 +12,169 @@ cc.Class({
     },
     initHandlers: function() {
         cc.log("==>WebSocketManager initHandlers");
-        //获取TOKEN
-        th.ws.addHandler("getToken", data => {
-            cc.log("<<<===WebSocketManager getToken:", data);
-            this.dispatchEvent("getToken", data);
-            let { result, result_message, data: rdata } = data;
+        th.ws.msgprefn = function({ result, result_message }) {
             if (result != 0) {
                 th.wc.hide();
                 th.alert.show(
                     "提示",
                     th.args.debug ? result_message : "系统维护更新"
                 );
-                return;
+                return false;
             }
+            return true;
+        };
+        //获取TOKEN
+        th.ws.addHandler("getToken", ({ data }) => {
+            cc.log("<<<===[getToken] WebSocketManager:", data);
+            this.dispatchEvent("getToken", data);
             th.wc.show("正在获生成签名...");
-            th.token = rdata.t;
+            th.token = data.t;
             let params = {
                 operation: "makeSign",
                 data: {
                     timestamp: Date.parse(new Date()) / 1000,
-                    token: rdata.t
+                    token: data.t
                 }
             };
-            cc.log("===>>>WebSocketManager makeSign:", params);
+            cc.log("===>>>[makeSign] WebSocketManager:", params);
             th.ws.send(JSON.stringify(params));
         });
 
         //模拟生成签名(获取用户信息)
-        th.ws.addHandler("makeSign", data => {
-            cc.log("<<<===WebSocketManager makeSign:", data);
+        th.ws.addHandler("makeSign", ({ data }) => {
+            cc.log("<<<===[makeSign] WebSocketManager:", data);
             this.dispatchEvent("makeSign", data);
-            let { result, result_message, data: rdata } = data;
-            if (result != 0) {
-                th.wc.hide();
-                th.alert.show(
-                    "提示",
-                    th.args.debug ? result_message : "系统维护更新"
-                );
-                return;
-            }
             th.wc.show("正在用户信息...");
-            th.sign = rdata.sign;
+            th.sign = data.sign;
             let params = {
                 operation: "pullUserInfo",
                 data: {
                     timestamp: Date.parse(new Date()) / 1000,
                     token: th.token,
-                    sign: rdata.sign
+                    sign: data.sign
                 }
             };
-            cc.log("===>>>WebSocketManager pullUserInfo:", params);
+            cc.log("===>>>[pullUserInfo] WebSocketManager:", params);
             th.ws.send(JSON.stringify(params));
         });
 
         //4. 获取用户信息
-        th.ws.addHandler("pullUserInfo", data => {
-            cc.log("<<<===WebSocketManager pullUserInfo:", data);
+        th.ws.addHandler("pullUserInfo", ({ data }) => {
+            cc.log("<<<===[pullUserInfo] WebSocketManager:", data);
             this.dispatchEvent("pullUserInfo", data);
-            let { result, result_message, data: rdata } = data;
-            if (result != 0) {
-                th.wc.hide();
-                th.alert.show("提示", result_message);
-                return;
-            }
             th.wc.show("正在加载游戏...");
-            th.myself.id = rdata.account_id;
-            th.myself.name = rdata.nickname;
+            Object.assign(th.myself, data);
             cc.director.loadScene("Hall", () => {
                 th.wc.hide();
             });
         });
 
         //创建房间
-        th.ws.addHandler("CreateRoom", data => {
-            cc.log("<<<===WebSocketManager CreateRoom:", data);
-            let { result, result_message, data: rdata } = data;
-            if (result != 0) {
-                th.wc.hide();
-                th.alert.show(
-                    "提示",
-                    th.args.debug ? result_message : "系统维护更新"
-                );
-                return;
-            }
+        th.ws.addHandler("CreateRoom", ({ data }) => {
+            cc.log("<<<===[CreateRoom] WebSocketManager:", data);
             th.wc.show("正在加请求房间数据...");
-            th.room.id = rdata.room_id;
-            th.room.number = rdata.room_number;
+            Object.assign(th.room, data);
             this.dispatchEvent("CreateRoom", data);
             let params = {
                 operation: "PrepareJoinRoom",
-                account_id: th.myself.id, //用户id};
+                account_id: th.myself.account_id, //用户id};
                 session: th.sign,
                 data: {
-                    room_number: th.room.number
+                    room_number: th.room.room_number
                 }
             };
-            cc.log("===>>>WebSocketManager PrepareJoinRoom:", params);
+            cc.log("===>>>[PrepareJoinRoom] WebSocketManager:", params);
             th.ws.send(JSON.stringify(params));
         });
 
         //进入房间请求初始信息
-        th.ws.addHandler("PrepareJoinRoom", data => {
-            cc.log("<<<===WebSocketManager PrepareJoinRoom:", data);
-            let { result, result_message, data: rdata } = data;
-            if (result != 0) {
-                th.wc.hide();
-                th.alert.show(
-                    "提示",
-                    th.args.debug ? result_message : "系统维护更新"
-                );
-                return;
-            }
+        th.ws.addHandler("PrepareJoinRoom", ({ data }) => {
+            cc.log("<<<===[PrepareJoinRoom] WebSocketManager:", data);
+            th.room = Object.assign(th.room, data);
+            this.dispatchEvent("PrepareJoinRoom", data);
             th.wc.hide();
-            th.room = Object.assign(th.room, rdata);
-            this.dispatchEvent("PrepareJoinRoom", rdata);
         });
 
+        //加入房间
+        th.ws.addHandler("JoinRoom", ({ data }) => {
+            cc.log("<<<===[JoinRoom] WebSocketManager:", data);
+            Object.assign(th.room, data);
+            let sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
+            cc.director.loadScene(sceneName, () => {
+                th.wc.hide();
+            });
+            this.dispatchEvent("JoinRoom", data);
+        });
+        //加入观战
+        th.ws.addHandler("GuestRoom", ({ data }) => {
+            cc.log("<<<===[GuestRoom] WebSocketManager:", data);
+            Object.assign(th.room, data);
+            let sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
+            cc.director.loadScene(sceneName, () => {
+                th.wc.hide();
+            });
+            this.dispatchEvent("GuestRoom", data);
+        });
+
+        //到游戏人员信息
+        th.ws.addHandler("AllGamerInfo", ({ data }) => {
+            cc.log("<<<===[AllGamerInfo] WebSocketManager:", data);
+            th.room.players = data;
+            th.myself.isPlayer =
+                data.findIndex(
+                    player => player.account_id == th.myself.account_id
+                ) > -1
+                    ? true
+                    : false;
+            this.dispatchEvent("AllGamerInfo", data);
+        });
+        //观战人员信息
+        th.ws.addHandler("AllGuestInfo", ({ data }) => {
+            cc.log("<<<===[AllGuestInfo] WebSocketManager:", data);
+            th.room.guests = data;
+            this.dispatchEvent("AllGuestInfo", data);
+        });
+
+        //更新游戏人员信息
+        th.ws.addHandler("UpdateGamerInfo", ({ data }) => {
+            cc.log("<<<===[UpdateGamerInfo] WebSocketManager:", data);
+            let player = th.room.players.find(
+                player => player.account_id == data.account_id
+            );
+            if (player) {
+                Object.assign(player, data);
+                this.dispatchEvent("UpdateGamerInfo", player);
+            } else {
+                th.room.players.push(data);
+                this.dispatchEvent("UpdateGamerInfo", data);
+            }
+        });
+
+        //增加观战 ,更新观战人员信息
+        th.ws.addHandler("UpdateGuestInfo", ({ data }) => {
+            cc.log("<<<===[UpdateGuestInfo] WebSocketManager:", data);
+            Object.assign(
+                th.room.guests.find(
+                    player => player.account_id == data.account_id
+                ),
+                data
+            );
+            this.dispatchEvent("UpdateGuestInfo", data);
+        });
+
+        //更新玩家状态信息
+        th.ws.addHandler("UpdateAccountStatus", ({ data }) => {
+            cc.log("<<<===[UpdateAccountStatus] WebSocketManager:", data);
+            let player = th.room.players.find(
+                player => player.account_id == data.account_id
+            );
+            if (player) {
+                Object.assign(player, data);
+                this.dispatchEvent("UpdateAccountStatus", player);
+            }
+        });
+
+        /*
         //连接成功初始化信息
         th.ws.addHandler("getUserInfo", data => {
             cc.log("<<<===WebSocketManager getUserInfo:", JSON.stringify(data));
@@ -138,6 +185,7 @@ cc.Class({
         th.ws.addHandler("disconnect", data => {
             cc.log("<<<===WebSocketManager 断开连接");
         });
+        */
     },
 
     connectApiServer: function({ ip, port, namespace }) {
@@ -149,36 +197,37 @@ cc.Class({
             () => {
                 this.dispatchEvent("api_connect_success");
                 cc.log(
-                    `===WebSocketManager 连接成功:${ip}:${port}/${namespace}===`
+                    `[连接成功] WebSocketManager :${ip}:${port}/${namespace}`
                 );
+                th.wc.show("正在获取TOKEN...");
                 let params = {
                     operation: "getToken",
                     data: { code: th.args.code }
                 };
-                cc.log("===>>>WebSocketManager getToken:", params);
+                cc.log("===>>>[getToken] WebSocketManager:", params);
                 th.ws.send(JSON.stringify(params));
-                th.wc.show("正在获取TOKEN...");
             },
             () => {
                 cc.log(
-                    `===WebSocketManager 连接失败:${ip}:${port}/${namespace}===`
+                    `[连接失败] WebSocketManager :${ip}:${port}/${namespace}`
                 );
                 th.alert.show("提示", "连接失败");
             }
         );
     },
-    connectGameNNServer: function({ ip, port, namespace }) {
+    connectGameNNServer: function({ ip, port, namespace }, callback) {
         th.ws.close();
         th.ws.ip = ip;
         th.ws.port = port;
         th.ws.addr = `ws://${ip}:${port}/${namespace}`;
+        th.gametype = "nn";
         th.ws.connect(
             () => {
                 this.dispatchEvent("game_connect_success");
+                callback();
                 cc.log(
                     `===WebSocketManager 连接成功:${ip}:${port}/${namespace}===`
                 );
-                //cc.log("===>>>WebSocketManager getToken:", params);
             },
             () => {
                 cc.log(
