@@ -23,6 +23,9 @@ cc.Class({
         chat: cc.Label,
         btnNull: cc.Button,
         userNode: cc.Node,
+        multiples: cc.Label,
+
+        nodePokers: cc.Node,
 
         animWinScore: cc.Label,
         animLoseScore: cc.Label,
@@ -57,6 +60,9 @@ cc.Class({
         }
         if (this.animLoseScore) {
             this.animLoseScore.node.active = false;
+        }
+        if (this.multiples) {
+            this.multiples.node.active = false;
         }
         this.refresh();
     },
@@ -150,6 +156,7 @@ cc.Class({
         isShow = isShow || false;
         if (this.lblLoseScore && this.lblWinScore) {
             if (isShow) {
+                cc.log("\u540D\u5B57\uFF1A" + this._userName + "\uFF0C\u65E7\u5206\u6570" + this._score + "\uFF0C\u65B0\u5206\u6570" + score);
                 if (this._score != score) {
                     var diff = score - this._score;
                     var anim = diff >= 0 ? this.animWinScore : this.animLoseScore;
@@ -193,6 +200,7 @@ cc.Class({
     },
 
     setReady: function setReady(isReady) {
+        //cc.log("read:",this.node.seatIndex )
         this._isReady = isReady;
         if (this.ready) {
             var x = this.node.x;
@@ -239,6 +247,29 @@ cc.Class({
             this.chat.getComponent(cc.Label).string = content;
             this.chat.node.getChildByName("lbl_msg").getComponent(cc.Label).string = content;
             this._lastChatTime = 3;
+        }
+    },
+
+    setMultiples: function setMultiples(content) {
+        if (!content) {
+            this.multiples.node.active = false;
+            return;
+        }
+        this.multiples.node.active = true;
+        if (this.multiples) {
+            var x = this.node.x;
+
+            if (x > 0) {
+                this.multiples.node.x = -100;
+                this.multiples.node.anchorX = 1;
+            } else {
+                this.multiples.node.x = 100;
+                this.multiples.node.anchorX = 0;
+            }
+            this.multiples.getComponent(cc.Label).string = content;
+            this.multiples.node.scale = 0.1;
+            this.multiples.node.active = true;
+            this.multiples.node.runAction(cc.scaleTo(0.3, 1));
         }
     },
 

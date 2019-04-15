@@ -181,10 +181,14 @@ cc.Class({
             var data = _ref12.data;
 
             cc.log("<<<===[UpdateGuestInfo] WebSocketManager:", data);
-            Object.assign(th.room.guests.find(function (player) {
-                return player.account_id == data.account_id;
-            }), data);
-            _this.dispatchEvent("UpdateGuestInfo", data);
+            var guest = th.getGuestById(data.account_id);
+            if (guest) {
+                Object.assign(guest, data);
+                _this.dispatchEvent("UpdateGuestInfo", guest);
+            } else {
+                th.room.guests.push(data);
+                _this.dispatchEvent("UpdateGuestInfo", data);
+            }
         });
 
         //更新玩家状态信息
@@ -192,13 +196,86 @@ cc.Class({
             var data = _ref13.data;
 
             cc.log("<<<===[UpdateAccountStatus] WebSocketManager:", data);
-            var player = th.room.players.find(function (player) {
-                return player.account_id == data.account_id;
-            });
+            var player = th.getPlayerById(data.account_id);
             if (player) {
                 Object.assign(player, data);
+                cc.log("UpdateAccountStatus player:", player);
                 _this.dispatchEvent("UpdateAccountStatus", player);
             }
+        });
+
+        //开始游戏
+        th.ws.addHandler("GameStart", function (data) {
+            cc.log("<<<===[GameStart] WebSocketManager:", data);
+            var game_num = data.game_num,
+                limit_time = data.limit_time,
+                rdata = data.data;
+
+            th.room.game_num = game_num;
+            th.room.limit_time = limit_time;
+            rdata.forEach(function (player) {
+                var oldPlayer = th.getPlayerById(player.account_id);
+                Object.assign(oldPlayer, player);
+                _this.dispatchEvent("UpdateAccountStatus", oldPlayer);
+            });
+            _this.dispatchEvent("GameStart", data);
+        });
+        //我的牌
+        th.ws.addHandler("MyCards", function (_ref14) {
+            var data = _ref14.data;
+
+            cc.log("<<<===[MyCards] WebSocketManager:", data);
+            var player = th.getPlayerById(data.account_id);
+            player.cards = data.cards;
+            _this.dispatchEvent("MyCards", player);
+        });
+        //开始游戏,闲家选倍数
+        th.ws.addHandler("StartBet", function (data) {
+            cc.log("<<<===[StartBet] WebSocketManager:", data);
+            data.data.forEach(function (player) {
+                var oldPlayer = th.getPlayerById(player.account_id);
+                Object.assign(oldPlayer, player);
+            });
+            _this.dispatchEvent("StartBet", data);
+        });
+
+        //闲家选倍数 通知
+        th.ws.addHandler("UpdateAccountMultiples", function (_ref15) {
+            var data = _ref15.data;
+
+            cc.log("<<<===[UpdateAccountMultiples] WebSocketManager:", data);
+            var player = th.getPlayerById(data.account_id);
+            player.multiples = data.multiples;
+            _this.dispatchEvent("UpdateAccountMultiples", player);
+        });
+
+        //显示牌
+        th.ws.addHandler("StartShow", function (data) {
+            cc.log("<<<===[StartShow] WebSocketManager:", data);
+            data.data.forEach(function (player) {
+                var oldPlayer = th.getPlayerById(player.account_id);
+                Object.assign(oldPlayer, player);
+            });
+            _this.dispatchEvent("StartShow", data);
+        });
+
+        //摊牌
+        th.ws.addHandler("UpdateAccountShow", function (_ref16) {
+            var data = _ref16.data;
+
+            cc.log("<<<===[UpdateAccountShow] WebSocketManager:", data);
+            var player = th.getPlayerById(data.account_id);
+            Object.assign(player, data);
+            _this.dispatchEvent("UpdateAccountShow", player);
+        });
+
+        //结果
+        th.ws.addHandler("Win", function (_ref17) {
+            var data = _ref17.data;
+
+            cc.log("<<<===[Win] WebSocketManager:", data);
+            Object.assign(th.room, data);
+            _this.dispatchEvent("Win", data);
         });
 
         /*
@@ -214,12 +291,12 @@ cc.Class({
         */
     },
 
-    connectApiServer: function connectApiServer(_ref14) {
+    connectApiServer: function connectApiServer(_ref18) {
         var _this2 = this;
 
-        var ip = _ref14.ip,
-            port = _ref14.port,
-            namespace = _ref14.namespace;
+        var ip = _ref18.ip,
+            port = _ref18.port,
+            namespace = _ref18.namespace;
 
         th.ws.close();
         th.ws.ip = ip;
@@ -240,12 +317,12 @@ cc.Class({
             th.alert.show("提示", "连接失败");
         });
     },
-    connectGameNNServer: function connectGameNNServer(_ref15, callback) {
+    connectGameNNServer: function connectGameNNServer(_ref19, callback) {
         var _this3 = this;
 
-        var ip = _ref15.ip,
-            port = _ref15.port,
-            namespace = _ref15.namespace;
+        var ip = _ref19.ip,
+            port = _ref19.port,
+            namespace = _ref19.namespace;
 
         th.ws.close();
         th.ws.ip = ip;

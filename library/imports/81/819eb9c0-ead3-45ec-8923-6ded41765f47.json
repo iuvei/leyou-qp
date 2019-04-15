@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bull19",
+    "texture": "64062134-03c3-47a3-8443-b6d78cfc5ebc",
+    "atlas": "9aa84d8d-aa89-4879-a59f-7e429e8ab2d0",
+    "rect": [
+      1795,
+      0,
+      110,
+      49
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      110,
+      49
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

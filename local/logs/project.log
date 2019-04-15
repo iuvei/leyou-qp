@@ -1,77 +1,77 @@
-2019-04-13T16:36:10.156Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-13T16:36:11.829Z - normal: Initializing Asset Database
-2019-04-13T16:36:11.890Z - normal: checking language setting...
-2019-04-13T16:36:11.890Z - normal: Language: zh
-2019-04-13T16:36:22.805Z - success: preview server running at http://localhost:7456
-2019-04-13T16:36:22.808Z - success: protocol editor-framework registered
-2019-04-13T16:36:22.809Z - success: protocol app registered
-2019-04-13T16:36:22.809Z - success: protocol theme registered
-2019-04-13T16:36:22.809Z - success: protocol packages registered
-2019-04-13T16:36:22.809Z - success: protocol uuid registerred
-2019-04-13T16:36:22.809Z - success: protocol db registerred
-2019-04-13T16:36:22.809Z - success: protocol thumbnail registerred
-2019-04-13T16:36:22.809Z - success: protocol unpack registerred
-2019-04-13T16:36:22.809Z - success: protocol disable-commonjs registerred
-2019-04-13T16:36:22.974Z - normal: connected!
-2019-04-13T16:36:22.976Z - normal: Check project D:\Workspaces_CocosCreator\leyou
-2019-04-13T16:36:22.979Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
-2019-04-13T16:36:27.111Z - normal: Initializing Cocos2d
-2019-04-13T16:36:36.466Z - normal: Initializing engine extends
-2019-04-13T16:36:38.112Z - success: asset-db-debugger loaded
-2019-04-13T16:36:38.114Z - success: baidu-adapter loaded
-2019-04-13T16:36:38.170Z - success: code-editor loaded
-2019-04-13T16:36:38.171Z - success: color-picker loaded
-2019-04-13T16:36:39.145Z - success: fb-audience-network loaded
-2019-04-13T16:36:40.004Z - success: fb-live-stream loaded
-2019-04-13T16:36:40.133Z - success: google-play-instant loaded
-2019-04-13T16:36:40.250Z - success: huawei-runtime loaded
-2019-04-13T16:36:40.252Z - success: jsb-adapter loaded
-2019-04-13T16:36:40.370Z - success: oppo-runtime loaded
-2019-04-13T16:36:40.412Z - success: package-manager loaded
-2019-04-13T16:36:43.880Z - success: qqplay-adapter loaded
-2019-04-13T16:36:43.906Z - success: runtime-dev-tools loaded
-2019-04-13T16:36:43.979Z - success: sdkbox loaded
-2019-04-13T16:36:44.002Z - success: tester loaded
-2019-04-13T16:36:44.046Z - success: ui-grid loaded
-2019-04-13T16:36:44.081Z - success: ui-kit-preview-extra loaded
-2019-04-13T16:36:44.129Z - success: ui-kit-preview loaded
-2019-04-13T16:36:44.132Z - success: ui-kit loaded
-2019-04-13T16:36:44.162Z - success: ui-tree loaded
-2019-04-13T16:36:44.258Z - success: vivo-runtime loaded
-2019-04-13T16:36:44.259Z - success: weapp-adapter loaded
-2019-04-13T16:36:44.364Z - success: assets loaded
-2019-04-13T16:36:44.412Z - success: builder loaded
-2019-04-13T16:36:47.491Z - success: cocos-services loaded
-2019-04-13T16:36:47.536Z - success: console loaded
-2019-04-13T16:36:47.630Z - success: fb-instant-games loaded
-2019-04-13T16:36:47.632Z - success: google-instant-games loaded
-2019-04-13T16:36:47.640Z - success: hierarchy loaded
-2019-04-13T16:36:47.651Z - success: inspector loaded
-2019-04-13T16:36:47.663Z - success: keystore loaded
-2019-04-13T16:36:47.708Z - success: node-library loaded
-2019-04-13T16:36:47.732Z - success: package-asset loaded
-2019-04-13T16:36:47.742Z - success: preferences loaded
-2019-04-13T16:36:47.765Z - success: project-exporter loaded
-2019-04-13T16:36:47.817Z - success: project-importer loaded
-2019-04-13T16:36:47.821Z - success: project-settings loaded
-2019-04-13T16:36:47.836Z - success: scene loaded
-2019-04-13T16:36:47.844Z - success: simulator-debugger loaded
-2019-04-13T16:36:47.846Z - success: sprite-editor loaded
-2019-04-13T16:36:47.855Z - success: store loaded
-2019-04-13T16:36:47.861Z - success: timeline loaded
-2019-04-13T16:36:47.868Z - success: bitmap-font loaded
-2019-04-13T16:36:52.411Z - info: Cocos Services load base data!
-2019-04-13T16:36:56.060Z - normal: Loading packages
-2019-04-13T16:36:56.069Z - normal: Watching packages
-2019-04-13T16:36:57.678Z - normal: Run Application
-2019-04-13T17:04:02.114Z - failed: [db-task][sync-changes] Failed to import asset D:\Workspaces_CocosCreator\leyou\assets\scripts\Global.js, message: Compile error: SyntaxError: D:/Workspaces_CocosCreator/leyou/assets/scripts/Global.js: Unexpected token, expected ; (105:47)
-  103 |             let total = th.room.max_count;
-  104 |             let mySeatIndex = index - th.getMyselfSeatIndex() + total;
-> 105 |             cc.log("mySeatIndex:", mySeatIndex):
-      |                                                ^
-  106 |             let rindex = (index - th.getMyselfSeatIndex() + total) % total;
-  107 |             cc.log(
-  108 |                 `${index} - ${th.getMyselfSeatIndex()} + ${total} ${total} = ${(index -
+2019-04-15T12:15:32.688Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-15T12:15:33.895Z - normal: Initializing Asset Database
+2019-04-15T12:15:33.915Z - normal: checking language setting...
+2019-04-15T12:15:33.915Z - normal: Language: zh
+2019-04-15T12:15:36.257Z - success: preview server running at http://localhost:7456
+2019-04-15T12:15:36.261Z - success: protocol editor-framework registered
+2019-04-15T12:15:36.261Z - success: protocol app registered
+2019-04-15T12:15:36.261Z - success: protocol theme registered
+2019-04-15T12:15:36.261Z - success: protocol packages registered
+2019-04-15T12:15:36.261Z - success: protocol uuid registerred
+2019-04-15T12:15:36.261Z - success: protocol db registerred
+2019-04-15T12:15:36.261Z - success: protocol thumbnail registerred
+2019-04-15T12:15:36.262Z - success: protocol unpack registerred
+2019-04-15T12:15:36.262Z - success: protocol disable-commonjs registerred
+2019-04-15T12:15:36.431Z - normal: connected!
+2019-04-15T12:15:36.433Z - normal: Check project D:\Workspaces_CocosCreator\leyou
+2019-04-15T12:15:36.435Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou
+2019-04-15T12:15:37.438Z - normal: Initializing Cocos2d
+2019-04-15T12:15:40.593Z - normal: Initializing engine extends
+2019-04-15T12:15:40.980Z - success: asset-db-debugger loaded
+2019-04-15T12:15:40.983Z - success: baidu-adapter loaded
+2019-04-15T12:15:41.011Z - success: code-editor loaded
+2019-04-15T12:15:41.015Z - success: color-picker loaded
+2019-04-15T12:15:41.237Z - success: fb-audience-network loaded
+2019-04-15T12:15:41.380Z - success: fb-live-stream loaded
+2019-04-15T12:15:41.399Z - success: google-play-instant loaded
+2019-04-15T12:15:41.432Z - success: huawei-runtime loaded
+2019-04-15T12:15:41.433Z - success: jsb-adapter loaded
+2019-04-15T12:15:41.465Z - success: oppo-runtime loaded
+2019-04-15T12:15:41.471Z - success: package-manager loaded
+2019-04-15T12:15:41.862Z - success: qqplay-adapter loaded
+2019-04-15T12:15:41.865Z - success: runtime-dev-tools loaded
+2019-04-15T12:15:41.885Z - success: sdkbox loaded
+2019-04-15T12:15:41.891Z - success: tester loaded
+2019-04-15T12:15:41.906Z - success: ui-grid loaded
+2019-04-15T12:15:41.909Z - success: ui-kit-preview-extra loaded
+2019-04-15T12:15:41.926Z - success: ui-kit-preview loaded
+2019-04-15T12:15:41.928Z - success: ui-kit loaded
+2019-04-15T12:15:41.931Z - success: ui-tree loaded
+2019-04-15T12:15:41.951Z - success: vivo-runtime loaded
+2019-04-15T12:15:41.952Z - success: weapp-adapter loaded
+2019-04-15T12:15:42.002Z - success: assets loaded
+2019-04-15T12:15:42.004Z - success: builder loaded
+2019-04-15T12:15:42.540Z - success: cocos-services loaded
+2019-04-15T12:15:42.544Z - success: console loaded
+2019-04-15T12:15:42.589Z - success: fb-instant-games loaded
+2019-04-15T12:15:42.591Z - success: google-instant-games loaded
+2019-04-15T12:15:42.597Z - success: hierarchy loaded
+2019-04-15T12:15:42.611Z - success: inspector loaded
+2019-04-15T12:15:42.613Z - success: keystore loaded
+2019-04-15T12:15:42.618Z - success: node-library loaded
+2019-04-15T12:15:42.620Z - success: package-asset loaded
+2019-04-15T12:15:42.622Z - success: preferences loaded
+2019-04-15T12:15:42.624Z - success: project-exporter loaded
+2019-04-15T12:15:42.626Z - success: project-importer loaded
+2019-04-15T12:15:42.628Z - success: project-settings loaded
+2019-04-15T12:15:42.638Z - success: scene loaded
+2019-04-15T12:15:42.640Z - success: simulator-debugger loaded
+2019-04-15T12:15:42.641Z - success: sprite-editor loaded
+2019-04-15T12:15:42.646Z - success: store loaded
+2019-04-15T12:15:42.651Z - success: timeline loaded
+2019-04-15T12:15:42.658Z - success: bitmap-font loaded
+2019-04-15T12:15:47.570Z - info: Cocos Services load base data!
+2019-04-15T12:15:50.211Z - normal: Loading packages
+2019-04-15T12:15:50.221Z - normal: Watching packages
+2019-04-15T12:15:51.774Z - normal: Run Application
+2019-04-15T13:13:31.175Z - failed: [db-task][sync-changes] Failed to import asset D:\Workspaces_CocosCreator\leyou\assets\scripts\components\GameNN.js, message: Compile error: SyntaxError: D:/Workspaces_CocosCreator/leyou/assets/scripts/components/GameNN.js: Unexpected token, expected ; (323:92)
+  321 |     initSingleSeat: function(player) {
+  322 |         const index = th.getLocalIndex(player.serial_num - 1);
+> 323 |         cc.log(`name:${player.nickname}, serial_num: ${player.serial_num }, index:${index}`):
+      |                                                                                             ^
+  324 |         this.componentSeats[index].setInfo(
+  325 |             player.account_id,
+  326 |             player.nickname,
     at Parser.pp$5.raise (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4454:13)
     at Parser.pp.unexpected (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1761:8)
     at Parser.pp.semicolon (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1742:38)
@@ -82,3 +82,51 @@
     at Parser.pp$3.parseFunctionBody (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4235:22)
     at Parser.pp$1.parseFunction (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2386:8)
     at Parser.pp$3.parseFunctionExpression (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3760:17)
+2019-04-15T13:23:57.068Z - failed: [db-task][sync-changes] Failed to import asset D:\Workspaces_CocosCreator\leyou\assets\scripts\components\GameNN.js, message: Compile error: SyntaxError: D:/Workspaces_CocosCreator/leyou/assets/scripts/components/GameNN.js: Unexpected token, expected ; (343:92)
+  341 |     initSingleSeat: function(player) {
+  342 |         const index = th.getLocalIndex(player.serial_num - 1);
+> 343 |         cc.log(`name:${player.nickname}, serial_num: ${player.serial_num }, index:${index}`):
+      |                                                                                             ^
+  344 |         this.componentSeats[index].setInfo(
+  345 |             player.account_id,
+  346 |             player.nickname,
+    at Parser.pp$5.raise (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4454:13)
+    at Parser.pp.unexpected (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1761:8)
+    at Parser.pp.semicolon (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1742:38)
+    at Parser.pp$1.parseExpressionStatement (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2236:8)
+    at Parser.pp$1.parseStatement (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1911:17)
+    at Parser.pp$1.parseBlockBody (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2268:21)
+    at Parser.pp$1.parseBlock (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2247:8)
+    at Parser.pp$3.parseFunctionBody (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4235:22)
+    at Parser.pp$1.parseFunction (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2386:8)
+    at Parser.pp$3.parseFunctionExpression (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3760:17)
+2019-04-15T13:24:28.445Z - failed: [db-task][sync-changes] Failed to import asset D:\Workspaces_CocosCreator\leyou\assets\scripts\components\GameNN.js, message: Compile error: SyntaxError: D:/Workspaces_CocosCreator/leyou/assets/scripts/components/GameNN.js: Unexpected token, expected ; (330:92)
+  328 |     initSingleSeat: function(player) {
+  329 |         const index = th.getLocalIndex(player.serial_num - 1);
+> 330 |         cc.log(`name:${player.nickname}, serial_num: ${player.serial_num }, index:${index}`):
+      |                                                                                             ^
+  331 |         this.componentSeats[index].setInfo(
+  332 |             player.account_id,
+  333 |             player.nickname,
+    at Parser.pp$5.raise (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4454:13)
+    at Parser.pp.unexpected (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1761:8)
+    at Parser.pp.semicolon (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1742:38)
+    at Parser.pp$1.parseExpressionStatement (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2236:8)
+    at Parser.pp$1.parseStatement (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1911:17)
+    at Parser.pp$1.parseBlockBody (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2268:21)
+    at Parser.pp$1.parseBlock (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2247:8)
+    at Parser.pp$3.parseFunctionBody (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4235:22)
+    at Parser.pp$1.parseFunction (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:2386:8)
+    at Parser.pp$3.parseFunctionExpression (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3760:17)
+2019-04-15T15:27:15.282Z - failed: [db-task][move] Failed to post import asset D:\Workspaces_CocosCreator\leyou\assets\fonts\niu_type.fnt, message: TypeError: Cannot read property 'uuid' of undefined
+    at module.exports.postImport (D:\CocosCreator2.0.9\resources\app.asar\editor\share\assets\meta\bitmap-font.js:1:1158)
+    at i.series.t (D:\CocosCreator2.0.9\resources\app.asar\asset-db\lib\tasks.js:1:4891)
+    at D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:718:13
+    at iterate (D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:262:13)
+    at async.forEachOfSeries.async.eachOfSeries (D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:281:9)
+    at _parallel (D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:717:9)
+    at Object.async.series (D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:739:9)
+    at g (D:\CocosCreator2.0.9\resources\app.asar\asset-db\lib\tasks.js:1:4821)
+    at i.eachLimit (D:\CocosCreator2.0.9\resources\app.asar\asset-db\lib\tasks.js:1:16446)
+    at D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:181:20
+2019-04-15T18:37:11.433Z - info: shutdown preview server

@@ -1,22 +1,22 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "mtp_num",
-    "texture": "8dcf93d6-f8f1-4958-9003-fa2d41bd01ff",
-    "atlas": "",
+    "name": "bull2",
+    "texture": "64062134-03c3-47a3-8443-b6d78cfc5ebc",
+    "atlas": "9aa84d8d-aa89-4879-a59f-7e429e8ab2d0",
     "rect": [
+      155,
       0,
-      2,
-      246,
-      77
+      77,
+      52
     ],
     "offset": [
-      -2,
-      9.5
+      0,
+      0
     ],
     "originalSize": [
-      250,
-      100
+      77,
+      52
     ],
     "capInsets": [
       0,

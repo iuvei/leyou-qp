@@ -29,7 +29,8 @@ cc.Class({
             headimgurl: "", //头像
             account_ticket: 0, //房卡
             phone: "--------",
-            isPlayer: false //是不是玩家（不是玩家就是游客）， false=游客
+            isPlayer: false, //是不是玩家（不是玩家就是游客）， false=游客
+            needLookCount: 0 //只用为0才能点击摊牌  会在收到 ShowCard 设置
         };
         th.token = null;
         th.sign = null;
@@ -52,7 +53,16 @@ cc.Class({
         th.getSeatXY = function () {
             return th.seatxy[this.room.max_count.toString()];
         };
-
+        th.getGuestById = function (account_id) {
+            return this.room.guests.find(function (guest) {
+                return guest.account_id == account_id;
+            });
+        };
+        th.getPlayerById = function (account_id) {
+            return this.room.players.find(function (player) {
+                return player.account_id == account_id;
+            });
+        };
         th.getLocalIndex = function (index) {
             if (!th.myself.isPlayer) {
                 return 0;
@@ -65,28 +75,29 @@ cc.Class({
             if (!th.myself.isPlayer) {
                 return 0;
             }
-            var player = th.room.players.findIndex(function (player) {
-                return player.account_id == account_id;
-            });
+            var player = this.getPlayerById(account_id);
             return player.serial_num - 1;
         };
         th.getMyselfSeatIndex = function () {
             if (!th.myself.isPlayer) {
                 return 0;
             }
-            var player = th.room.players.find(function (player) {
-                return player.account_id == th.myself.account_id;
-            });
+            var player = this.getPlayerById(th.myself.account_id);
             return Number(player.serial_num) - 1;
         };
         th.getMyselfPlayer = function () {
             if (!th.myself.isPlayer) {
                 return null;
             }
-            var player = th.room.players.find(function (player) {
-                return player.account_id == th.myself.account_id;
-            });
+            var player = this.getPlayerById(th.myself.account_id);
             return player;
+        };
+        th.getMyselfLocalIndex = function () {
+            if (!th.myself.isPlayer) {
+                return 0;
+            }
+            var player = this.getMyselfPlayer();
+            return this.getLocalIndex(player.serial_num - 1);
         };
     },
     initManager: function initManager() {

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "niu_type",
+    "texture": "64062134-03c3-47a3-8443-b6d78cfc5ebc",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      2021,
+      54
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      2021,
+      54
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

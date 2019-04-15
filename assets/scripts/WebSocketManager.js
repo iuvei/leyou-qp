@@ -153,25 +153,88 @@ cc.Class({
         //增加观战 ,更新观战人员信息
         th.ws.addHandler("UpdateGuestInfo", ({ data }) => {
             cc.log("<<<===[UpdateGuestInfo] WebSocketManager:", data);
-            Object.assign(
-                th.room.guests.find(
-                    player => player.account_id == data.account_id
-                ),
-                data
-            );
-            this.dispatchEvent("UpdateGuestInfo", data);
+            let guest = th.getGuestById(data.account_id);
+            if (guest) {
+                Object.assign(guest, data);
+                this.dispatchEvent("UpdateGuestInfo", guest);
+            } else {
+                th.room.guests.push(data);
+                this.dispatchEvent("UpdateGuestInfo", data);
+            }
         });
 
         //更新玩家状态信息
         th.ws.addHandler("UpdateAccountStatus", ({ data }) => {
             cc.log("<<<===[UpdateAccountStatus] WebSocketManager:", data);
-            let player = th.room.players.find(
-                player => player.account_id == data.account_id
-            );
+            let player = th.getPlayerById(data.account_id);
             if (player) {
                 Object.assign(player, data);
+                cc.log("UpdateAccountStatus player:", player);
                 this.dispatchEvent("UpdateAccountStatus", player);
             }
+        });
+
+        //开始游戏
+        th.ws.addHandler("GameStart", data => {
+            cc.log("<<<===[GameStart] WebSocketManager:", data);
+            let { game_num, limit_time, data: rdata } = data;
+            th.room.game_num = game_num;
+            th.room.limit_time = limit_time;
+            rdata.forEach(player => {
+                let oldPlayer = th.getPlayerById(player.account_id);
+                Object.assign(oldPlayer, player);
+                this.dispatchEvent("UpdateAccountStatus", oldPlayer);
+            });
+            this.dispatchEvent("GameStart", data);
+        });
+        //我的牌
+        th.ws.addHandler("MyCards", ({ data }) => {
+            cc.log("<<<===[MyCards] WebSocketManager:", data);
+            let player = th.getPlayerById(data.account_id);
+            player.cards = data.cards;
+            this.dispatchEvent("MyCards", player);
+        });
+        //开始游戏,闲家选倍数
+        th.ws.addHandler("StartBet", data => {
+            cc.log("<<<===[StartBet] WebSocketManager:", data);
+            data.data.forEach(player => {
+                let oldPlayer = th.getPlayerById(player.account_id);
+                Object.assign(oldPlayer, player);
+            });
+            this.dispatchEvent("StartBet", data);
+        });
+
+        //闲家选倍数 通知
+        th.ws.addHandler("UpdateAccountMultiples", ({ data }) => {
+            cc.log("<<<===[UpdateAccountMultiples] WebSocketManager:", data);
+            let player = th.getPlayerById(data.account_id);
+            player.multiples = data.multiples;
+            this.dispatchEvent("UpdateAccountMultiples", player);
+        });
+
+        //显示牌
+        th.ws.addHandler("StartShow", data => {
+            cc.log("<<<===[StartShow] WebSocketManager:", data);
+            data.data.forEach(player => {
+                let oldPlayer = th.getPlayerById(player.account_id);
+                Object.assign(oldPlayer, player);
+            });
+            this.dispatchEvent("StartShow", data);
+        });
+
+        //摊牌
+        th.ws.addHandler("UpdateAccountShow", ({ data }) => {
+            cc.log("<<<===[UpdateAccountShow] WebSocketManager:", data);
+            let player = th.getPlayerById(data.account_id);
+            Object.assign(player, data);
+            this.dispatchEvent("UpdateAccountShow", player);
+        });
+
+        //结果
+        th.ws.addHandler("Win", ({ data }) => {
+            cc.log("<<<===[Win] WebSocketManager:", data);
+            Object.assign(th.room, data);
+            this.dispatchEvent("Win", data);
         });
 
         /*

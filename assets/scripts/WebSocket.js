@@ -46,7 +46,6 @@ var WS = cc.Class({
                 this.heartbeat();
             };
             this.ws.onmessage = event => {
-                let self = this;
                 this.lastRecieveTime = Date.now();
                 this.delay = this.lastRecieveTime - this.lastSendTime;
                 const data = event.data;
@@ -54,6 +53,7 @@ var WS = cc.Class({
                     //cc.log("<<<===pong");
                     return;
                 }
+                //cc.log("Onmessage:", event.data);
                 const json = JSON.parse(data);
                 let pass = true;
                 if (this.msgprefn) {

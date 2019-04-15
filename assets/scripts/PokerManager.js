@@ -2,11 +2,13 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        niuAtlas: cc.SpriteAtlas,
         pokerAtlas: cc.SpriteAtlas,
         pokerNormal: cc.Prefab,
         pokerGhost: cc.Prefab,
         pokerFlower: cc.Prefab,
         pokerBack: cc.Prefab,
+        niuType: cc.Prefab,
         normalIds: null,
         ghostIds: null,
         flowerIds: null
@@ -152,6 +154,23 @@ cc.Class({
         } else {
             return cc.instantiate(this.pokerBack);
         }
+    },
+
+    getNiuSprite(cardType, comboPoint) {
+        cardType = Number(cardType);
+        let imgIndex = 0;
+        if (cardType == 1) {
+            imgIndex = 0;
+        } else if (cardType >= 4 && cardType <= 14) {
+            imgIndex = cardType + 6;
+        } else {
+            imgIndex = comboPoint;
+        }
+        let niu = cc.instantiate(this.niuType);
+        niu.getComponent(
+            "cc.Sprite"
+        ).spriteFrame = this.niuAtlas.getSpriteFrame("bull" + imgIndex);
+        return niu;
     },
 
     start() {}
