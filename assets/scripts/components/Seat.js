@@ -149,59 +149,29 @@ cc.Class({
             this._headSpriteFrame = null;
         }
     },
-
-    setScore: function(score, isShow) {
-        isShow = isShow || false;
+    setScoreAnim: function(score) {
+        let anim = score >= 0 ? this.animWinScore : this.animLoseScore;
+        anim.string = score >= 0 ? "+" + score : score;
+        anim.node.active = true;
+        anim.node.runAction(
+            cc.sequence(
+                cc.fadeIn(0),
+                cc.moveBy(0.5, cc.v2(0, 100)),
+                cc.fadeOut(0.5)
+            )
+        );
+    },
+    setScore: function(score) {
         if (this.lblLoseScore && this.lblWinScore) {
-            if (isShow) {
-                cc.log(
-                    `名字：${this._userName}，旧分数${
-                        this._score
-                    }，新分数${score}`
-                );
-                if (this._score != score) {
-                    let diff = score - this._score;
-                    let anim =
-                        diff >= 0 ? this.animWinScore : this.animLoseScore;
-                    this._score = score;
-                    anim.string = diff >= 0 ? "+" + diff : diff;
-                    anim.node.active = true;
-                    anim.node.runAction(
-                        cc.sequence(
-                            cc.fadeIn(0),
-                            cc.moveBy(0.5, cc.v2(0, 100)),
-                            cc.callFunc(target => {
-                                if (this._score >= 0) {
-                                    this.lblWinScore.string = this._score;
-                                    this.lblWinScore.node.active = true;
-                                    this.lblLoseScore.node.active = false;
-                                } else {
-                                    this.lblLoseScore.string = this._score;
-                                    this.lblLoseScore.node.active = true;
-                                    this.lblWinScore.node.active = false;
-                                }
-                            }),
-                            cc.fadeOut(0.5),
-                            cc.callFunc(target => {
-                                target.y =
-                                    diff >= 0
-                                        ? this.lblWinScore.node.y
-                                        : this.lblLoseScore.node.y;
-                            })
-                        )
-                    );
-                }
+            this._score = score;
+            if (this._score >= 0) {
+                this.lblWinScore.string = this._score;
+                this.lblWinScore.node.active = true;
+                this.lblLoseScore.node.active = false;
             } else {
-                this._score = score;
-                if (this._score >= 0) {
-                    this.lblWinScore.string = this._score;
-                    this.lblWinScore.node.active = true;
-                    this.lblLoseScore.node.active = false;
-                } else {
-                    this.lblLoseScore.string = this._score;
-                    this.lblLoseScore.node.active = true;
-                    this.lblWinScore.node.active = false;
-                }
+                this.lblLoseScore.string = this._score;
+                this.lblLoseScore.node.active = true;
+                this.lblWinScore.node.active = false;
             }
         }
     },
@@ -266,9 +236,11 @@ cc.Class({
 
     setMultiples: function(content) {
         if (!content) {
+            this.multiples.getComponent(cc.Label).string = "";
             this.multiples.node.active = false;
             return;
         }
+        cc.log(`${this._userName}, multiples: ${content}`);
         this.multiples.node.active = true;
         if (this.multiples) {
             let { x } = this.node;
@@ -344,7 +316,7 @@ cc.Class({
         this.blink.node.active = true;
         this.blink.node.runAction(
             cc.sequence(
-                cc.blink(0.45, 3),
+                cc.blink(0.6, 3),
                 cc.callFunc(target => {
                     target.active = false;
                 })

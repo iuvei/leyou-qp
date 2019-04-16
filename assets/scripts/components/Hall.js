@@ -56,7 +56,7 @@ cc.Class({
             cc.log(`直接进入房间：${th.args.type}==${th.args.roomId}`);
             th.room.room_number = th.args.roomId;
             if (th.args.type == "nn") {
-                th.webSocketManager.connectGameNNServer(
+                th.webSocketManager.connectGameServer(
                     {
                         ip: "47.96.177.207",
                         port: 10000,
@@ -106,8 +106,12 @@ cc.Class({
             this.selectGame.active = false;
             this.topToBottomAnim(this.selectGame);
         });
-        this.node.on("PrepareJoinRoom", () => {
+        this.node.on("PrepareJoinRoom", data => {
             cc.log("<<<===[PrepareJoinRoom],Hall");
+            if (data.room_status == 4) {
+                th.alert.show("提示", "房间已经关闭");
+                return;
+            }
             this.joinOrLook.getComponent("JoinOrLook").show(th.gametype);
         });
     },

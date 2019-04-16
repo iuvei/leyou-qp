@@ -149,45 +149,23 @@ cc.Class({
             this._headSpriteFrame = null;
         }
     },
-
-    setScore: function setScore(score, isShow) {
-        var _this2 = this;
-
-        isShow = isShow || false;
+    setScoreAnim: function setScoreAnim(score) {
+        var anim = score >= 0 ? this.animWinScore : this.animLoseScore;
+        anim.string = score >= 0 ? "+" + score : score;
+        anim.node.active = true;
+        anim.node.runAction(cc.sequence(cc.fadeIn(0), cc.moveBy(0.5, cc.v2(0, 100)), cc.fadeOut(0.5)));
+    },
+    setScore: function setScore(score) {
         if (this.lblLoseScore && this.lblWinScore) {
-            if (isShow) {
-                cc.log("\u540D\u5B57\uFF1A" + this._userName + "\uFF0C\u65E7\u5206\u6570" + this._score + "\uFF0C\u65B0\u5206\u6570" + score);
-                if (this._score != score) {
-                    var diff = score - this._score;
-                    var anim = diff >= 0 ? this.animWinScore : this.animLoseScore;
-                    this._score = score;
-                    anim.string = diff >= 0 ? "+" + diff : diff;
-                    anim.node.active = true;
-                    anim.node.runAction(cc.sequence(cc.fadeIn(0), cc.moveBy(0.5, cc.v2(0, 100)), cc.callFunc(function (target) {
-                        if (_this2._score >= 0) {
-                            _this2.lblWinScore.string = _this2._score;
-                            _this2.lblWinScore.node.active = true;
-                            _this2.lblLoseScore.node.active = false;
-                        } else {
-                            _this2.lblLoseScore.string = _this2._score;
-                            _this2.lblLoseScore.node.active = true;
-                            _this2.lblWinScore.node.active = false;
-                        }
-                    }), cc.fadeOut(0.5), cc.callFunc(function (target) {
-                        target.y = diff >= 0 ? _this2.lblWinScore.node.y : _this2.lblLoseScore.node.y;
-                    })));
-                }
+            this._score = score;
+            if (this._score >= 0) {
+                this.lblWinScore.string = this._score;
+                this.lblWinScore.node.active = true;
+                this.lblLoseScore.node.active = false;
             } else {
-                this._score = score;
-                if (this._score >= 0) {
-                    this.lblWinScore.string = this._score;
-                    this.lblWinScore.node.active = true;
-                    this.lblLoseScore.node.active = false;
-                } else {
-                    this.lblLoseScore.string = this._score;
-                    this.lblLoseScore.node.active = true;
-                    this.lblWinScore.node.active = false;
-                }
+                this.lblLoseScore.string = this._score;
+                this.lblLoseScore.node.active = true;
+                this.lblWinScore.node.active = false;
             }
         }
     },
@@ -252,9 +230,11 @@ cc.Class({
 
     setMultiples: function setMultiples(content) {
         if (!content) {
+            this.multiples.getComponent(cc.Label).string = "";
             this.multiples.node.active = false;
             return;
         }
+        cc.log(this._userName + ", multiples: " + content);
         this.multiples.node.active = true;
         if (this.multiples) {
             var x = this.node.x;
@@ -325,7 +305,7 @@ cc.Class({
 
     doBlink: function doBlink() {
         this.blink.node.active = true;
-        this.blink.node.runAction(cc.sequence(cc.blink(0.45, 3), cc.callFunc(function (target) {
+        this.blink.node.runAction(cc.sequence(cc.blink(0.6, 3), cc.callFunc(function (target) {
             target.active = false;
         })));
     },

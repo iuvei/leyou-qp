@@ -20,6 +20,8 @@ cc.Class({
     initHandlers: function initHandlers() {
         var _this = this;
 
+        //===================================================
+        //下面公共消息
         cc.log("==>WebSocketManager initHandlers");
         th.ws.msgprefn = function (_ref) {
             var result = _ref.result,
@@ -120,12 +122,14 @@ cc.Class({
 
             cc.log("<<<===[JoinRoom] WebSocketManager:", data);
             Object.assign(th.room, data);
+            th.initRoom();
             var sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
             cc.director.loadScene(sceneName, function () {
                 th.wc.hide();
             });
             _this.dispatchEvent("JoinRoom", data);
         });
+
         //加入观战
         th.ws.addHandler("GuestRoom", function (_ref8) {
             var data = _ref8.data;
@@ -139,6 +143,8 @@ cc.Class({
             _this.dispatchEvent("GuestRoom", data);
         });
 
+        //======================================================
+        //牛牛消息
         //到游戏人员信息
         th.ws.addHandler("AllGamerInfo", function (_ref9) {
             var data = _ref9.data;
@@ -278,17 +284,8 @@ cc.Class({
             _this.dispatchEvent("Win", data);
         });
 
-        /*
-        //连接成功初始化信息
-        th.ws.addHandler("getUserInfo", data => {
-            cc.log("<<<===WebSocketManager getUserInfo:", JSON.stringify(data));
-            this.dispatchEvent("getUserInfo", data);
-        });
-          //断线
-        th.ws.addHandler("disconnect", data => {
-            cc.log("<<<===WebSocketManager 断开连接");
-        });
-        */
+        //=========================================================
+        //炸金花消息写在这下面。
     },
 
     connectApiServer: function connectApiServer(_ref18) {
@@ -317,7 +314,8 @@ cc.Class({
             th.alert.show("提示", "连接失败");
         });
     },
-    connectGameNNServer: function connectGameNNServer(_ref19, callback) {
+
+    connectGameServer: function connectGameServer(_ref19, callback) {
         var _this3 = this;
 
         var ip = _ref19.ip,

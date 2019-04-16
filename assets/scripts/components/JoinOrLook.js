@@ -162,6 +162,7 @@ cc.Class({
         th.ws.send(JSON.stringify(params));
     },
     onLookClicked: function(traget) {
+        return;
         cc.log("onLookClicked");
         th.wc.show("正在加入房间...");
         const params = {

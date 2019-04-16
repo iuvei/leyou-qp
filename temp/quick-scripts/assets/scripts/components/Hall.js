@@ -62,7 +62,7 @@ cc.Class((_cc$Class = {
             cc.log("\u76F4\u63A5\u8FDB\u5165\u623F\u95F4\uFF1A" + th.args.type + "==" + th.args.roomId);
             th.room.room_number = th.args.roomId;
             if (th.args.type == "nn") {
-                th.webSocketManager.connectGameNNServer({
+                th.webSocketManager.connectGameServer({
                     ip: "47.96.177.207",
                     port: 10000,
                     namespace: "gamebdn"
@@ -111,8 +111,12 @@ cc.Class((_cc$Class = {
             _this.selectGame.active = false;
             _this.topToBottomAnim(_this.selectGame);
         });
-        this.node.on("PrepareJoinRoom", function () {
+        this.node.on("PrepareJoinRoom", function (data) {
             cc.log("<<<===[PrepareJoinRoom],Hall");
+            if (data.room_status == 4) {
+                th.alert.show("提示", "房间已经关闭");
+                return;
+            }
             _this.joinOrLook.getComponent("JoinOrLook").show(th.gametype);
         });
     },

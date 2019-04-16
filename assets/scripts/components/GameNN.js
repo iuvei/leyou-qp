@@ -40,9 +40,6 @@ cc.Class({
         }
         cc.log("GameNN onLoad");
         //自由抢庄需要看牌两次
-        if (th.room.banker_mode == 1) {
-            th.myself.needLookCount = 2;
-        }
         this.initEventHandlers();
         this.initView();
     },
@@ -102,15 +99,27 @@ cc.Class({
             this.setCountdown(data.limit_time, "投注开始了");
             //抢庄account_ID数据
             //"grab_array": ["31", "18"],
-            data.grab_array.forEach(account_id => {
-                const player = th.getPlayerById(account_id);
-                //const index = th.getLocalIndex(player.serial_num - 1);
-                //this.componentSeats[index].doBlink();
-                this.initSingleSeat(player);
+            data.data.forEach(player => {
+                const oldPlayer = th.getPlayerById(player.account_id);
+                this.initSingleSeat(oldPlayer);
             });
 
             //TODO
-            cc.log("抢庄效果");
+            cc.log("TODO抢庄效果", data.grab_array);
+            data.grab_array.forEach((account_id, index) => {
+                this.scheduleOnce(() => {
+                    const player = th.getPlayerById(account_id);
+                    const index = th.getLocalIndex(player.serial_num - 1);
+                    this.componentSeats[index].doBlink();
+                }, index * 0.3 + 0.1);
+            });
+
+            this.scheduleOnce(() => {
+                const player = th.getBankerPlayer();
+                const index = th.getLocalIndex(player.serial_num - 1);
+                this.componentSeats[index].doBlink();
+                this.refreshOptions();
+            }, data.grab_array.length * 0.3 + (data.grab_array.length == 0 ? 0 : 0.6));
         });
 
         //闲家选倍数 通知
@@ -192,9 +201,27 @@ cc.Class({
             account_ids.forEach(account_id => {
                 const player = th.getPlayerById(account_id);
                 player.account_score = score_board[account_id];
-                this.initSingleSeat(player);
+                const index = th.getLocalIndex(player.serial_num - 1);
+                this.componentSeats[index].setScoreAnim(player.account_score);
+                //this.initSingleSeat(player);
             });
-            this.refreshOptions();
+            cc.log("TODO 赢的效果");
+
+            cc.log("TODO 飞筹码效果");
+
+            this.scheduleOnce(() => {
+                if (th.room.banker_mode == 1) {
+                    th.myself.needLookCount = 2;
+                }
+                th.clear();
+                this.nodePokers.forEach(node => {
+                    node.removeAllChildren();
+                });
+                th.room.players.forEach(player => {
+                    this.initSingleSeat(player);
+                });
+                this.refreshOptions();
+            }, 3);
         });
     },
     showNiuType(player) {
@@ -220,6 +247,9 @@ cc.Class({
             niuType.y = 70;
             nodePoker.addChild(niuType);
         }
+        let niuIndex = th.getNiuIndex(player.card_type, player.combo_point);
+        let mp3Name = "bull" + niuIndex + ".m4a";
+        th.audioManager.playSFX(mp3Name);
     },
     initView() {
         cc.log("GameNN initView");
@@ -257,10 +287,10 @@ cc.Class({
         this.btnPlayerMtp3.node.active = false;
         this.btnPlayerMtp4.node.active = false;
 
-        this.btnPlayerMtp1.multiples = mtp1;
-        this.btnPlayerMtp2.multiples = mtp2;
-        this.btnPlayerMtp3.multiples = mtp3;
-        this.btnPlayerMtp4.multiples = mtp4;
+        this.btnPlayerMtp1.node.multiples = mtp1;
+        this.btnPlayerMtp2.node.multiples = mtp2;
+        this.btnPlayerMtp3.node.multiples = mtp3;
+        this.btnPlayerMtp4.node.multiples = mtp4;
 
         this.btnQiang.node.active = false;
         this.btnBuqiang.node.active = false;
@@ -362,7 +392,7 @@ cc.Class({
         this.componentSeats[index].setBanker(
             player.is_banker == 1 ? true : false
         );
-        this.componentSeats[index].setScore(player.account_score, true);
+        this.componentSeats[index].setScore(player.account_score);
         this.componentSeats[index].setReady(player.account_status == 2);
         if (player.account_status == 4) {
             //不抢
@@ -385,11 +415,19 @@ cc.Class({
             this.componentSeats[index].setMultiples(
                 player.is_banker == 1 ? null : "x" + player.multiples
             );
+        } else {
+            this.componentSeats[index].setMultiples(null);
         }
     },
     onBankerMultiplesClicked: function(targer, value) {
-        let multiples = targer.target.multiples;
-        cc.log("onBankerMultiplesClicked:", targer.multiples, multiples);
+        let multiples = 1;
+        if (Number(value) == 0) {
+            multiples = 1;
+            th.audioManager.playSFX(`robbanker.m4a`);
+        } else {
+            multiples = Number(value);
+            th.audioManager.playSFX(`multiples${multiples}.m4a`);
+        }
         const params = {
             operation: "GrabBanker",
             account_id: th.myself.account_id,
@@ -397,13 +435,14 @@ cc.Class({
             data: {
                 room_id: th.room.room_id,
                 is_grab: 1,
-                multiples: Number(multiples)
+                multiples: Number(value)
             }
         };
         cc.log("===>>>[GrabBanker] GameNN:", params);
         th.ws.send(JSON.stringify(params));
     },
     onBuqiangClicked: function() {
+        th.audioManager.playSFX("nobanker.m4a");
         const params = {
             operation: "GrabBanker",
             account_id: th.myself.account_id,
@@ -431,14 +470,21 @@ cc.Class({
         th.ws.send(JSON.stringify(params));
     },
     onPlayerMultiplesClicked: function(targer, value) {
-        cc.log("onPlayerMultiplesClicked:", value);
+        let multiples = targer.target.multiples;
+        cc.log(targer);
+        cc.log("==============================multiples:", targer.target);
+        cc.log(
+            "==============================multiples:",
+            targer.target.multiples
+        );
+        th.audioManager.playSFX(`multiples${multiples}.m4a`);
         const params = {
             operation: "PlayerMultiples",
             account_id: th.myself.account_id,
             session: th.sign,
             data: {
                 room_id: th.room.room_id,
-                multiples: Number(value)
+                multiples: Number(multiples)
             }
         };
         cc.log("===>>>[PlayerMultiples] GameNN:", params);
@@ -499,7 +545,6 @@ cc.Class({
         cc.log("Poker", targer.target.pokerId, value);
         let pokerId = targer.target.pokerId;
         if (pokerId != -1) {
-            cc.log("111111th.myself.needLookCount:", th.myself.needLookCount);
             targer.target.runAction(
                 cc.sequence(
                     cc.scaleTo(0.3, 0, 1),
@@ -515,7 +560,6 @@ cc.Class({
                 )
             );
             th.myself.needLookCount = th.myself.needLookCount - 1;
-            cc.log("2222222th.myself.needLookCount:", th.myself.needLookCount);
             this.refreshOptions();
         }
     },
@@ -584,7 +628,7 @@ cc.Class({
             }
         }
         //发牌效果
-
+        th.audioManager.playSFX("fapai.m4a");
         for (let i = 0; i < 5; i++) {
             for (let j = 0; j < seatIndexs.length; j++) {
                 let seatIndex = seatIndexs[j];

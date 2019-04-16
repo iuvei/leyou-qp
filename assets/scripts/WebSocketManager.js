@@ -11,6 +11,8 @@ cc.Class({
         }
     },
     initHandlers: function() {
+        //===================================================
+        //下面公共消息
         cc.log("==>WebSocketManager initHandlers");
         th.ws.msgprefn = function({ result, result_message }) {
             if (result != 0) {
@@ -99,12 +101,14 @@ cc.Class({
         th.ws.addHandler("JoinRoom", ({ data }) => {
             cc.log("<<<===[JoinRoom] WebSocketManager:", data);
             Object.assign(th.room, data);
+            th.initRoom();
             let sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
             cc.director.loadScene(sceneName, () => {
                 th.wc.hide();
             });
             this.dispatchEvent("JoinRoom", data);
         });
+
         //加入观战
         th.ws.addHandler("GuestRoom", ({ data }) => {
             cc.log("<<<===[GuestRoom] WebSocketManager:", data);
@@ -116,6 +120,8 @@ cc.Class({
             this.dispatchEvent("GuestRoom", data);
         });
 
+        //======================================================
+        //牛牛消息
         //到游戏人员信息
         th.ws.addHandler("AllGamerInfo", ({ data }) => {
             cc.log("<<<===[AllGamerInfo] WebSocketManager:", data);
@@ -237,18 +243,8 @@ cc.Class({
             this.dispatchEvent("Win", data);
         });
 
-        /*
-        //连接成功初始化信息
-        th.ws.addHandler("getUserInfo", data => {
-            cc.log("<<<===WebSocketManager getUserInfo:", JSON.stringify(data));
-            this.dispatchEvent("getUserInfo", data);
-        });
-
-        //断线
-        th.ws.addHandler("disconnect", data => {
-            cc.log("<<<===WebSocketManager 断开连接");
-        });
-        */
+        //=========================================================
+        //炸金花消息写在这下面。
     },
 
     connectApiServer: function({ ip, port, namespace }) {
@@ -278,7 +274,8 @@ cc.Class({
             }
         );
     },
-    connectGameNNServer: function({ ip, port, namespace }, callback) {
+
+    connectGameServer: function({ ip, port, namespace }, callback) {
         th.ws.close();
         th.ws.ip = ip;
         th.ws.port = port;

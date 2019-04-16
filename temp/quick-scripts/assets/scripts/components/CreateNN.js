@@ -23,7 +23,7 @@ cc.Class({
         lblTicketRemark1: cc.Label,
         lblTicketRemark2: cc.Label,
 
-        createFrom: null
+        createFrom: null //创建房间有参数
     },
 
     onLoad: function onLoad() {
@@ -34,6 +34,7 @@ cc.Class({
         this.dropdown.active = false;
         this.showGhost(false);
         this.showBankScore(false);
+        //创建房间初始参数
         this.createFrom = {
             banker_mode: 1, // 3=转庄牛牛, 2 = 明牌抢庄 5 = 固定庄家 1 = 自由抢庄 4 = 通比牛牛
             theme: 1,
@@ -318,7 +319,7 @@ cc.Class({
 
         cc.log("onCreateClicked:", this.createFrom);
         //断开大厅连接连接游戏websocket
-        th.webSocketManager.connectGameNNServer({
+        th.webSocketManager.connectGameServer({
             ip: "47.96.177.207",
             port: 10000,
             namespace: "gamebdn"

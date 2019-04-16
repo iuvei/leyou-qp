@@ -50,6 +50,18 @@ cc.Class({
             "12": [[-305, -420], [305, -260], [305, -110], [305, 40], [305, 190], [305, 340], [-100, 485], [-305, 340], [-305, 190], [-305, 40], [-305, -110], [-305, -260]],
             "13": [[-305, -420], [305, -260], [305, -110], [305, 40], [305, 190], [305, 340], [305, 485], [-305, 485], [-305, 340], [-305, 190], [-305, 40], [-305, -110], [-305, -260]]
         };
+        th.getNiuIndex = function (cardType, comboPoint) {
+            cardType = Number(cardType);
+            var index = 0;
+            if (cardType == 1) {
+                index = 0;
+            } else if (cardType >= 4 && cardType <= 14) {
+                index = cardType + 6;
+            } else {
+                index = comboPoint;
+            }
+            return index;
+        };
         th.getSeatXY = function () {
             return th.seatxy[this.room.max_count.toString()];
         };
@@ -99,6 +111,29 @@ cc.Class({
             var player = this.getMyselfPlayer();
             return this.getLocalIndex(player.serial_num - 1);
         };
+        th.getBankerPlayer = function () {
+            return this.room.players.find(function (player) {
+                return player.is_banker == 1;
+            });
+        };
+        th.initRoom = function () {
+            if (th.room.banker_mode == 1) {
+                th.myself.needLookCount = 2;
+            }
+        };
+        th.clear = function () {
+            th.room.room_status = 1;
+            th.room.players.forEach(function (player) {
+                player.account_status = 1;
+                player.banker_multiples = "";
+                player.multiples = 0;
+                player.cards = [];
+                player.card_type = 0;
+                player.combo_array = [];
+                player.combo_point = 0;
+                player.is_banker = 0;
+            });
+        };
     },
     initManager: function initManager() {
         th.ws = require("WebSocket");
@@ -108,7 +143,7 @@ cc.Class({
         th.audioManager.init();
 
         //播放背景音乐
-        th.audioManager.playBGM("bg_hall.mp3");
+        th.audioManager.playBGM("background.mp3");
 
         var WebSocketManager = require("WebSocketManager");
         th.webSocketManager = new WebSocketManager();

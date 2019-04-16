@@ -48,9 +48,6 @@ cc.Class({
         }
         cc.log("GameNN onLoad");
         //自由抢庄需要看牌两次
-        if (th.room.banker_mode == 1) {
-            th.myself.needLookCount = 2;
-        }
         this.initEventHandlers();
         this.initView();
     },
@@ -112,15 +109,27 @@ cc.Class({
             _this.setCountdown(data.limit_time, "投注开始了");
             //抢庄account_ID数据
             //"grab_array": ["31", "18"],
-            data.grab_array.forEach(function (account_id) {
-                var player = th.getPlayerById(account_id);
-                //const index = th.getLocalIndex(player.serial_num - 1);
-                //this.componentSeats[index].doBlink();
-                _this.initSingleSeat(player);
+            data.data.forEach(function (player) {
+                var oldPlayer = th.getPlayerById(player.account_id);
+                _this.initSingleSeat(oldPlayer);
             });
 
             //TODO
-            cc.log("抢庄效果");
+            cc.log("TODO抢庄效果", data.grab_array);
+            data.grab_array.forEach(function (account_id, index) {
+                _this.scheduleOnce(function () {
+                    var player = th.getPlayerById(account_id);
+                    var index = th.getLocalIndex(player.serial_num - 1);
+                    _this.componentSeats[index].doBlink();
+                }, index * 0.3 + 0.1);
+            });
+
+            _this.scheduleOnce(function () {
+                var player = th.getBankerPlayer();
+                var index = th.getLocalIndex(player.serial_num - 1);
+                _this.componentSeats[index].doBlink();
+                _this.refreshOptions();
+            }, data.grab_array.length * 0.3 + (data.grab_array.length == 0 ? 0 : 0.6));
         });
 
         //闲家选倍数 通知
@@ -189,9 +198,27 @@ cc.Class({
             account_ids.forEach(function (account_id) {
                 var player = th.getPlayerById(account_id);
                 player.account_score = score_board[account_id];
-                _this.initSingleSeat(player);
+                var index = th.getLocalIndex(player.serial_num - 1);
+                _this.componentSeats[index].setScoreAnim(player.account_score);
+                //this.initSingleSeat(player);
             });
-            _this.refreshOptions();
+            cc.log("TODO 赢的效果");
+
+            cc.log("TODO 飞筹码效果");
+
+            _this.scheduleOnce(function () {
+                if (th.room.banker_mode == 1) {
+                    th.myself.needLookCount = 2;
+                }
+                th.clear();
+                _this.nodePokers.forEach(function (node) {
+                    node.removeAllChildren();
+                });
+                th.room.players.forEach(function (player) {
+                    _this.initSingleSeat(player);
+                });
+                _this.refreshOptions();
+            }, 3);
         });
     },
     showNiuType: function showNiuType(player) {
@@ -211,6 +238,9 @@ cc.Class({
             _niuType.y = 70;
             nodePoker.addChild(_niuType);
         }
+        var niuIndex = th.getNiuIndex(player.card_type, player.combo_point);
+        var mp3Name = "bull" + niuIndex + ".m4a";
+        th.audioManager.playSFX(mp3Name);
     },
     initView: function initView() {
         cc.log("GameNN initView");
@@ -245,10 +275,10 @@ cc.Class({
         this.btnPlayerMtp3.node.active = false;
         this.btnPlayerMtp4.node.active = false;
 
-        this.btnPlayerMtp1.multiples = mtp1;
-        this.btnPlayerMtp2.multiples = mtp2;
-        this.btnPlayerMtp3.multiples = mtp3;
-        this.btnPlayerMtp4.multiples = mtp4;
+        this.btnPlayerMtp1.node.multiples = mtp1;
+        this.btnPlayerMtp2.node.multiples = mtp2;
+        this.btnPlayerMtp3.node.multiples = mtp3;
+        this.btnPlayerMtp4.node.multiples = mtp4;
 
         this.btnQiang.node.active = false;
         this.btnBuqiang.node.active = false;
@@ -327,7 +357,7 @@ cc.Class({
         this.componentSeats[index].setInfo(player.account_id, player.nickname, player.account_score, player.headimgurl, player.sex);
         this.componentSeats[index].setOffline(player.online_status == 1 ? false : true);
         this.componentSeats[index].setBanker(player.is_banker == 1 ? true : false);
-        this.componentSeats[index].setScore(player.account_score, true);
+        this.componentSeats[index].setScore(player.account_score);
         this.componentSeats[index].setReady(player.account_status == 2);
         if (player.account_status == 4) {
             //不抢
@@ -346,11 +376,19 @@ cc.Class({
         } else if (player.account_status == 7) {
             //未摊牌
             this.componentSeats[index].setMultiples(player.is_banker == 1 ? null : "x" + player.multiples);
+        } else {
+            this.componentSeats[index].setMultiples(null);
         }
     },
     onBankerMultiplesClicked: function onBankerMultiplesClicked(targer, value) {
-        var multiples = targer.target.multiples;
-        cc.log("onBankerMultiplesClicked:", targer.multiples, multiples);
+        var multiples = 1;
+        if (Number(value) == 0) {
+            multiples = 1;
+            th.audioManager.playSFX("robbanker.m4a");
+        } else {
+            multiples = Number(value);
+            th.audioManager.playSFX("multiples" + multiples + ".m4a");
+        }
         var params = {
             operation: "GrabBanker",
             account_id: th.myself.account_id,
@@ -358,13 +396,14 @@ cc.Class({
             data: {
                 room_id: th.room.room_id,
                 is_grab: 1,
-                multiples: Number(multiples)
+                multiples: Number(value)
             }
         };
         cc.log("===>>>[GrabBanker] GameNN:", params);
         th.ws.send(JSON.stringify(params));
     },
     onBuqiangClicked: function onBuqiangClicked() {
+        th.audioManager.playSFX("nobanker.m4a");
         var params = {
             operation: "GrabBanker",
             account_id: th.myself.account_id,
@@ -392,14 +431,18 @@ cc.Class({
         th.ws.send(JSON.stringify(params));
     },
     onPlayerMultiplesClicked: function onPlayerMultiplesClicked(targer, value) {
-        cc.log("onPlayerMultiplesClicked:", value);
+        var multiples = targer.target.multiples;
+        cc.log(targer);
+        cc.log("==============================multiples:", targer.target);
+        cc.log("==============================multiples:", targer.target.multiples);
+        th.audioManager.playSFX("multiples" + multiples + ".m4a");
         var params = {
             operation: "PlayerMultiples",
             account_id: th.myself.account_id,
             session: th.sign,
             data: {
                 room_id: th.room.room_id,
-                multiples: Number(value)
+                multiples: Number(multiples)
             }
         };
         cc.log("===>>>[PlayerMultiples] GameNN:", params);
@@ -460,14 +503,12 @@ cc.Class({
         cc.log("Poker", targer.target.pokerId, value);
         var pokerId = targer.target.pokerId;
         if (pokerId != -1) {
-            cc.log("111111th.myself.needLookCount:", th.myself.needLookCount);
             targer.target.runAction(cc.sequence(cc.scaleTo(0.3, 0, 1), cc.callFunc(function (target) {
                 target.addChild(th.pokerManager.getPokerSpriteById(pokerId));
             }), cc.scaleTo(0.3, 1, 1), cc.callFunc(function (traget) {
                 traget.pokerId = -1;
             })));
             th.myself.needLookCount = th.myself.needLookCount - 1;
-            cc.log("2222222th.myself.needLookCount:", th.myself.needLookCount);
             this.refreshOptions();
         }
     },
@@ -528,7 +569,7 @@ cc.Class({
             }
         }
         //发牌效果
-
+        th.audioManager.playSFX("fapai.m4a");
         for (var _i2 = 0; _i2 < 5; _i2++) {
             for (var j = 0; j < seatIndexs.length; j++) {
                 var seatIndex = seatIndexs[j];

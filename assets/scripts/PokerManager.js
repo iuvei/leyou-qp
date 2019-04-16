@@ -158,14 +158,7 @@ cc.Class({
 
     getNiuSprite(cardType, comboPoint) {
         cardType = Number(cardType);
-        let imgIndex = 0;
-        if (cardType == 1) {
-            imgIndex = 0;
-        } else if (cardType >= 4 && cardType <= 14) {
-            imgIndex = cardType + 6;
-        } else {
-            imgIndex = comboPoint;
-        }
+        let imgIndex = th.getNiuIndex(cardType, comboPoint);
         let niu = cc.instantiate(this.niuType);
         niu.getComponent(
             "cc.Sprite"
