@@ -150,14 +150,23 @@ cc.Class({
         }
     },
     setScoreAnim: function setScoreAnim(score) {
-        var anim = score >= 0 ? this.animWinScore : this.animLoseScore;
-        anim.string = score >= 0 ? "+" + score : score;
+        var _this2 = this;
+
+        var diff = Number(score) - this._score;
+        if (diff == 0) return;
+        var anim = diff >= 0 ? this.animWinScore : this.animLoseScore;
+        anim.string = diff >= 0 ? "+" + diff : diff;
         anim.node.active = true;
-        anim.node.runAction(cc.sequence(cc.fadeIn(0), cc.moveBy(0.5, cc.v2(0, 100)), cc.fadeOut(0.5)));
+        anim.node.y = 0;
+        anim.node.scale = 0.5;
+        anim.node.runAction(cc.sequence(cc.fadeIn(0), cc.spawn(cc.moveBy(1, cc.v2(0, 100)), cc.scaleTo(1, 2.5)), cc.fadeOut(0), cc.callFunc(function () {
+            _this2.setScore(score);
+        })));
+        this._score = Number(score);
     },
     setScore: function setScore(score) {
         if (this.lblLoseScore && this.lblWinScore) {
-            this._score = score;
+            this._score = Number(score);
             if (this._score >= 0) {
                 this.lblWinScore.string = this._score;
                 this.lblWinScore.node.active = true;
@@ -183,15 +192,37 @@ cc.Class({
         if (this.ready) {
             var x = this.node.x;
 
-            this.ready.node.x = x > 0 ? -88 : 88;
-            this.ready.node.active = this._isReady; //&& th.socketIOManager.status == "idle";
+            this.ready.node.x = x > 0 ? -100 : 100;
+            if (this._isReady == true) {
+                this.ready.node.scale = 0.1;
+                this.ready.node.active = true;
+                this.ready.node.runAction(cc.scaleTo(0.3, 1.3));
+            } else {
+                this.ready.node.active = false; //&& th.socketIOManager.status == "idle";
+            }
         }
     },
 
     setBanker: function setBanker(isbanker) {
-        this._isbanker = isbanker;
-        if (this.banker) {
-            this.banker.node.active = this._isbanker;
+        var _this3 = this;
+
+        if (this._isbanker != isbanker) {
+            if (this.banker) {
+                if (this._isbanker == false && isbanker == true) {
+                    this.blink.node.active = true;
+                    this.blink.node.scaleX = 1;
+                    this.blink.node.scaleY = 0.9;
+                    this.blink.node.runAction(cc.sequence(cc.fadeIn(0), cc.spawn(cc.scaleTo(0.5, 1.3), cc.fadeOut(0.5)), cc.callFunc(function (target) {
+                        target.active = false;
+                        _this3.banker.node.scale = 0.1;
+                        _this3.banker.node.active = true;
+                        _this3.banker.node.runAction(cc.scaleTo(0.3, 1));
+                    })));
+                } else {
+                    this.banker.node.active = false;
+                }
+            }
+            this._isbanker = isbanker;
         }
     },
 
@@ -249,7 +280,7 @@ cc.Class({
             this.multiples.getComponent(cc.Label).string = content;
             this.multiples.node.scale = 0.1;
             this.multiples.node.active = true;
-            this.multiples.node.runAction(cc.scaleTo(0.3, 1));
+            this.multiples.node.runAction(cc.scaleTo(0.3, 1.5));
         }
     },
 
@@ -305,7 +336,9 @@ cc.Class({
 
     doBlink: function doBlink() {
         this.blink.node.active = true;
-        this.blink.node.runAction(cc.sequence(cc.blink(0.6, 3), cc.callFunc(function (target) {
+        this.blink.node.scaleX = 1;
+        this.blink.node.scaleY = 0.9;
+        this.blink.node.runAction(cc.sequence(cc.blink(0.5, 2), cc.callFunc(function (target) {
             target.active = false;
         })));
     },

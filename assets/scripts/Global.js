@@ -195,16 +195,16 @@ cc.Class({
         th.webSocketManager.initHandlers();
     },
     urlParse() {
-        var params = { code: 123 };
+        let params = { code: 123 };
         if (window.location == null) {
             return params;
         }
-        var name, value;
-        var str = window.location.href; //取得整个地址栏
-        var num = str.indexOf("?");
-        str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
-        var arr = str.split("&"); //各个参数放到数组里
-        for (var i = 0; i < arr.length; i++) {
+        let name, value;
+        let location = window.location.href; //取得整个地址栏
+        let num = location.indexOf("?");
+        let paramsStr = location.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+        let arr = paramsStr.split("&"); //各个参数放到数组里
+        for (let i = 0; i < arr.length; i++) {
             num = arr[i].indexOf("=");
             if (num > 0) {
                 name = arr[i].substring(0, num);
@@ -213,6 +213,7 @@ cc.Class({
             }
         }
         cc.log("Params:", params);
+        th.href = location.substr(0, location.indexOf("?"));
         th.args = params;
     }
 });

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_wait_next",
+    "texture": "c79fccc8-0384-46b8-b99f-9c64daa99901",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      287,
+      46
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      287,
+      46
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_player_bet",
+    "texture": "a379fe1f-729c-4034-909b-175ed0fbb992",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      320,
+      50
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      320,
+      50
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

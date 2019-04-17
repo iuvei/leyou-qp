@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_wait_palyer_bet",
+    "texture": "bd0fa984-530d-49cd-b85f-e78a473fc615",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      321,
+      50
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      321,
+      50
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

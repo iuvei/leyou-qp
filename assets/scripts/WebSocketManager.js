@@ -293,7 +293,7 @@ cc.Class({
                 cc.log(
                     `===WebSocketManager 连接失败:${ip}:${port}/${namespace}===`
                 );
-                th.alert.show("提示", "连接失败");
+                th.alert.show("提示", `连接失败:${ip}:${port}/${namespace}`);
             }
         );
     }

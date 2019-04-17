@@ -333,7 +333,7 @@ cc.Class({
             cc.log("===WebSocketManager \u8FDE\u63A5\u6210\u529F:" + ip + ":" + port + "/" + namespace + "===");
         }, function () {
             cc.log("===WebSocketManager \u8FDE\u63A5\u5931\u8D25:" + ip + ":" + port + "/" + namespace + "===");
-            th.alert.show("提示", "连接失败");
+            th.alert.show("提示", "\u8FDE\u63A5\u5931\u8D25:" + ip + ":" + port + "/" + namespace);
         });
     }
 });

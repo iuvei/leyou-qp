@@ -150,20 +150,28 @@ cc.Class({
         }
     },
     setScoreAnim: function(score) {
-        let anim = score >= 0 ? this.animWinScore : this.animLoseScore;
-        anim.string = score >= 0 ? "+" + score : score;
+        let diff = Number(score) - this._score;
+        if (diff == 0) return;
+        let anim = diff >= 0 ? this.animWinScore : this.animLoseScore;
+        anim.string = diff >= 0 ? "+" + diff : diff;
         anim.node.active = true;
+        anim.node.y = 0;
+        anim.node.scale = 0.5;
         anim.node.runAction(
             cc.sequence(
                 cc.fadeIn(0),
-                cc.moveBy(0.5, cc.v2(0, 100)),
-                cc.fadeOut(0.5)
+                cc.spawn(cc.moveBy(1, cc.v2(0, 100)), cc.scaleTo(1, 2.5)),
+                cc.fadeOut(0),
+                cc.callFunc(() => {
+                    this.setScore(score);
+                })
             )
         );
+        this._score = Number(score);
     },
     setScore: function(score) {
         if (this.lblLoseScore && this.lblWinScore) {
-            this._score = score;
+            this._score = Number(score);
             if (this._score >= 0) {
                 this.lblWinScore.string = this._score;
                 this.lblWinScore.node.active = true;
@@ -188,15 +196,41 @@ cc.Class({
         this._isReady = isReady;
         if (this.ready) {
             let { x } = this.node;
-            this.ready.node.x = x > 0 ? -88 : 88;
-            this.ready.node.active = this._isReady; //&& th.socketIOManager.status == "idle";
+            this.ready.node.x = x > 0 ? -100 : 100;
+            if (this._isReady == true) {
+                this.ready.node.scale = 0.1;
+                this.ready.node.active = true;
+                this.ready.node.runAction(cc.scaleTo(0.3, 1.3));
+            } else {
+                this.ready.node.active = false; //&& th.socketIOManager.status == "idle";
+            }
         }
     },
 
     setBanker: function(isbanker) {
-        this._isbanker = isbanker;
-        if (this.banker) {
-            this.banker.node.active = this._isbanker;
+        if (this._isbanker != isbanker) {
+            if (this.banker) {
+                if (this._isbanker == false && isbanker == true) {
+                    this.blink.node.active = true;
+                    this.blink.node.scaleX = 1;
+                    this.blink.node.scaleY = 0.9;
+                    this.blink.node.runAction(
+                        cc.sequence(
+                            cc.fadeIn(0),
+                            cc.spawn(cc.scaleTo(0.5, 1.3), cc.fadeOut(0.5)),
+                            cc.callFunc(target => {
+                                target.active = false;
+                                this.banker.node.scale = 0.1;
+                                this.banker.node.active = true;
+                                this.banker.node.runAction(cc.scaleTo(0.3, 1));
+                            })
+                        )
+                    );
+                } else {
+                    this.banker.node.active = false;
+                }
+            }
+            this._isbanker = isbanker;
         }
     },
 
@@ -254,7 +288,7 @@ cc.Class({
             this.multiples.getComponent(cc.Label).string = content;
             this.multiples.node.scale = 0.1;
             this.multiples.node.active = true;
-            this.multiples.node.runAction(cc.scaleTo(0.3, 1));
+            this.multiples.node.runAction(cc.scaleTo(0.3, 1.5));
         }
     },
 
@@ -314,9 +348,11 @@ cc.Class({
 
     doBlink: function() {
         this.blink.node.active = true;
+        this.blink.node.scaleX = 1;
+        this.blink.node.scaleY = 0.9;
         this.blink.node.runAction(
             cc.sequence(
-                cc.blink(0.6, 3),
+                cc.blink(0.5, 2),
                 cc.callFunc(target => {
                     target.active = false;
                 })

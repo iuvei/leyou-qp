@@ -154,11 +154,12 @@ cc.Class({
         if (window.location == null) {
             return params;
         }
-        var name, value;
-        var str = window.location.href; //取得整个地址栏
-        var num = str.indexOf("?");
-        str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
-        var arr = str.split("&"); //各个参数放到数组里
+        var name = void 0,
+            value = void 0;
+        var location = window.location.href; //取得整个地址栏
+        var num = location.indexOf("?");
+        var paramsStr = location.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+        var arr = paramsStr.split("&"); //各个参数放到数组里
         for (var i = 0; i < arr.length; i++) {
             num = arr[i].indexOf("=");
             if (num > 0) {
@@ -168,6 +169,7 @@ cc.Class({
             }
         }
         cc.log("Params:", params);
+        th.href = location.substr(0, location.indexOf("?"));
         th.args = params;
     }
 });

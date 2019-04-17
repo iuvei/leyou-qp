@@ -42,8 +42,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.7323020315091211,
-      "y": 0.7323020315091211,
+      "x": 0.7389355306799338,
+      "y": 0.7389355306799338,
       "z": 1
     },
     "_quat": {
@@ -44052,7 +44052,7 @@
         "__id__": 1008
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 0,
     "_components": [
       {
@@ -44286,7 +44286,7 @@
     "_N$target": {
       "__id__": 1002
     },
-    "_N$isChecked": true,
+    "_N$isChecked": false,
     "toggleGroup": null,
     "checkMark": {
       "__id__": 1010
@@ -44567,7 +44567,7 @@
         "__id__": 1019
       }
     ],
-    "_active": false,
+    "_active": true,
     "_level": 0,
     "_components": [
       {
@@ -44801,7 +44801,7 @@
     "_N$target": {
       "__id__": 1013
     },
-    "_N$isChecked": false,
+    "_N$isChecked": true,
     "toggleGroup": null,
     "checkMark": {
       "__id__": 1021

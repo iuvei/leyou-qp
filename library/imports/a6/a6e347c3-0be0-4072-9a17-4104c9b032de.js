@@ -15,6 +15,7 @@ cc.Class({
         nodeSeats: [cc.Node], //所有座位的NODE
         componentSeats: [cc.Component], //所有座位的组件
         nodePokers: [cc.Node], //所有座位的扑克
+        nodeAmins: cc.Node, //用来播放动画
 
         nodeOptions: cc.Node,
         nodeCountdown: cc.Node,
@@ -35,6 +36,14 @@ cc.Class({
         btnBuqiang: cc.Button,
         btnReady: cc.Button,
         btnShow: cc.Button,
+
+        sprWaitBet: cc.Sprite,
+        sprPlayerBet: cc.Sprite,
+        sprQiangzhuang: cc.Sprite,
+        sprReady: cc.Sprite,
+        sprWaitPlayerBet: cc.Sprite,
+        sprWaitShow: cc.Sprite,
+        sprWaitNext: cc.Sprite,
 
         spriteClickLookPai: cc.Sprite, //点击看牌
 
@@ -121,15 +130,20 @@ cc.Class({
                     var player = th.getPlayerById(account_id);
                     var index = th.getLocalIndex(player.serial_num - 1);
                     _this.componentSeats[index].doBlink();
-                }, index * 0.3 + 0.1);
+                }, index * 0.5);
             });
-
             _this.scheduleOnce(function () {
+                data.data.forEach(function (player) {
+                    var oldPlayer = th.getPlayerById(player.account_id);
+                    _this.initSingleSeat(oldPlayer);
+                });
                 var player = th.getBankerPlayer();
                 var index = th.getLocalIndex(player.serial_num - 1);
-                _this.componentSeats[index].doBlink();
-                _this.refreshOptions();
-            }, data.grab_array.length * 0.3 + (data.grab_array.length == 0 ? 0 : 0.6));
+                _this.componentSeats[index].setBanker(true);
+                _this.scheduleOnce(function () {
+                    _this.refreshOptions();
+                }, 1);
+            }, data.grab_array.length * 0.5);
         });
 
         //闲家选倍数 通知
@@ -174,14 +188,25 @@ cc.Class({
             cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
             var index = th.getLocalIndex(player.serial_num - 1);
             var nodePoker = _this.nodePokers[index];
+            var nodeSeat = _this.nodeSeats[index];
             var pokers = nodePoker.children;
-            var cards = player.cards;
+
+            // 大于0为有牛
+            var hasNiu = th.getNiuIndex(player.card_type, player.combo_point) > 0;
+            var cards = hasNiu > 0 ? player.combo_array : player.cards;
             //如果不是自己
-            if (player.account_id != th.myself.account_id) {
-                pokers.forEach(function (poker, index) {
-                    poker.addChild(th.pokerManager.getPokerSpriteById(cards[index]));
-                });
-            }
+            //(isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y +i * (isMyself ? 110 : 30),
+            // isMyself ? -25 : 0,
+            cc.log(isMyself, "=======================有牛？：", hasNiu);
+            var isMyself = th.getMyselfLocalIndex() == index;
+            var firstX = isMyself ? 100 : nodeSeat.x > 0 ? -210 : 90;
+            var firstY = isMyself ? -25 : 0;
+            var offset = isMyself ? 110 : 30;
+            pokers.forEach(function (poker, index) {
+                poker.runAction(cc.sequence(cc.moveTo(0.3, cc.v2(firstX, firstY)), cc.callFunc(function (target) {
+                    target.addChild(th.pokerManager.getPokerSpriteById(cards[index]));
+                }), cc.moveTo(0.3, cc.v2(firstX + nodePoker.y + index * offset + (hasNiu && index > 2 ? 15 : 0), firstY))));
+            });
             _this.showNiuType(player);
         });
 
@@ -195,14 +220,13 @@ cc.Class({
 
             var score_board = data.score_board;
             var account_ids = Object.keys(score_board);
+            cc.log("AccountIds:", account_ids);
             account_ids.forEach(function (account_id) {
                 var player = th.getPlayerById(account_id);
                 player.account_score = score_board[account_id];
                 var index = th.getLocalIndex(player.serial_num - 1);
                 _this.componentSeats[index].setScoreAnim(player.account_score);
-                //this.initSingleSeat(player);
             });
-            cc.log("TODO 赢的效果");
 
             cc.log("TODO 飞筹码效果");
 
@@ -211,6 +235,9 @@ cc.Class({
                     th.myself.needLookCount = 2;
                 }
                 th.clear();
+                _this.componentSeats.forEach(function (cpnt) {
+                    cpnt.setBanker(false);
+                });
                 _this.nodePokers.forEach(function (node) {
                     node.removeAllChildren();
                 });
@@ -218,7 +245,12 @@ cc.Class({
                     _this.initSingleSeat(player);
                 });
                 _this.refreshOptions();
-            }, 3);
+            }, 10);
+
+            //
+            if (th.room.game_num == th.room.total_num) {
+                cc.log("done........................");
+            }
         });
     },
     showNiuType: function showNiuType(player) {
@@ -230,13 +262,17 @@ cc.Class({
             var niuType = th.pokerManager.getNiuSprite(player.card_type, player.combo_point);
             niuType.x = nodeSeat.x > 0 ? -160 : 150;
             niuType.y = -20;
+            niuType.scale = 0.1;
             nodePoker.addChild(niuType);
+            niuType.runAction(cc.scaleTo(0.3, 1.2));
         } else {
             //TODO 显示牛几
             var _niuType = th.pokerManager.getNiuSprite(player.card_type, player.combo_point);
             _niuType.x = 310;
-            _niuType.y = 70;
+            _niuType.y = 85;
+            _niuType.scale = 0.1;
             nodePoker.addChild(_niuType);
+            _niuType.runAction(cc.scaleTo(0.3, 1.5));
         }
         var niuIndex = th.getNiuIndex(player.card_type, player.combo_point);
         var mp3Name = "bull" + niuIndex + ".m4a";
@@ -251,9 +287,15 @@ cc.Class({
         this.initMtpBtn();
         this.refreshOptions();
         if (th.room.room_status == 2) {
-            var player = th.getMyselfPlayer();
-            player.cards = th.room.cards;
+            var _player = th.getMyselfPlayer();
+            _player.cards = th.room.cards;
             this.showPokers();
+        }
+        //是不是有庄
+        var player = th.getBankerPlayer();
+        if (player) {
+            var index = th.getLocalIndex(player.serial_num - 1);
+            this.componentSeats[index].setBanker(true);
         }
     },
     initMtpBtn: function initMtpBtn() {
@@ -308,6 +350,7 @@ cc.Class({
             //准备按钮
             var isShowBtnReady = (player.account_status == 0 || player.account_status == 1) && th.room.room_status == 1;
             this.btnReady.node.active = isShowBtnReady;
+            this.sprReady.node.active = isShowBtnReady;
             //抢庄按钮
             var isShowQiangBrank = player.account_status == 3 && (th.room.room_status == 1 || th.room.room_status == 2);
             this.btnBankerMtp1.node.active = isShowQiangBrank && !isZYQZ;
@@ -315,16 +358,21 @@ cc.Class({
             this.btnBankerMtp4.node.active = isShowQiangBrank && !isZYQZ;
             this.btnQiang.node.active = isShowQiangBrank && isZYQZ;
             this.btnBuqiang.node.active = isShowQiangBrank;
+            this.sprQiangzhuang.node.active = isShowQiangBrank;
             //闲加倍数选择
             var isShowSelectMultiples = player.is_banker == 0 && player.account_status == 6 && (th.room.room_status == 1 || th.room.room_status == 2);
             this.btnPlayerMtp1.node.active = isShowSelectMultiples;
             this.btnPlayerMtp2.node.active = isShowSelectMultiples;
             this.btnPlayerMtp3.node.active = isShowSelectMultiples;
             this.btnPlayerMtp4.node.active = isShowSelectMultiples;
+            this.sprWaitPlayerBet.node.active = isShowSelectMultiples;
             //摊牌按钮
-            this.btnShow.node.active = player.account_status == 7 && (th.room.room_status == 1 || th.room.room_status == 2) && th.myself.needLookCount <= 0;
+            var isShowText = player.account_status == 7 && (th.room.room_status == 1 || th.room.room_status == 2) && th.myself.needLookCount <= 0;
+            this.btnShow.node.active = isShowText;
+
             var isShowClickLookPai = player.account_status == 7 && (th.room.room_status == 1 || th.room.room_status == 2) && th.myself.needLookCount > 0;
             this.spriteClickLookPai.node.active = isShowClickLookPai;
+            this.sprWaitShow.node.active = isShowClickLookPai || isShowText;
         }
     },
     initRoomInfo: function initRoomInfo() {
@@ -356,7 +404,11 @@ cc.Class({
         var index = th.getLocalIndex(player.serial_num - 1);
         this.componentSeats[index].setInfo(player.account_id, player.nickname, player.account_score, player.headimgurl, player.sex);
         this.componentSeats[index].setOffline(player.online_status == 1 ? false : true);
-        this.componentSeats[index].setBanker(player.is_banker == 1 ? true : false);
+        /*
+        this.componentSeats[index].setBanker(
+            player.is_banker == 1 ? true : false
+        );
+        */
         this.componentSeats[index].setScore(player.account_score);
         this.componentSeats[index].setReady(player.account_status == 2);
         if (player.account_status == 4) {
@@ -379,6 +431,11 @@ cc.Class({
         } else {
             this.componentSeats[index].setMultiples(null);
         }
+    },
+    onCopyCliecked: function onCopyCliecked(targer, value) {
+        var address = th.href + "?roomId=" + th.room.room_number + "&type=" + th.gametype;
+        cc.log("address:", address);
+        th.msg.show(address);
     },
     onBankerMultiplesClicked: function onBankerMultiplesClicked(targer, value) {
         var multiples = 1;
@@ -592,9 +649,9 @@ cc.Class({
 
         //如果玩家已经 摊牌，显示牛
         for (var _i3 = 0; _i3 < seatIndexs.length; _i3++) {
-            var _player = players[_i3];
-            if (_player.account_status == 8) {
-                this.showNiuType(_player);
+            var _player2 = players[_i3];
+            if (_player2.account_status == 8) {
+                this.showNiuType(_player2);
             }
         }
     },

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_qiangzhuang",
+    "texture": "0880cb12-45bd-4dbb-9895-bdd9a872a9d7",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      320,
+      50
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      320,
+      50
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
