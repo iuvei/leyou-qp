@@ -102,6 +102,7 @@ cc.Class({
             cc.log("<<<===[JoinRoom] WebSocketManager:", data);
             Object.assign(th.room, data);
             th.initRoom();
+            th.getRoomCopyUrl();
             let sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
             cc.director.loadScene(sceneName, () => {
                 th.wc.hide();
@@ -112,6 +113,7 @@ cc.Class({
         //加入观战
         th.ws.addHandler("GuestRoom", ({ data }) => {
             cc.log("<<<===[GuestRoom] WebSocketManager:", data);
+            th.getRoomCopyUrl();
             Object.assign(th.room, data);
             let sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
             cc.director.loadScene(sceneName, () => {
@@ -243,10 +245,31 @@ cc.Class({
             this.dispatchEvent("Win", data);
         });
 
+        //战绩
+        th.ws.addHandler("getScoreBoard", ({ data }) => {
+            cc.log("<<<===[getScoreBoard] WebSocketManager:", data);
+            //Object.assign(th.room, data);
+            this.dispatchEvent("getScoreBoard", data);
+        });
+
+        //战绩明细
+        th.ws.addHandler("getScoreDetail", ({ data }) => {
+            cc.log("<<<===[getScoreDetail] WebSocketManager:", data);
+            //Object.assign(th.room, data);
+            this.dispatchEvent("getScoreDetail", data);
+        });
+
+        //复制URL
+        th.ws.addHandler("getCopyUrl", ({ data }) => {
+            cc.log("<<<===[getCopyUrl] WebSocketManager:", data);
+            th.room.copyurl = data.url;
+            this.dispatchEvent("getCopyUrl", data);
+        });
+
         //=========================================================
         //炸金花消息写在这下面。
     },
-
+    /*
     connectApiServer: function({ ip, port, namespace }) {
         th.ws.close();
         th.ws.ip = ip;
@@ -274,7 +297,7 @@ cc.Class({
             }
         );
     },
-
+    */
     connectGameServer: function({ ip, port, namespace }, callback) {
         th.ws.close();
         th.ws.ip = ip;

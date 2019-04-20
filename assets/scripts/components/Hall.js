@@ -51,7 +51,7 @@ cc.Class({
         this.createZJHComponent = this.node
             .getChildByName("CreateZJH")
             .getComponent("CreateZJH");
-
+        cc.log("args:", th.args);
         if (th.args.roomId && th.args.type) {
             cc.log(`直接进入房间：${th.args.type}==${th.args.roomId}`);
             th.room.room_number = th.args.roomId;

@@ -12,6 +12,7 @@ cc.Class({
     properties: {
         seatPrefab: cc.Prefab,
 
+        baseNode: cc.Node,
         nodeSeats: [cc.Node], //所有座位的NODE
         componentSeats: [cc.Component], //所有座位的组件
         nodePokers: [cc.Node], //所有座位的扑克
@@ -47,11 +48,27 @@ cc.Class({
 
         spriteClickLookPai: cc.Sprite, //点击看牌
 
+        coinPrefab: cc.Prefab,
+
+        resultNode: cc.Node,
+        resultDeatilNode: cc.Node,
+        resultItemPrefab: cc.Prefab,
+        resultDetailItemPrefab: cc.Prefab,
+        resultDetailSonItemPrefab: cc.Prefab,
+
+        btnCaptureScreen: cc.Button,
+        btnTest: cc.Button,
+
+        holdTimeEclipse: 0, //用来检测长按
+        holdClick: false,
+
         _countdownEndTime: 0, //倒计时剩余时间
         _isPlay: true //用来播放倒计时声音
     },
 
     onLoad: function onLoad() {
+        var _this = this;
+
         if (th == null) {
             return;
         }
@@ -59,6 +76,22 @@ cc.Class({
         //自由抢庄需要看牌两次
         this.initEventHandlers();
         this.initView();
+
+        this.btnCaptureScreen.node.on("touchstart", function (event) {
+            _this.holdClick = true;
+            _this.holdTimeEclipse = 0;
+        });
+        this.btnCaptureScreen.node.on("touchend", function (event) {
+            _this.holdClick = false;
+            if (_this.holdTimeEclipse >= 30) {
+                _this.node.emit("captureScreenLongClicked");
+            }
+            _this.holdTimeEclipse = 0;
+        });
+
+        this.node.on("captureScreenLongClicked", function (data) {
+            _this.onChanganbaocunClicked();
+        });
     },
     onEnable: function onEnable() {
         cc.log("GameNN onEnable");
@@ -67,7 +100,7 @@ cc.Class({
         cc.log("GameNN start");
     },
     initEventHandlers: function initEventHandlers() {
-        var _this = this;
+        var _this2 = this;
 
         cc.log("GameNN initEventHandlers()");
         th.webSocketManager.dataEventHandler = this.node;
@@ -86,100 +119,115 @@ cc.Class({
         });
         this.node.on("UpdateGamerInfo", function (player) {
             cc.log("<<<===[UpdateGamerInfo] GmaeNN:", player);
-            _this.initSingleSeat(player);
+            _this2.initSingleSeat(player);
         });
         this.node.on("UpdateGuestInfo", function () {
             cc.log("<<<===[UpdateGuestInfo] GmaeNN");
         });
         this.node.on("UpdateAccountStatus", function (player) {
             cc.log("<<<===[UpdateAccountStatus] GmaeNN", player);
-            _this.initSingleSeat(player);
+            _this2.initSingleSeat(player);
             if (player.account_id == th.myself.account_id) {
-                _this.refreshOptions();
-                _this.initSingleSeat(player);
+                _this2.refreshOptions();
+                _this2.initSingleSeat(player);
             }
         });
         this.node.on("GameStart", function (data) {
             cc.log("<<<===[GameStart] GmaeNN", data);
-            _this.initRoomInfo();
-            _this.setCountdown(data.limit_time, "游戏开始了");
-            _this.refreshOptions();
+            _this2.initRoomInfo();
+            _this2.setCountdown(data.limit_time, "游戏开始了");
+            _this2.refreshOptions();
         });
         this.node.on("MyCards", function (player) {
             cc.log("<<<===[MyCards] GmaeNN", player);
-            _this.showPokers();
-            _this.refreshOptions();
+            _this2.showPokers();
+            _this2.refreshOptions();
         });
 
         //开始游戏,闲家选倍数
         this.node.on("StartBet", function (data) {
             cc.log("<<<===[StartBet] GmaeNN:", data);
-            _this.refreshOptions();
-            _this.setCountdown(data.limit_time, "投注开始了");
+            _this2.setCountdown(data.limit_time, "投注开始了");
             //抢庄account_ID数据
             //"grab_array": ["31", "18"],
             data.data.forEach(function (player) {
                 var oldPlayer = th.getPlayerById(player.account_id);
-                _this.initSingleSeat(oldPlayer);
+                _this2.initSingleSeat(oldPlayer);
             });
 
             //TODO
             cc.log("TODO抢庄效果", data.grab_array);
             data.grab_array.forEach(function (account_id, index) {
-                _this.scheduleOnce(function () {
+                _this2.scheduleOnce(function () {
                     var player = th.getPlayerById(account_id);
                     var index = th.getLocalIndex(player.serial_num - 1);
-                    _this.componentSeats[index].doBlink();
+                    _this2.componentSeats[index].doBlink();
                 }, index * 0.5);
             });
-            _this.scheduleOnce(function () {
+            cc.log("\u62A2\u5E84\u4EBA\u6570" + data.grab_array.length + " \u603B\u7528\u65F6\uFF1A" + data.grab_array.length * 0.5);
+            _this2.scheduleOnce(function () {
                 data.data.forEach(function (player) {
                     var oldPlayer = th.getPlayerById(player.account_id);
-                    _this.initSingleSeat(oldPlayer);
+                    _this2.initSingleSeat(oldPlayer);
                 });
                 var player = th.getBankerPlayer();
                 var index = th.getLocalIndex(player.serial_num - 1);
-                _this.componentSeats[index].setBanker(true);
-                _this.scheduleOnce(function () {
-                    _this.refreshOptions();
-                }, 1);
+                cc.log("\u5E84 " + player.nickname + " player.serial_num:" + player.serial_num + ", index: " + index);
+                _this2.componentSeats[index].setBanker(true);
             }, data.grab_array.length * 0.5);
+
+            var delayTime = data.grab_array.length * 0.5 + 1;
+            cc.log("\u663E\u793A\u500D\u6570\u6309\u94AE\u5EF6\u65F6\uFF1A" + delayTime);
+
+            _this2.scheduleOnce(function () {
+                _this2.refreshOptions();
+            }, delayTime);
         });
 
         //闲家选倍数 通知
         this.node.on("UpdateAccountMultiples", function (player) {
             cc.log("<<<===[UpdateAccountMultiples] GmaeNN:", player);
-            _this.initSingleSeat(player);
+            _this2.initSingleSeat(player);
+            if (player.account_id == th.myself.account_id) {
+                _this2.refreshOptions();
+            }
         });
 
         //显示牌
         this.node.on("StartShow", function (data) {
             cc.log("<<<===[StartShow] GmaeNN:", data);
 
-            _this.refreshOptions();
+            _this2.refreshOptions();
+            //1 自由抢庄
+
             //显示我自己的牌
             var player = th.getMyselfPlayer();
             var cards = player.cards;
             var index = th.getLocalIndex(player.serial_num - 1);
-            var pokers = _this.nodePokers[index].children;
+            var pokers = _this2.nodePokers[index].children;
+            var showCard = 5 - th.myself.needLookCount;
             cc.log("显示我自己的牌:", player, cards);
             pokers.forEach(function (poker, index) {
-                poker.pokerId = cards[index];
+                if (index >= showCard) {
+                    poker.pokerId = cards[index];
+                }
             });
-            pokers.forEach(function (poker, idx) {
-                if (idx >= 3) return;
-                poker.runAction(cc.sequence(cc.scaleTo(0.3, 0, 1), cc.callFunc(function (target) {
-                    target.addChild(th.pokerManager.getPokerSpriteById(target.pokerId));
-                }), cc.scaleTo(0.3, 1, 1), cc.callFunc(function (target) {
-                    target.pokerId = -1;
-                })));
-            });
+            if (th.room.banker_mode == 1) {
+                pokers.forEach(function (poker, idx) {
+                    if (idx >= showCard) return;
+                    poker.runAction(cc.sequence(cc.scaleTo(0.3, 0, 1), cc.callFunc(function (target) {
+                        target.addChild(th.pokerManager.getPokerSpriteById(target.pokerId));
+                    }), cc.scaleTo(0.3, 1, 1), cc.callFunc(function (target) {
+                        target.pokerId = -1;
+                    })));
+                });
+            }
 
-            _this.setCountdown(data.limit_time, "摊牌开始了");
+            _this2.setCountdown(data.limit_time, "摊牌开始了");
 
             data.data.forEach(function (item) {
                 var player = th.getPlayerById(item.account_id);
-                _this.initSingleSeat(player);
+                _this2.initSingleSeat(player);
             });
         });
 
@@ -187,8 +235,8 @@ cc.Class({
         this.node.on("UpdateAccountShow", function (player) {
             cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
             var index = th.getLocalIndex(player.serial_num - 1);
-            var nodePoker = _this.nodePokers[index];
-            var nodeSeat = _this.nodeSeats[index];
+            var nodePoker = _this2.nodePokers[index];
+            var nodeSeat = _this2.nodeSeats[index];
             var pokers = nodePoker.children;
 
             // 大于0为有牛
@@ -197,7 +245,6 @@ cc.Class({
             //如果不是自己
             //(isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y +i * (isMyself ? 110 : 30),
             // isMyself ? -25 : 0,
-            cc.log(isMyself, "=======================有牛？：", hasNiu);
             var isMyself = th.getMyselfLocalIndex() == index;
             var firstX = isMyself ? 100 : nodeSeat.x > 0 ? -210 : 90;
             var firstY = isMyself ? -25 : 0;
@@ -207,7 +254,7 @@ cc.Class({
                     target.addChild(th.pokerManager.getPokerSpriteById(cards[index]));
                 }), cc.moveTo(0.3, cc.v2(firstX + nodePoker.y + index * offset + (hasNiu && index > 2 ? 15 : 0), firstY))));
             });
-            _this.showNiuType(player);
+            _this2.showNiuType(player);
         });
 
         //结果
@@ -217,41 +264,273 @@ cc.Class({
             //let win = data.winner_array;
             //输的人
             //let lose = data.loser_array;
+            _this2.scheduleOnce(function () {
+                _this2.nodeAmins.removeAllChildren();
 
-            var score_board = data.score_board;
-            var account_ids = Object.keys(score_board);
-            cc.log("AccountIds:", account_ids);
-            account_ids.forEach(function (account_id) {
-                var player = th.getPlayerById(account_id);
-                player.account_score = score_board[account_id];
-                var index = th.getLocalIndex(player.serial_num - 1);
-                _this.componentSeats[index].setScoreAnim(player.account_score);
+                cc.log("TODO 飞筹码效果");
+                //通比牛牛先飞向最大的人，否则先飞向庄
+                var tagerPalyer = th.room.banker_mode == 4 ? th.getPlayerById(data.winner_array[0].account_id) : th.getBankerPlayer();
+
+                var seatxy = th.getSeatXY();
+                var index = th.getLocalIndex(tagerPalyer.serial_num - 1);
+
+                var _seatxy$index = _slicedToArray(seatxy[index], 2),
+                    tx = _seatxy$index[0],
+                    ty = _seatxy$index[1];
+                //输得的人先飞向tagerPalyer
+
+
+                th.audioManager.playSFX("coin.mp3");
+                data.loser_array.forEach(function (loser) {
+                    if (loser.account_id != tagerPalyer.account_id) {
+                        var player = th.getPlayerById(loser.account_id);
+                        var _index = th.getLocalIndex(player.serial_num - 1);
+
+                        var _seatxy$_index = _slicedToArray(seatxy[_index], 2),
+                            x = _seatxy$_index[0],
+                            y = _seatxy$_index[1];
+
+                        for (var i = 0; i < 5; i++) {
+                            var coin = cc.instantiate(_this2.coinPrefab);
+                            coin.x = x;
+                            coin.y = y;
+                            _this2.nodeAmins.addChild(coin);
+                            coin.runAction(cc.sequence(cc.delayTime(0.1 + i * 0.05), cc.moveTo(0.5, cc.v2(tx, ty)).easing(cc.easeSineOut()), cc.callFunc(function (target) {
+                                target.removeFromParent();
+                            })));
+                        }
+                    }
+                });
+                var loserCount = data.loser_array.filter(function (loser) {
+                    return loser.account_id != tagerPalyer.account_id;
+                }).length;
+                //this.nodeAmins.removeAllChildren();
+                _this2.scheduleOnce(function () {
+                    //tagerPalyer输得的人先飞向赢的人
+                    th.audioManager.playSFX("coin.mp3");
+                    data.winner_array.forEach(function (winer) {
+                        if (winer.account_id != tagerPalyer.account_id) {
+                            var player = th.getPlayerById(winer.account_id);
+                            var _index2 = th.getLocalIndex(player.serial_num - 1);
+
+                            var _seatxy$_index2 = _slicedToArray(seatxy[_index2], 2),
+                                x = _seatxy$_index2[0],
+                                y = _seatxy$_index2[1];
+
+                            for (var i = 0; i < 5; i++) {
+                                var coin = cc.instantiate(_this2.coinPrefab);
+                                coin.x = tx;
+                                coin.y = ty;
+                                _this2.nodeAmins.addChild(coin);
+                                coin.runAction(cc.sequence(cc.delayTime(0.1 + i * 0.05), cc.moveTo(0.5, cc.v2(x, y)).easing(cc.easeSineOut()), cc.callFunc(function (target) {
+                                    target.removeFromParent();
+                                })));
+                            }
+                        }
+                    });
+                }, 0.1 + 0.5 + loserCount * 0.05);
+
+                var winerCount = data.winner_array.filter(function (winner) {
+                    return winner.account_id != tagerPalyer.account_id;
+                }).length;
+
+                var offsetCount = loserCount + winerCount;
+                cc.log("==================offsetCount:", offsetCount);
+
+                _this2.scheduleOnce(function () {
+                    var score_board = data.score_board;
+                    var account_ids = Object.keys(score_board);
+                    cc.log("AccountIds:", account_ids);
+                    account_ids.forEach(function (account_id) {
+                        var player = th.getPlayerById(account_id);
+                        player.account_score = score_board[account_id];
+                        var index = th.getLocalIndex(player.serial_num - 1);
+                        _this2.componentSeats[index].setScoreAnim(player.account_score);
+                    });
+                }, 0.1 + 0.5 + offsetCount * 0.05 + 0.5);
+
+                _this2.scheduleOnce(function () {
+                    th.clear();
+                    _this2.componentSeats.forEach(function (cpnt) {
+                        cpnt.setBanker(false);
+                    });
+                    _this2.nodePokers.forEach(function (node) {
+                        node.removeAllChildren();
+                    });
+                    th.room.players.forEach(function (player) {
+                        _this2.initSingleSeat(player);
+                    });
+                    _this2.refreshOptions();
+                    if (th.room.game_num == th.room.total_num) {
+                        cc.log("done........................");
+                        _this2.toConnectApi();
+                    }
+                }, 0.1 + 0.5 + offsetCount * 0.05 + 3);
+            }, 1);
+        });
+
+        //战绩
+        this.node.on("getScoreBoard", function (data) {
+            cc.log("<<<===[getScoreBoard] GameNN:", data);
+            th.wc.hide();
+            _this2.resultNode.x = 0;
+            _this2.resultNode.y = 0;
+            _this2.resultNode.active = true;
+
+            var _data$balance_scorebo = data.balance_scoreboard,
+                room_number = _data$balance_scorebo.room_number,
+                time = _data$balance_scorebo.time,
+                total_num = _data$balance_scorebo.total_num,
+                room_creator = _data$balance_scorebo.room_creator,
+                scoreboard = _data$balance_scorebo.scoreboard;
+
+
+            _this2.resultNode.getChildByName("lbl_roomId").getComponent("cc.Label").string = "房间号：" + room_number;
+
+            _this2.resultNode.getChildByName("lbl_time").getComponent("cc.Label").string = time;
+
+            _this2.resultNode.getChildByName("lbl_round").getComponent("cc.Label").string = total_num + "局";
+
+            _this2.resultNode.getChildByName("lbl_banker").getComponent("cc.Label").string = "房主：" + room_creator;
+
+            var resultNode = _this2.resultNode.getChildByName("results").getChildByName("view").getChildByName("content");
+            scoreboard.forEach(function (player, index) {
+                var item = cc.instantiate(_this2.resultItemPrefab);
+                item.getChildByName("lbl_id").getComponent("cc.Label").string = "ID：" + player.account_id;
+                item.getChildByName("lbl_name").getComponent("cc.Label").string = player.name;
+                item.getChildByName("lbl_score").getComponent("cc.Label").string = player.score;
+
+                var headImg = item.getChildByName("headImg").getComponent("cc.Sprite");
+                cc.loader.load({
+                    url: player.avatar,
+                    type: "jpg"
+                }, function (err, texture) {
+                    if (!err) {
+                        var headSpriteFrame = new cc.SpriteFrame(texture, cc.Rect(0, 0, texture.width, texture.height));
+                        headImg.spriteFrame = headSpriteFrame;
+                        headImg.node.setScale(2 - texture.width / 120);
+                    }
+                });
+
+                if (index == 0) {
+                    item.getChildByName("dayinjia").active = true;
+                }
+                resultNode.addChild(item);
+            });
+            //Object.assign(th.room, data);
+        });
+
+        //战绩明细
+        this.node.on("getScoreDetail", function (data) {
+            cc.log("<<<===[getScoreDetail] GameNN:", data);
+            //Object.assign(th.room, data);
+            th.wc.hide();
+            _this2.resultDeatilNode.x = 0;
+            _this2.resultDeatilNode.y = 0;
+            _this2.resultDeatilNode.active = true;
+
+            var room_number = data.room_number,
+                create_time = data.create_time,
+                game_num = data.game_num,
+                rule_text = data.rule_text;
+
+
+            _this2.resultDeatilNode.getChildByName("lbl_roomId").getComponent("cc.Label").string = "房间号：" + room_number;
+
+            _this2.resultDeatilNode.getChildByName("lbl_time").getComponent("cc.Label").string = create_time;
+
+            _this2.resultDeatilNode.getChildByName("lbl_round").getComponent("cc.Label").string = game_num + "局";
+
+            _this2.resultDeatilNode.getChildByName("lbl_info").getComponent("cc.Label").string = rule_text;
+
+            var resultDetailNode = _this2.resultDeatilNode.getChildByName("results").getChildByName("view").getChildByName("content");
+
+            //加载头像
+            var players = {};
+            data.balance_board.forEach(function (item) {
+                players[item.name] = item;
             });
 
-            cc.log("TODO 飞筹码效果");
+            data.player_array.forEach(function (player) {
+                var game_num = player.game_num,
+                    total_num = player.total_num,
+                    player_cards = player.player_cards;
 
-            _this.scheduleOnce(function () {
-                if (th.room.banker_mode == 1) {
-                    th.myself.needLookCount = 2;
-                }
-                th.clear();
-                _this.componentSeats.forEach(function (cpnt) {
-                    cpnt.setBanker(false);
-                });
-                _this.nodePokers.forEach(function (node) {
-                    node.removeAllChildren();
-                });
-                th.room.players.forEach(function (player) {
-                    _this.initSingleSeat(player);
-                });
-                _this.refreshOptions();
-            }, 10);
+                var roundNode = cc.instantiate(_this2.resultDetailItemPrefab);
+                roundNode.height = 100 + data.balance_board.length * 100;
+                roundNode.getChildByName("lbl_round").getComponent("cc.Label").string = game_num + "/" + total_num;
+                var playersNode = roundNode.getChildByName("players");
+                player_cards.forEach(function (item) {
+                    var playerNode = cc.instantiate(_this2.resultDetailSonItemPrefab);
 
-            //
-            if (th.room.game_num == th.room.total_num) {
-                cc.log("done........................");
-            }
+                    playerNode.getChildByName("lbl_id").getComponent("cc.Label").string = players[item.name].account_id + "";
+                    playerNode.getChildByName("lbl_name").getComponent("cc.Label").string = item.name + "";
+                    playerNode.getChildByName("lbl_mtp").getComponent("cc.Label").string = item.chip + "";
+                    playerNode.getChildByName("lbl_score").getComponent("cc.Label").string = item.score + "";
+                    playerNode.getChildByName("lbl_niu").getComponent("cc.Label").string = item.card_type_str + "";
+                    playerNode.getChildByName("icon_banker").active = item.is_banker == 1;
+
+                    var headimg = playerNode.getChildByName("headImg").getComponent("cc.Sprite");
+
+                    cc.loader.load({
+                        url: players[item.name].avatar,
+                        type: "jpg"
+                    }, function (err, texture) {
+                        if (!err) {
+                            var headSpriteFrame = new cc.SpriteFrame(texture, cc.Rect(0, 0, texture.width, texture.height));
+                            headimg.spriteFrame = headSpriteFrame;
+                            headimg.node.setScale(2 - texture.width / 120);
+                        }
+                    });
+
+                    var pokerNode = playerNode.getChildByName("pokers");
+                    item.player_cards.forEach(function (card) {
+                        pokerNode.addChild(th.pokerManager.getPokerSpriteById(card));
+                    });
+                    playersNode.addChild(playerNode);
+                });
+                resultDetailNode.addChild(roundNode);
+            });
         });
+
+        this.node.on("getCopyUrl", function (data) {
+            cc.log("<<<===[getCopyUrl] GameNN:", data);
+            /*
+            let result = th.webCopyString(data.url);
+            cc.log("address:", data.url);
+            th.msg.show(result ? "复制成功！" : "复制失败");
+            */
+        });
+    },
+    onResultCloseClicked: function onResultCloseClicked() {
+        th.wc.show("正在返回大厅。。。");
+        th.args = {};
+        th.room.room_id = null;
+        th.room.room_number = null;
+        th.gametype = null;
+        cc.director.loadScene("Hall", function () {
+            th.wc.hide();
+        });
+    },
+    onZhanjiseachClicked: function onZhanjiseachClicked() {
+        var params = {
+            operation: "getScoreDetail", //操作标志
+            account_id: th.myself.account_id, //用户id};
+            session: th.sign,
+            data: {
+                type: 1,
+                num2: 10291,
+                num: th.room.room_number
+            }
+        };
+        cc.log("===>>>[getScoreDetail] GameNN:", params);
+        th.ws.send(JSON.stringify(params));
+    },
+    onResultDetailCloseClicked: function onResultDetailCloseClicked() {
+        this.resultDeatilNode.active = false;
+    },
+    onChanganbaocunClicked: function onChanganbaocunClicked() {
+        cc.log("长按保存....");
     },
     showNiuType: function showNiuType(player) {
         var index = th.getLocalIndex(player.serial_num - 1);
@@ -360,7 +639,7 @@ cc.Class({
             this.btnBuqiang.node.active = isShowQiangBrank;
             this.sprQiangzhuang.node.active = isShowQiangBrank;
             //闲加倍数选择
-            var isShowSelectMultiples = player.is_banker == 0 && player.account_status == 6 && (th.room.room_status == 1 || th.room.room_status == 2);
+            var isShowSelectMultiples = player.is_banker == 0 && player.account_status == 6 && (th.room.room_status == 1 || th.room.room_status == 2) && player.multiples == 0;
             this.btnPlayerMtp1.node.active = isShowSelectMultiples;
             this.btnPlayerMtp2.node.active = isShowSelectMultiples;
             this.btnPlayerMtp3.node.active = isShowSelectMultiples;
@@ -380,23 +659,23 @@ cc.Class({
     },
     initSeat: function initSeat() {
         var seatsxy = th.getSeatXY();
-        for (var _i = 0; _i < seatsxy.length; _i++) {
-            var _seatsxy$_i = _slicedToArray(seatsxy[_i], 2),
-                x = _seatsxy$_i[0],
-                y = _seatsxy$_i[1];
+        for (var i = 0; i < seatsxy.length; i++) {
+            var _seatsxy$i = _slicedToArray(seatsxy[i], 2),
+                x = _seatsxy$i[0],
+                y = _seatsxy$i[1];
 
             var seat = cc.instantiate(this.seatPrefab);
             seat.x = x;
             seat.y = y;
-            seat.seatIndex = _i; //为座位编号
-            this.node.addChild(seat);
+            seat.seatIndex = i; //为座位编号
+            this.baseNode.addChild(seat);
             this.nodeSeats.push(seat);
             this.componentSeats.push(seat.getComponent("Seat"));
             this.nodePokers.push(seat.getChildByName("info").getChildByName("pokers"));
         }
         var players = th.room.players;
-        for (var i = 0; i < players.length; ++i) {
-            this.initSingleSeat(players[i]);
+        for (var _i = 0; _i < players.length; ++_i) {
+            this.initSingleSeat(players[_i]);
         }
     },
 
@@ -419,12 +698,17 @@ cc.Class({
             var mtp = player.multiples != 0 ? "x" + player.multiples : "";
             this.componentSeats[index].setMultiples("y" + mtp);
         } else if (player.account_status == 6) {
+            this.componentSeats[index].setMultiples(player.multiples != 0 ? "x" + player.multiples : "");
+            /*
             //闲家倍数
             if (player.is_banker == 1) {
-                this.componentSeats[index].setMultiples(player.multiples != 0 ? "x" + player.multiples : "");
+                this.componentSeats[index].setMultiples(
+                    player.multiples != 0 ? "x" + player.multiples : ""
+                );
             } else {
                 this.componentSeats[index].setMultiples(null);
             }
+            */
         } else if (player.account_status == 7) {
             //未摊牌
             this.componentSeats[index].setMultiples(player.is_banker == 1 ? null : "x" + player.multiples);
@@ -432,10 +716,15 @@ cc.Class({
             this.componentSeats[index].setMultiples(null);
         }
     },
-    onCopyCliecked: function onCopyCliecked(targer, value) {
-        var address = th.href + "?roomId=" + th.room.room_number + "&type=" + th.gametype;
-        cc.log("address:", address);
-        th.msg.show(address);
+    onCopyCliecked: function onCopyCliecked(targer, data) {
+        /*
+        let address = `${th.href}?roomId=${th.room.room_number}&type=${
+            th.gametype
+        }`;
+        */
+        var result = th.webCopyString(th.room.copyurl);
+        cc.log("address:", th.room.copyurl);
+        th.msg.show(result ? "复制成功！" : "复制失败");
     },
     onBankerMultiplesClicked: function onBankerMultiplesClicked(targer, value) {
         var multiples = 1;
@@ -489,9 +778,6 @@ cc.Class({
     },
     onPlayerMultiplesClicked: function onPlayerMultiplesClicked(targer, value) {
         var multiples = targer.target.multiples;
-        cc.log(targer);
-        cc.log("==============================multiples:", targer.target);
-        cc.log("==============================multiples:", targer.target.multiples);
         th.audioManager.playSFX("multiples" + multiples + ".m4a");
         var params = {
             operation: "PlayerMultiples",
@@ -555,26 +841,39 @@ cc.Class({
         seat.setScore("+8888");
         seat.setCountdown(0);
     },
-    onLookClicked: function onLookClicked(targer) {},
+    onLookClicked: function onLookClicked(targer) {
+        cc.log("onLookClickedonLookClickedonLookClickedonLookClicked");
+        var result = th.webCopyString("onLookClickedonLookClickedonLookClickedonLookClickedCopy");
+        th.msg.show(result ? "复制成功！" : "复制失败");
+    },
     onPokerClicked: function onPokerClicked(targer, value) {
         cc.log("Poker", targer.target.pokerId, value);
         var pokerId = targer.target.pokerId;
         if (pokerId != -1) {
-            targer.target.runAction(cc.sequence(cc.scaleTo(0.3, 0, 1), cc.callFunc(function (target) {
-                target.addChild(th.pokerManager.getPokerSpriteById(pokerId));
-            }), cc.scaleTo(0.3, 1, 1), cc.callFunc(function (traget) {
-                traget.pokerId = -1;
-            })));
+            this.showOpenPokerAnim(targer.target);
             th.myself.needLookCount = th.myself.needLookCount - 1;
             this.refreshOptions();
         }
     },
+    showOpenPokerAnim: function showOpenPokerAnim(poker) {
+        var pokerId = poker.pokerId;
+        if (pokerId != -1) {
+            poker.runAction(cc.sequence(cc.scaleTo(0.3, 0, 1), cc.callFunc(function (target) {
+                target.addChild(th.pokerManager.getPokerSpriteById(pokerId));
+            }), cc.scaleTo(0.3, 1, 1), cc.callFunc(function (traget) {
+                traget.pokerId = -1;
+            })));
+        }
+    },
     showPokers: function showPokers() {
+        var _this3 = this;
+
         //找到坐位上有人，且准备的发牌
         var seatIndexs = [];
         var players = [];
         th.room.players.forEach(function (player) {
-            if (player.account_status) {
+            cc.log("showPokers:", player.account_status);
+            if (player.account_status > 1) {
                 var index = th.getLocalIndex(player.serial_num - 1);
                 seatIndexs.push(index);
                 players.push(player);
@@ -589,9 +888,9 @@ cc.Class({
                 //没摊牌
                 if (isMyself) {
                     pokerIds = new Array(5).fill(-1);
-                    pokerIds[0] = player.cards[0];
-                    pokerIds[1] = player.cards[1];
-                    pokerIds[2] = player.cards[2];
+                    for (var j = 0; j < 5 - th.myself.needLookCount; j++) {
+                        pokerIds[j] = player.cards[j];
+                    }
                 } else {
                     pokerIds = new Array(5).fill(-1);
                 }
@@ -608,9 +907,9 @@ cc.Class({
             var readyPokersIds = player.cards;
             for (var pi = 0; pi < pokerIds.length; pi++) {
                 var pokerId = pokerIds[pi];
-                var readyPokerId = readyPokersIds[pi] || -1;
+                var realPokerId = readyPokersIds[pi] || -1;
                 var poker = th.pokerManager.getPokerSpriteById(pokerId);
-                poker.pokerId = readyPokerId;
+                poker.pokerId = isMyself ? realPokerId : -1;
                 poker.scale = 0.65;
                 //poker.x = (seat.x > 0 ? -250 : 45) + basePoker.y + pi * 30;
                 poker.position = basePoker.convertToNodeSpaceAR(cc.v2(375, 603 + 60));
@@ -619,7 +918,7 @@ cc.Class({
                     clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
                     clickEventHandler.component = "GameNN"; //这个是代码文件名
                     clickEventHandler.handler = "onPokerClicked";
-                    clickEventHandler.customEventData = readyPokerId;
+                    clickEventHandler.customEventData = realPokerId;
                     poker.getComponent(cc.Button).clickEvents.push(clickEventHandler);
                 }
                 basePoker.addChild(poker);
@@ -628,22 +927,27 @@ cc.Class({
         //发牌效果
         th.audioManager.playSFX("fapai.m4a");
         for (var _i2 = 0; _i2 < 5; _i2++) {
-            for (var j = 0; j < seatIndexs.length; j++) {
-                var seatIndex = seatIndexs[j];
+            for (var _j = 0; _j < seatIndexs.length; _j++) {
+                var seatIndex = seatIndexs[_j];
                 var seat = this.nodeSeats[seatIndex];
                 var basePokers = this.nodePokers[seatIndex];
                 var pokers = basePokers.children;
                 var _poker = pokers[_i2];
                 var _isMyself = seatIndex == myLocalIndex;
+                var showCard = _i2 < 5 - th.myself.needLookCount;
                 //cc.log(seatIndex, myLocalIndex, seatIndex == myLocalIndex);
-                (function (poker, delay, x, y, isMyself) {
+                (function (poker, delay, x, y, isMyself, showCard) {
                     //cc.log("delay:", delay, x, y, isMyself);
                     if (isMyself) {
-                        poker.runAction(cc.sequence(cc.delayTime(delay), cc.spawn(cc.moveTo(0.2, cc.v2(x, y)), cc.scaleTo(0.2, 1))));
+                        poker.runAction(cc.sequence(cc.delayTime(delay), cc.spawn(cc.moveTo(0.2, cc.v2(x, y)), cc.scaleTo(0.2, 1)), cc.callFunc(function (target) {
+                            if (showCard) {
+                                _this3.showOpenPokerAnim(target);
+                            }
+                        })));
                     } else {
                         poker.runAction(cc.sequence(cc.delayTime(delay), cc.moveTo(0.2, cc.v2(x, y))));
                     }
-                })(_poker, 0.1 + _i2 * 0.04 * seatIndexs.length + j * 0.04, (_isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y + _i2 * (_isMyself ? 110 : 30), _isMyself ? -25 : 0, _isMyself);
+                })(_poker, 0.1 + _i2 * 0.04 * seatIndexs.length + _j * 0.04, (_isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y + _i2 * (_isMyself ? 110 : 30), _isMyself ? -25 : 0, _isMyself, showCard);
             }
         }
 
@@ -656,7 +960,7 @@ cc.Class({
         }
     },
     setCountdown: function setCountdown(val, content) {
-        var _this2 = this;
+        var _this4 = this;
 
         var num = Number(val);
         this.nodeCountdown.active = num > 0 ? true : false;
@@ -670,8 +974,8 @@ cc.Class({
         this._isPlay = false;
 
         this.scheduleOnce(function () {
-            if (_this2._countdownEndTime <= Date.now()) {
-                _this2.nodeCountdown.active = false;
+            if (_this4._countdownEndTime <= Date.now()) {
+                _this4.nodeCountdown.active = false;
             }
         }, num + 0.1);
     },
@@ -684,8 +988,38 @@ cc.Class({
         }
         if (this._alertStartTime < now && !this._isPlay) {
             this._isPlay = true;
-            th.audioManager.playSFX("timeup_alarm.mp3");
+            //th.audioManager.playSFX("timeup_alarm.mp3");
         }
+        if (this.holdClick) {
+            this.holdTimeEclipse++;
+            if (this.holdTimeEclipse > 120) {
+                //如果长按时间大于2s，则认为长按了2s
+                this.holdTimeEclipse = 120;
+            }
+        }
+    },
+    toConnectApi: function toConnectApi(targer) {
+        cc.log("onCreateClicked:", this.createFrom);
+        //断开大厅连接连接游戏websocket
+        th.webSocketManager.connectGameServer({
+            ip: "47.96.177.207",
+            port: 10000,
+            namespace: "api"
+        }, function () {
+            th.wc.show("正在获取结果...");
+            var params = {
+                operation: "getScoreBoard", //操作标志
+                account_id: th.myself.account_id, //用户id};
+                session: th.sign,
+                data: {
+                    type: 1,
+                    num2: 10291,
+                    num: th.room.room_number
+                }
+            };
+            cc.log("===>>>[getScoreBoard] GameNN:", params);
+            th.ws.send(JSON.stringify(params));
+        });
     }
 });
 

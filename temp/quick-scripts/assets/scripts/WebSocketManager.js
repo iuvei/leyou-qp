@@ -123,6 +123,7 @@ cc.Class({
             cc.log("<<<===[JoinRoom] WebSocketManager:", data);
             Object.assign(th.room, data);
             th.initRoom();
+            th.getRoomCopyUrl();
             var sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
             cc.director.loadScene(sceneName, function () {
                 th.wc.hide();
@@ -135,6 +136,7 @@ cc.Class({
             var data = _ref8.data;
 
             cc.log("<<<===[GuestRoom] WebSocketManager:", data);
+            th.getRoomCopyUrl();
             Object.assign(th.room, data);
             var sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
             cc.director.loadScene(sceneName, function () {
@@ -284,43 +286,71 @@ cc.Class({
             _this.dispatchEvent("Win", data);
         });
 
+        //战绩
+        th.ws.addHandler("getScoreBoard", function (_ref18) {
+            var data = _ref18.data;
+
+            cc.log("<<<===[getScoreBoard] WebSocketManager:", data);
+            //Object.assign(th.room, data);
+            _this.dispatchEvent("getScoreBoard", data);
+        });
+
+        //战绩明细
+        th.ws.addHandler("getScoreDetail", function (_ref19) {
+            var data = _ref19.data;
+
+            cc.log("<<<===[getScoreDetail] WebSocketManager:", data);
+            //Object.assign(th.room, data);
+            _this.dispatchEvent("getScoreDetail", data);
+        });
+
+        //复制URL
+        th.ws.addHandler("getCopyUrl", function (_ref20) {
+            var data = _ref20.data;
+
+            cc.log("<<<===[getCopyUrl] WebSocketManager:", data);
+            th.room.copyurl = data.url;
+            _this.dispatchEvent("getCopyUrl", data);
+        });
+
         //=========================================================
         //炸金花消息写在这下面。
     },
-
-    connectApiServer: function connectApiServer(_ref18) {
-        var _this2 = this;
-
-        var ip = _ref18.ip,
-            port = _ref18.port,
-            namespace = _ref18.namespace;
-
+    /*
+    connectApiServer: function({ ip, port, namespace }) {
         th.ws.close();
         th.ws.ip = ip;
         th.ws.port = port;
-        th.ws.addr = "ws://" + ip + ":" + port + "/" + namespace;
-        th.ws.connect(function () {
-            _this2.dispatchEvent("api_connect_success");
-            cc.log("[\u8FDE\u63A5\u6210\u529F] WebSocketManager :" + ip + ":" + port + "/" + namespace);
-            th.wc.show("正在获取TOKEN...");
-            var params = {
-                operation: "getToken",
-                data: { code: th.args.code }
-            };
-            cc.log("===>>>[getToken] WebSocketManager:", params);
-            th.ws.send(JSON.stringify(params));
-        }, function () {
-            cc.log("[\u8FDE\u63A5\u5931\u8D25] WebSocketManager :" + ip + ":" + port + "/" + namespace);
-            th.alert.show("提示", "连接失败");
-        });
+        th.ws.addr = `ws://${ip}:${port}/${namespace}`;
+        th.ws.connect(
+            () => {
+                this.dispatchEvent("api_connect_success");
+                cc.log(
+                    `[连接成功] WebSocketManager :${ip}:${port}/${namespace}`
+                );
+                th.wc.show("正在获取TOKEN...");
+                let params = {
+                    operation: "getToken",
+                    data: { code: th.args.code }
+                };
+                cc.log("===>>>[getToken] WebSocketManager:", params);
+                th.ws.send(JSON.stringify(params));
+            },
+            () => {
+                cc.log(
+                    `[连接失败] WebSocketManager :${ip}:${port}/${namespace}`
+                );
+                th.alert.show("提示", "连接失败");
+            }
+        );
     },
+    */
+    connectGameServer: function connectGameServer(_ref21, callback) {
+        var _this2 = this;
 
-    connectGameServer: function connectGameServer(_ref19, callback) {
-        var _this3 = this;
-
-        var ip = _ref19.ip,
-            port = _ref19.port,
-            namespace = _ref19.namespace;
+        var ip = _ref21.ip,
+            port = _ref21.port,
+            namespace = _ref21.namespace;
 
         th.ws.close();
         th.ws.ip = ip;
@@ -328,7 +358,7 @@ cc.Class({
         th.ws.addr = "ws://" + ip + ":" + port + "/" + namespace;
         th.gametype = "nn";
         th.ws.connect(function () {
-            _this3.dispatchEvent("game_connect_success");
+            _this2.dispatchEvent("game_connect_success");
             callback();
             cc.log("===WebSocketManager \u8FDE\u63A5\u6210\u529F:" + ip + ":" + port + "/" + namespace + "===");
         }, function () {

@@ -1,126 +1,66 @@
-2019-04-17T12:43:07.584Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-17T12:43:08.842Z - normal: Initializing Asset Database
-2019-04-17T12:43:08.847Z - normal: checking language setting...
-2019-04-17T12:43:08.847Z - normal: Language: zh
-2019-04-17T12:43:10.969Z - success: preview server running at http://localhost:7456
-2019-04-17T12:43:10.972Z - success: protocol editor-framework registered
-2019-04-17T12:43:10.972Z - success: protocol app registered
-2019-04-17T12:43:10.972Z - success: protocol theme registered
-2019-04-17T12:43:10.972Z - success: protocol packages registered
-2019-04-17T12:43:10.973Z - success: protocol uuid registerred
-2019-04-17T12:43:10.973Z - success: protocol db registerred
-2019-04-17T12:43:10.973Z - success: protocol thumbnail registerred
-2019-04-17T12:43:10.973Z - success: protocol unpack registerred
-2019-04-17T12:43:10.973Z - success: protocol disable-commonjs registerred
-2019-04-17T12:43:11.155Z - normal: connected!
-2019-04-17T12:43:11.156Z - normal: Check project D:\Workspaces_CocosCreator\leyou-github
-2019-04-17T12:43:11.159Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou-github
-2019-04-17T12:43:12.128Z - normal: Initializing Cocos2d
-2019-04-17T12:43:15.939Z - normal: Initializing engine extends
-2019-04-17T12:43:16.330Z - success: asset-db-debugger loaded
-2019-04-17T12:43:16.333Z - success: baidu-adapter loaded
-2019-04-17T12:43:16.357Z - success: code-editor loaded
-2019-04-17T12:43:16.361Z - success: color-picker loaded
-2019-04-17T12:43:16.583Z - success: fb-audience-network loaded
-2019-04-17T12:43:16.732Z - success: fb-live-stream loaded
-2019-04-17T12:43:16.758Z - success: google-play-instant loaded
-2019-04-17T12:43:16.790Z - success: huawei-runtime loaded
-2019-04-17T12:43:16.791Z - success: jsb-adapter loaded
-2019-04-17T12:43:16.822Z - success: oppo-runtime loaded
-2019-04-17T12:43:16.828Z - success: package-manager loaded
-2019-04-17T12:43:17.242Z - success: qqplay-adapter loaded
-2019-04-17T12:43:17.245Z - success: runtime-dev-tools loaded
-2019-04-17T12:43:17.274Z - success: sdkbox loaded
-2019-04-17T12:43:17.280Z - success: tester loaded
-2019-04-17T12:43:17.296Z - success: ui-grid loaded
-2019-04-17T12:43:17.299Z - success: ui-kit-preview-extra loaded
-2019-04-17T12:43:17.317Z - success: ui-kit-preview loaded
-2019-04-17T12:43:17.320Z - success: ui-kit loaded
-2019-04-17T12:43:17.322Z - success: ui-tree loaded
-2019-04-17T12:43:17.354Z - success: vivo-runtime loaded
-2019-04-17T12:43:17.355Z - success: weapp-adapter loaded
-2019-04-17T12:43:17.410Z - success: assets loaded
-2019-04-17T12:43:17.413Z - success: builder loaded
-2019-04-17T12:43:18.225Z - success: cocos-services loaded
-2019-04-17T12:43:18.231Z - success: console loaded
-2019-04-17T12:43:18.277Z - success: fb-instant-games loaded
-2019-04-17T12:43:18.280Z - success: google-instant-games loaded
-2019-04-17T12:43:18.286Z - success: hierarchy loaded
-2019-04-17T12:43:18.302Z - success: inspector loaded
-2019-04-17T12:43:18.343Z - success: keystore loaded
-2019-04-17T12:43:18.354Z - success: node-library loaded
-2019-04-17T12:43:18.360Z - success: package-asset loaded
-2019-04-17T12:43:18.362Z - success: preferences loaded
-2019-04-17T12:43:18.364Z - success: project-exporter loaded
-2019-04-17T12:43:18.366Z - success: project-importer loaded
-2019-04-17T12:43:18.369Z - success: project-settings loaded
-2019-04-17T12:43:18.374Z - success: scene loaded
-2019-04-17T12:43:18.377Z - success: simulator-debugger loaded
-2019-04-17T12:43:18.379Z - success: sprite-editor loaded
-2019-04-17T12:43:18.385Z - success: store loaded
-2019-04-17T12:43:18.393Z - success: timeline loaded
-2019-04-17T12:43:18.403Z - success: bitmap-font loaded
-2019-04-17T12:43:24.651Z - info: Cocos Services load base data!
-2019-04-17T12:43:25.462Z - normal: Loading packages
-2019-04-17T12:43:25.470Z - normal: Watching packages
-2019-04-17T12:43:27.188Z - normal: Run Application
-2019-04-17T17:34:45.353Z - failed: [db-task][sync-changes] Failed to import asset D:\Workspaces_CocosCreator\leyou-github\assets\scripts\components\GameNN.js, message: Compile error: SyntaxError: D:/Workspaces_CocosCreator/leyou-github/assets/scripts/components/GameNN.js: Unexpected token, expected , (240:12)
-  238 |                             */
-  239 |             }
-> 240 |             this.showNiuType(player);
-      |             ^
-  241 |         });
-  242 | 
-  243 |         //结果
-    at Parser.pp$5.raise (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4454:13)
-    at Parser.pp.unexpected (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1761:8)
-    at Parser.pp.expect (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1749:33)
-    at Parser.pp$3.parseCallExpressionArguments (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3564:12)
-    at Parser.pp$3.parseSubscripts (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3533:31)
-    at Parser.pp$3.parseExprSubscripts (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3504:15)
-    at Parser.pp$3.parseMaybeUnary (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3474:19)
-    at Parser.pp$3.parseExprOps (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3404:19)
-    at Parser.pp$3.parseMaybeConditional (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3381:19)
-    at Parser.pp$3.parseMaybeAssign (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3344:19)
-2019-04-17T18:07:23.561Z - warn: Failed to set property btn_zjqz<Toggle> to true at isChecked, ReferenceError: th is not defined
-    at CreateNN.onBankerModeGroupClicked (D:\Workspaces_CocosCreator\leyou-github\temp\quick-scripts\assets\scripts\components\CreateNN.js:147:9)
-    at cc_ClickEvent.emit (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCComponentEventHandler.js:70:25)
-    at Function.emitEvents (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCComponentEventHandler.js:50:31)
-    at cc_ToggleContainer.updateToggles (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCToggleContainer.js:43:51)
-    at cc_Toggle.set [as isChecked] (D:\CocosCreator2.0.9\resources\engine\bin\.cache\dev\cocos2d\core\components\CCToggle.js:42:35)
-    at u (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:2055)
-    at y (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:3802)
-    at Object.b [as setPropertyByPath] (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\set-property-by-path.js:1:5028)
-    at Object.setProperty (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\scene.js:1:8276)
-    at HTMLElement.set-property (D:\CocosCreator2.0.9\resources\app.asar\editor\builtin\scene\panel\messages\scene-operation.js:1:782)
-2019-04-17T18:19:07.915Z - error: Reference "0" of "CreateZJH" to external scene object "CreateNN" can not be saved in prefab asset.
-    at D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3768
-    at r (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3448)
-    at i (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3532)
-    at D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3553
-    at f (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:781)
-    at f (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:830)
-    at Object.c.getDumpableNode (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3216)
-    at Object.c.createPrefabFrom (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:4069)
-    at Object.createPrefab (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\index.js:1:5363)
-2019-04-17T18:19:07.917Z - error: Reference "0" of "CreateZJH" to external scene object "SelectZJH" can not be saved in prefab asset.
-    at D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3768
-    at r (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3448)
-    at i (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3532)
-    at D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3553
-    at f (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:781)
-    at f (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:830)
-    at Object.c.getDumpableNode (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3216)
-    at Object.c.createPrefabFrom (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:4069)
-    at Object.createPrefab (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\index.js:1:5363)
-2019-04-17T18:19:07.917Z - error: Reference "0" of "CreateZJH" to external scene object "SelectZJH" can not be saved in prefab asset.
-    at D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3768
-    at r (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3448)
-    at i (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3532)
-    at D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3553
-    at f (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:781)
-    at f (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:830)
-    at Object.c.getDumpableNode (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:3216)
-    at Object.c.createPrefabFrom (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\utils\prefab.js:1:4069)
-    at Object.createPrefab (D:\CocosCreator2.0.9\resources\app.asar\editor\page\scene-utils\index.js:1:5363)
-2019-04-17T18:23:17.128Z - info: shutdown preview server
+2019-04-20T11:06:59.481Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-20T11:07:01.018Z - normal: Initializing Asset Database
+2019-04-20T11:07:01.044Z - normal: checking language setting...
+2019-04-20T11:07:01.044Z - normal: Language: zh
+2019-04-20T11:07:10.420Z - success: preview server running at http://localhost:7456
+2019-04-20T11:07:10.422Z - success: protocol editor-framework registered
+2019-04-20T11:07:10.423Z - success: protocol app registered
+2019-04-20T11:07:10.423Z - success: protocol theme registered
+2019-04-20T11:07:10.423Z - success: protocol packages registered
+2019-04-20T11:07:10.423Z - success: protocol uuid registerred
+2019-04-20T11:07:10.423Z - success: protocol db registerred
+2019-04-20T11:07:10.423Z - success: protocol thumbnail registerred
+2019-04-20T11:07:10.423Z - success: protocol unpack registerred
+2019-04-20T11:07:10.424Z - success: protocol disable-commonjs registerred
+2019-04-20T11:07:10.602Z - normal: connected!
+2019-04-20T11:07:10.603Z - normal: Check project D:\Workspaces_CocosCreator\leyou-github
+2019-04-20T11:07:10.607Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou-github
+2019-04-20T11:07:12.554Z - normal: Initializing Cocos2d
+2019-04-20T11:07:17.689Z - normal: Initializing engine extends
+2019-04-20T11:07:18.884Z - success: asset-db-debugger loaded
+2019-04-20T11:07:18.887Z - success: baidu-adapter loaded
+2019-04-20T11:07:18.926Z - success: code-editor loaded
+2019-04-20T11:07:18.930Z - success: color-picker loaded
+2019-04-20T11:07:19.760Z - success: fb-audience-network loaded
+2019-04-20T11:07:20.367Z - success: fb-live-stream loaded
+2019-04-20T11:07:20.400Z - success: google-play-instant loaded
+2019-04-20T11:07:20.494Z - success: huawei-runtime loaded
+2019-04-20T11:07:20.496Z - success: jsb-adapter loaded
+2019-04-20T11:07:20.582Z - success: oppo-runtime loaded
+2019-04-20T11:07:20.623Z - success: package-manager loaded
+2019-04-20T11:07:22.724Z - success: qqplay-adapter loaded
+2019-04-20T11:07:22.750Z - success: runtime-dev-tools loaded
+2019-04-20T11:07:22.801Z - success: sdkbox loaded
+2019-04-20T11:07:22.837Z - success: tester loaded
+2019-04-20T11:07:22.868Z - success: ui-grid loaded
+2019-04-20T11:07:22.904Z - success: ui-kit-preview-extra loaded
+2019-04-20T11:07:22.951Z - success: ui-kit-preview loaded
+2019-04-20T11:07:22.954Z - success: ui-kit loaded
+2019-04-20T11:07:22.984Z - success: ui-tree loaded
+2019-04-20T11:07:23.069Z - success: vivo-runtime loaded
+2019-04-20T11:07:23.070Z - success: weapp-adapter loaded
+2019-04-20T11:07:23.140Z - success: assets loaded
+2019-04-20T11:07:23.168Z - success: builder loaded
+2019-04-20T11:07:24.936Z - success: cocos-services loaded
+2019-04-20T11:07:24.969Z - success: console loaded
+2019-04-20T11:07:25.055Z - success: fb-instant-games loaded
+2019-04-20T11:07:25.057Z - success: google-instant-games loaded
+2019-04-20T11:07:25.076Z - success: hierarchy loaded
+2019-04-20T11:07:25.095Z - success: inspector loaded
+2019-04-20T11:07:25.122Z - success: keystore loaded
+2019-04-20T11:07:25.174Z - success: node-library loaded
+2019-04-20T11:07:25.198Z - success: package-asset loaded
+2019-04-20T11:07:25.220Z - success: preferences loaded
+2019-04-20T11:07:25.261Z - success: project-exporter loaded
+2019-04-20T11:07:25.264Z - success: project-importer loaded
+2019-04-20T11:07:25.267Z - success: project-settings loaded
+2019-04-20T11:07:25.292Z - success: scene loaded
+2019-04-20T11:07:25.312Z - success: simulator-debugger loaded
+2019-04-20T11:07:25.314Z - success: sprite-editor loaded
+2019-04-20T11:07:25.319Z - success: store loaded
+2019-04-20T11:07:25.324Z - success: timeline loaded
+2019-04-20T11:07:25.331Z - success: bitmap-font loaded
+2019-04-20T11:07:30.103Z - info: Cocos Services load base data!
+2019-04-20T11:07:36.260Z - normal: Loading packages
+2019-04-20T11:07:36.305Z - normal: Watching packages
+2019-04-20T11:07:38.414Z - normal: Run Application

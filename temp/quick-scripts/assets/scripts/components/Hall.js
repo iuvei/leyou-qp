@@ -57,7 +57,7 @@ cc.Class((_cc$Class = {
         this.initUserInfo();
         this.createNNComponent = this.node.getChildByName("CreateNN").getComponent("CreateNN");
         this.createZJHComponent = this.node.getChildByName("CreateZJH").getComponent("CreateZJH");
-
+        cc.log("args:", th.args);
         if (th.args.roomId && th.args.type) {
             cc.log("\u76F4\u63A5\u8FDB\u5165\u623F\u95F4\uFF1A" + th.args.type + "==" + th.args.roomId);
             th.room.room_number = th.args.roomId;

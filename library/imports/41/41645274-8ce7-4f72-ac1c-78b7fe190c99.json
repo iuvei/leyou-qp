@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_zjcx",
+    "texture": "d4ee310f-86ed-4560-a2f0-d30bda8e6291",
+    "atlas": "",
+    "rect": [
+      0,
+      3,
+      126,
+      36
+    ],
+    "offset": [
+      0,
+      -1.5
+    ],
+    "originalSize": [
+      126,
+      39
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

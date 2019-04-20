@@ -17,17 +17,31 @@ cc.Class({
     initEventHandlers() {
         cc.log("AppStart initEventHandlers()");
         th.webSocketManager.dataEventHandler = this.node;
+        /*
         this.node.on("api_connect_success", () => {
             cc.log("<<<===AppStart api_connect_success");
             this.unschedule(this._scheduleId);
         });
+        */
     },
     start: function() {
-        th.webSocketManager.connectApiServer({
-            ip: "47.96.177.207",
-            port: 10000,
-            namespace: "api"
-        });
+        th.webSocketManager.connectGameServer(
+            {
+                ip: "47.96.177.207",
+                port: 10000,
+                namespace: "api"
+            },
+            () => {
+                this.unschedule(this._scheduleId);
+                th.wc.show("正在获取TOKEN...");
+                let params = {
+                    operation: "getToken",
+                    data: { code: th.args.code }
+                };
+                cc.log("===>>>[getToken] WebSocketManager:", params);
+                th.ws.send(JSON.stringify(params));
+            }
+        );
 
         this._scheduleId = this.schedule(() => {
             let x = this._index % 6;

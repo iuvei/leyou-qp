@@ -31,7 +31,8 @@ cc.Class({
             room_number: null,
             players: [], //游戏人员列表
             guests: [], //观战人员列表
-            max_count: 0 //总人数
+            max_count: 0, //总人数
+            copyurl: null //要copy的地地址
         };
         //座位坐标
         th.seatxy = {
@@ -164,6 +165,8 @@ cc.Class({
         th.initRoom = function() {
             if (th.room.banker_mode == 1) {
                 th.myself.needLookCount = 2;
+            } else if (th.room.banker_mode == 2) {
+                th.myself.needLookCount = 1;
             }
         };
         th.clear = function() {
@@ -178,6 +181,90 @@ cc.Class({
                 player.combo_point = 0;
                 player.is_banker = 0;
             });
+            th.initRoom();
+        };
+        th.getRoomCopyUrl = function() {
+            //先把要COPY的房间URL请求回来
+            const params = {
+                operation: "getCopyUrl",
+                account_id: th.myself.account_id,
+                session: th.sign,
+                data: {
+                    roomId: th.room.room_number,
+                    type: th.gametype,
+                    url: th.href
+                }
+            };
+            cc.log("===>>>[getCopyUrl] Global:", params);
+            th.ws.send(JSON.stringify(params));
+        };
+        th.webCopyString = function(content) {
+            //确保在浏览器中
+            if (cc.sys.isBrowser) {
+                const input = content + "";
+                const el = document.createElement("textarea");
+                el.value = input;
+                el.setAttribute("readonly", "");
+                el.style.contain = "strict";
+                el.style.position = "absolute";
+                el.style.left = "-9999px";
+                el.style.fontSize = "12pt"; // Prevent zooming on iOS
+
+                const selection = getSelection();
+                let originalRange = false;
+                if (selection.rangeCount > 0) {
+                    originalRange = selection.getRangeAt(0);
+                }
+                document.body.appendChild(el);
+                el.select();
+                el.selectionStart = 0;
+                el.selectionEnd = input.length;
+                let success = false;
+                try {
+                    success = document.execCommand("copy");
+                } catch (err) {}
+
+                document.body.removeChild(el);
+                if (originalRange) {
+                    selection.removeAllRanges();
+                    selection.addRange(originalRange);
+                }
+                return success;
+            }
+            return false;
+        };
+        th.webCaptureScreen = function() {
+            if (cc.sys.isBrowser) {
+                cc.director.once(cc.Director.EVENT_AFTER_DRAW, () => {
+                    // 获取base64截图
+                    const canvas = document.getElementById("GameCanvas");
+                    const base64 = canvas.toDataURL();
+
+                    /*
+                    // 1.用cc.Sprite组件显示截图
+                    const image = new Image();
+                    image.src = base64;
+                    image.onload = () => {
+                        const texture = new cc.Texture2D();
+                        texture.initWithElement(image);
+                        texture.handleLoadedTexture();
+                        const spriteFrame = new cc.SpriteFrame(texture);
+                        // this.img是cc.Sprite组件.
+                        this.img.spriteFrame = spriteFrame;
+                    }
+                    */
+
+                    // 2.用http的img显示截图（可以保存图片到本地）
+
+                    const image = new Image();
+                    image.src = base64;
+                    const body = document.createElement("body");
+                    body.append(image);
+                    document.body = body;
+                    image.setAttribute("width", "100%");
+                    image.setAttribute("height", "100%");
+                });
+            }
         };
     },
     initManager() {

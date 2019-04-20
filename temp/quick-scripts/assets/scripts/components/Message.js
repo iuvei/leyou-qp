@@ -23,7 +23,7 @@ cc.Class({
         if (this.node) {
             this.node.active = true;
             this.ltlMsg.string = content || "";
-            this.node.runAction(cc.sequence(cc.fadeIn(0), cc.moveTo(1, cc.v2(0, 200)), cc.fadeOut(0), cc.callFunc(function (target) {
+            this.node.runAction(cc.sequence(cc.fadeIn(0), cc.moveTo(1, cc.v2(0, 150)), cc.fadeOut(0), cc.callFunc(function (target) {
                 return target.y = 0;
             })));
         }
@@ -31,7 +31,7 @@ cc.Class({
 
     onDestory: function onDestory() {
         if (th) {
-            th.alert = null;
+            th.msg = null;
         }
     }
 });

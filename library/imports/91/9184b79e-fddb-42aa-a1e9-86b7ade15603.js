@@ -206,24 +206,34 @@ cc.Class({
     setBanker: function setBanker(isbanker) {
         var _this3 = this;
 
+        cc.log("name: " + this._userName + " , this._isbanker:" + this._isbanker + " , isbanker:" + isbanker + " , result:" + (this._isbanker != isbanker));
         if (this._isbanker != isbanker) {
-            if (this.banker) {
-                if (this._isbanker == false && isbanker == true) {
-                    this.blink.node.active = true;
-                    this.blink.node.scaleX = 1;
-                    this.blink.node.scaleY = 0.9;
-                    this.blink.node.runAction(cc.sequence(cc.fadeIn(0), cc.spawn(cc.scaleTo(0.5, 1.3), cc.fadeOut(0.5)), cc.callFunc(function (target) {
-                        target.active = false;
-                        _this3.banker.node.scale = 0.1;
-                        _this3.banker.node.active = true;
-                        _this3.banker.node.runAction(cc.scaleTo(0.3, 1));
-                    })));
-                } else {
-                    this.banker.node.active = false;
-                }
+            cc.log("XXXXXXXXXXXXXXXXXXXXXXXthis._isbanker != isbanker");
+            if (isbanker) {
+                cc.log("YYYYYYYYYYYYYYYYYYYYthiisbanker");
+                this.blink.node.active = true;
+                this.blink.node.scaleX = 1;
+                this.blink.node.scaleY = 0.9;
+                this.blink.node.stopAllActions();
+                this.blink.node.runAction(cc.sequence(cc.fadeIn(0), cc.spawn(cc.scaleTo(0.5, 1.3), cc.fadeOut(0.5)), cc.callFunc(function (target) {
+                    cc.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZ");
+                    _this3.banker.node.scale = 0.1;
+                    _this3.banker.node.active = true;
+                    _this3.banker.node.runAction(cc.scaleTo(0.3, 1));
+                    target.active = false;
+                })));
+                this.scheduleOnce(function () {
+                    cc.log("WWWWWWWWWWWWWWWWWWWWWWWWWW");
+                    _this3.banker.node.active = true;
+                    _this3.banker.node.scale = 0.1;
+                    _this3.banker.node.runAction(cc.scaleTo(0.3, 1));
+                }, 0.5);
+            } else {
+                this.banker.node.scale = 1;
+                this.banker.node.active = false;
             }
-            this._isbanker = isbanker;
         }
+        this._isbanker = isbanker;
     },
 
     setOffline: function setOffline(isOffline) {

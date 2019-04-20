@@ -21,7 +21,7 @@ cc.Class({
             this.node.runAction(
                 cc.sequence(
                     cc.fadeIn(0),
-                    cc.moveTo(1, cc.v2(0, 200)),
+                    cc.moveTo(1, cc.v2(0, 150)),
                     cc.fadeOut(0),
                     cc.callFunc(target => (target.y = 0))
                 )
@@ -30,7 +30,7 @@ cc.Class({
     },
     onDestory: function() {
         if (th) {
-            th.alert = null;
+            th.msg = null;
         }
     }
 });

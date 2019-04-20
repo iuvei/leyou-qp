@@ -21,30 +21,39 @@ cc.Class({
         this.initEventHandlers();
     },
     initEventHandlers: function initEventHandlers() {
-        var _this = this;
-
         cc.log("AppStart initEventHandlers()");
         th.webSocketManager.dataEventHandler = this.node;
-        this.node.on("api_connect_success", function () {
+        /*
+        this.node.on("api_connect_success", () => {
             cc.log("<<<===AppStart api_connect_success");
-            _this.unschedule(_this._scheduleId);
+            this.unschedule(this._scheduleId);
         });
+        */
     },
 
     start: function start() {
-        var _this2 = this;
+        var _this = this;
 
-        th.webSocketManager.connectApiServer({
+        th.webSocketManager.connectGameServer({
             ip: "47.96.177.207",
             port: 10000,
             namespace: "api"
+        }, function () {
+            _this.unschedule(_this._scheduleId);
+            th.wc.show("正在获取TOKEN...");
+            var params = {
+                operation: "getToken",
+                data: { code: th.args.code }
+            };
+            cc.log("===>>>[getToken] WebSocketManager:", params);
+            th.ws.send(JSON.stringify(params));
         });
 
         this._scheduleId = this.schedule(function () {
-            var x = _this2._index % 6;
+            var x = _this._index % 6;
             var dian = "".padStart(x + 1, ".");
-            ++_this2._index;
-            _this2.lblLoadingMsg.string = "\u6B63\u5728\u8FDE\u63A5\u670D\u52A1\u5668" + dian;
+            ++_this._index;
+            _this.lblLoadingMsg.string = "\u6B63\u5728\u8FDE\u63A5\u670D\u52A1\u5668" + dian;
         }, 0.25);
     },
     onDestroy: function onDestroy() {
