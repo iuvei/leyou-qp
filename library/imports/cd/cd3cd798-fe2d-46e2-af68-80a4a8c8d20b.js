@@ -113,7 +113,6 @@ cc.Class({
             cc.log("<<<===[PrepareJoinRoom] WebSocketManager:", data);
             th.room = Object.assign(th.room, data);
             _this.dispatchEvent("PrepareJoinRoom", data);
-            th.wc.hide();
         });
 
         //加入房间
@@ -313,6 +312,15 @@ cc.Class({
             _this.dispatchEvent("getCopyUrl", data);
         });
 
+        //解散房间
+        th.ws.addHandler("BreakRoom", function (_ref21) {
+            var data = _ref21.data;
+
+            cc.log("<<<===[BreakRoom] WebSocketManager:", data);
+            Object.assign(th.room, data);
+            _this.dispatchEvent("BreakRoom", data);
+        });
+
         //=========================================================
         //炸金花消息写在这下面。
     },
@@ -345,12 +353,12 @@ cc.Class({
         );
     },
     */
-    connectGameServer: function connectGameServer(_ref21, callback) {
+    connectGameServer: function connectGameServer(_ref22, callback) {
         var _this2 = this;
 
-        var ip = _ref21.ip,
-            port = _ref21.port,
-            namespace = _ref21.namespace;
+        var ip = _ref22.ip,
+            port = _ref22.port,
+            namespace = _ref22.namespace;
 
         th.ws.close();
         th.ws.ip = ip;

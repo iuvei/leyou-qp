@@ -1,66 +1,111 @@
-2019-04-20T11:06:59.481Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-20T11:07:01.018Z - normal: Initializing Asset Database
-2019-04-20T11:07:01.044Z - normal: checking language setting...
-2019-04-20T11:07:01.044Z - normal: Language: zh
-2019-04-20T11:07:10.420Z - success: preview server running at http://localhost:7456
-2019-04-20T11:07:10.422Z - success: protocol editor-framework registered
-2019-04-20T11:07:10.423Z - success: protocol app registered
-2019-04-20T11:07:10.423Z - success: protocol theme registered
-2019-04-20T11:07:10.423Z - success: protocol packages registered
-2019-04-20T11:07:10.423Z - success: protocol uuid registerred
-2019-04-20T11:07:10.423Z - success: protocol db registerred
-2019-04-20T11:07:10.423Z - success: protocol thumbnail registerred
-2019-04-20T11:07:10.423Z - success: protocol unpack registerred
-2019-04-20T11:07:10.424Z - success: protocol disable-commonjs registerred
-2019-04-20T11:07:10.602Z - normal: connected!
-2019-04-20T11:07:10.603Z - normal: Check project D:\Workspaces_CocosCreator\leyou-github
-2019-04-20T11:07:10.607Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou-github
-2019-04-20T11:07:12.554Z - normal: Initializing Cocos2d
-2019-04-20T11:07:17.689Z - normal: Initializing engine extends
-2019-04-20T11:07:18.884Z - success: asset-db-debugger loaded
-2019-04-20T11:07:18.887Z - success: baidu-adapter loaded
-2019-04-20T11:07:18.926Z - success: code-editor loaded
-2019-04-20T11:07:18.930Z - success: color-picker loaded
-2019-04-20T11:07:19.760Z - success: fb-audience-network loaded
-2019-04-20T11:07:20.367Z - success: fb-live-stream loaded
-2019-04-20T11:07:20.400Z - success: google-play-instant loaded
-2019-04-20T11:07:20.494Z - success: huawei-runtime loaded
-2019-04-20T11:07:20.496Z - success: jsb-adapter loaded
-2019-04-20T11:07:20.582Z - success: oppo-runtime loaded
-2019-04-20T11:07:20.623Z - success: package-manager loaded
-2019-04-20T11:07:22.724Z - success: qqplay-adapter loaded
-2019-04-20T11:07:22.750Z - success: runtime-dev-tools loaded
-2019-04-20T11:07:22.801Z - success: sdkbox loaded
-2019-04-20T11:07:22.837Z - success: tester loaded
-2019-04-20T11:07:22.868Z - success: ui-grid loaded
-2019-04-20T11:07:22.904Z - success: ui-kit-preview-extra loaded
-2019-04-20T11:07:22.951Z - success: ui-kit-preview loaded
-2019-04-20T11:07:22.954Z - success: ui-kit loaded
-2019-04-20T11:07:22.984Z - success: ui-tree loaded
-2019-04-20T11:07:23.069Z - success: vivo-runtime loaded
-2019-04-20T11:07:23.070Z - success: weapp-adapter loaded
-2019-04-20T11:07:23.140Z - success: assets loaded
-2019-04-20T11:07:23.168Z - success: builder loaded
-2019-04-20T11:07:24.936Z - success: cocos-services loaded
-2019-04-20T11:07:24.969Z - success: console loaded
-2019-04-20T11:07:25.055Z - success: fb-instant-games loaded
-2019-04-20T11:07:25.057Z - success: google-instant-games loaded
-2019-04-20T11:07:25.076Z - success: hierarchy loaded
-2019-04-20T11:07:25.095Z - success: inspector loaded
-2019-04-20T11:07:25.122Z - success: keystore loaded
-2019-04-20T11:07:25.174Z - success: node-library loaded
-2019-04-20T11:07:25.198Z - success: package-asset loaded
-2019-04-20T11:07:25.220Z - success: preferences loaded
-2019-04-20T11:07:25.261Z - success: project-exporter loaded
-2019-04-20T11:07:25.264Z - success: project-importer loaded
-2019-04-20T11:07:25.267Z - success: project-settings loaded
-2019-04-20T11:07:25.292Z - success: scene loaded
-2019-04-20T11:07:25.312Z - success: simulator-debugger loaded
-2019-04-20T11:07:25.314Z - success: sprite-editor loaded
-2019-04-20T11:07:25.319Z - success: store loaded
-2019-04-20T11:07:25.324Z - success: timeline loaded
-2019-04-20T11:07:25.331Z - success: bitmap-font loaded
-2019-04-20T11:07:30.103Z - info: Cocos Services load base data!
-2019-04-20T11:07:36.260Z - normal: Loading packages
-2019-04-20T11:07:36.305Z - normal: Watching packages
-2019-04-20T11:07:38.414Z - normal: Run Application
+2019-04-21T00:22:31.980Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-21T00:22:33.378Z - normal: Initializing Asset Database
+2019-04-21T00:22:33.382Z - normal: checking language setting...
+2019-04-21T00:22:33.382Z - normal: Language: zh
+2019-04-21T00:22:40.277Z - success: preview server running at http://localhost:7456
+2019-04-21T00:22:40.280Z - success: protocol editor-framework registered
+2019-04-21T00:22:40.280Z - success: protocol app registered
+2019-04-21T00:22:40.280Z - success: protocol theme registered
+2019-04-21T00:22:40.280Z - success: protocol packages registered
+2019-04-21T00:22:40.280Z - success: protocol uuid registerred
+2019-04-21T00:22:40.280Z - success: protocol db registerred
+2019-04-21T00:22:40.280Z - success: protocol thumbnail registerred
+2019-04-21T00:22:40.280Z - success: protocol unpack registerred
+2019-04-21T00:22:40.281Z - success: protocol disable-commonjs registerred
+2019-04-21T00:22:40.462Z - normal: connected!
+2019-04-21T00:22:40.464Z - normal: Check project D:\Workspaces_CocosCreator\leyou-github
+2019-04-21T00:22:40.466Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou-github
+2019-04-21T00:22:42.370Z - normal: Initializing Cocos2d
+2019-04-21T00:22:45.748Z - normal: Initializing engine extends
+2019-04-21T00:22:46.407Z - success: asset-db-debugger loaded
+2019-04-21T00:22:46.410Z - success: baidu-adapter loaded
+2019-04-21T00:22:46.443Z - success: code-editor loaded
+2019-04-21T00:22:46.448Z - success: color-picker loaded
+2019-04-21T00:22:46.960Z - success: fb-audience-network loaded
+2019-04-21T00:22:47.381Z - success: fb-live-stream loaded
+2019-04-21T00:22:47.426Z - success: google-play-instant loaded
+2019-04-21T00:22:47.533Z - success: huawei-runtime loaded
+2019-04-21T00:22:47.534Z - success: jsb-adapter loaded
+2019-04-21T00:22:47.619Z - success: oppo-runtime loaded
+2019-04-21T00:22:47.650Z - success: package-manager loaded
+2019-04-21T00:22:48.829Z - success: qqplay-adapter loaded
+2019-04-21T00:22:48.832Z - success: runtime-dev-tools loaded
+2019-04-21T00:22:48.850Z - success: sdkbox loaded
+2019-04-21T00:22:48.857Z - success: tester loaded
+2019-04-21T00:22:48.873Z - success: ui-grid loaded
+2019-04-21T00:22:48.897Z - success: ui-kit-preview-extra loaded
+2019-04-21T00:22:48.914Z - success: ui-kit-preview loaded
+2019-04-21T00:22:48.917Z - success: ui-kit loaded
+2019-04-21T00:22:48.920Z - success: ui-tree loaded
+2019-04-21T00:22:48.962Z - success: vivo-runtime loaded
+2019-04-21T00:22:48.964Z - success: weapp-adapter loaded
+2019-04-21T00:22:49.012Z - success: assets loaded
+2019-04-21T00:22:49.014Z - success: builder loaded
+2019-04-21T00:22:50.163Z - success: cocos-services loaded
+2019-04-21T00:22:50.185Z - success: console loaded
+2019-04-21T00:22:50.225Z - success: fb-instant-games loaded
+2019-04-21T00:22:50.228Z - success: google-instant-games loaded
+2019-04-21T00:22:50.234Z - success: hierarchy loaded
+2019-04-21T00:22:50.237Z - success: inspector loaded
+2019-04-21T00:22:50.239Z - success: keystore loaded
+2019-04-21T00:22:50.245Z - success: node-library loaded
+2019-04-21T00:22:50.247Z - success: package-asset loaded
+2019-04-21T00:22:50.249Z - success: preferences loaded
+2019-04-21T00:22:50.252Z - success: project-exporter loaded
+2019-04-21T00:22:50.254Z - success: project-importer loaded
+2019-04-21T00:22:50.256Z - success: project-settings loaded
+2019-04-21T00:22:50.261Z - success: scene loaded
+2019-04-21T00:22:50.264Z - success: simulator-debugger loaded
+2019-04-21T00:22:50.266Z - success: sprite-editor loaded
+2019-04-21T00:22:50.271Z - success: store loaded
+2019-04-21T00:22:50.279Z - success: timeline loaded
+2019-04-21T00:22:50.304Z - success: bitmap-font loaded
+2019-04-21T00:22:57.226Z - info: Cocos Services load base data!
+2019-04-21T00:22:57.906Z - normal: Loading packages
+2019-04-21T00:22:57.914Z - normal: Watching packages
+2019-04-21T00:22:59.441Z - normal: Run Application
+2019-04-21T01:12:54.266Z - failed: [db-task][sync-changes] Failed to import asset D:\Workspaces_CocosCreator\leyou-github\assets\scripts\components\GameNN.js, message: Compile error: SyntaxError: D:/Workspaces_CocosCreator/leyou-github/assets/scripts/components/GameNN.js: Unexpected token (670:68)
+  668 |         this.refreshOptions();
+  669 |         if (th.room.room_status == 2) {
+> 670 |             if(th.room.banker_mode == 1 || th.room.banker_mode == 2)){
+      |                                                                     ^
+  671 |                 let player = th.getMyselfPlayer();
+  672 |                 player.cards = th.room.cards;
+  673 |                 this.showPokers();
+    at Parser.pp$5.raise (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:4454:13)
+    at Parser.pp.unexpected (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1761:8)
+    at Parser.pp$3.parseExprAtom (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3750:12)
+    at Parser.pp$3.parseExprSubscripts (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3494:19)
+    at Parser.pp$3.parseMaybeUnary (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3474:19)
+    at Parser.pp$3.parseExprOps (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3404:19)
+    at Parser.pp$3.parseMaybeConditional (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3381:19)
+    at Parser.pp$3.parseMaybeAssign (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3344:19)
+    at Parser.pp$3.parseExpression (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:3306:19)
+    at Parser.pp$1.parseStatement (D:\CocosCreator2.0.9\resources\app.asar\node_modules\babylon\lib\index.js:1906:19)
+2019-04-21T12:45:39.259Z - normal: Modified global variable while editing: onerror
+Before: function ( message, filename, lineno, colno, err ) {
+        if ( Editor ) {
+            if ( Editor.error ) {
+                Editor.error(err);
+            } else if ( Editor.Ipc.sendToMain ) {
+                Editor.Ipc.sendToMain('editor:renderer-console-error', err.stack || err);
+                Editor.Ipc.sendToMain('metrics:track-exception', (err.stack || err));
+            }
+        } else {
+            console.error(err.stack || err);
+        }
+        // Just let default handler run.
+        return false;
+    }
+After: null
+2019-04-21T12:45:39.271Z - failed: Exception  TypeError: Cannot read property 'nativeWin' of null
+    at Object.n.reply (D:\CocosCreator2.0.9\resources\app.asar\editor-framework\lib\main\ipc.js:1:3835)
+    at Object.callback (D:\CocosCreator2.0.9\resources\app.asar\editor\core\ipc\app-ipc.js:1:2628)
+    at D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:906:35
+    at _arrayEach (D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:85:13)
+    at D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:898:17
+    at D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:44:16
+    at u.<anonymous> (D:\CocosCreator2.0.9\resources\app.asar\asset-db\index.js:1:1883)
+    at u.queryMetas (D:\CocosCreator2.0.9\resources\app.asar\asset-db\lib\tasks.js:1:12955)
+    at _tasks.r.queue (D:\CocosCreator2.0.9\resources\app.asar\asset-db\index.js:1:2264)
+    at D:\CocosCreator2.0.9\resources\app.asar\node_modules\async\lib\async.js:987:13

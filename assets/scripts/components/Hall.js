@@ -55,6 +55,7 @@ cc.Class({
         if (th.args.roomId && th.args.type) {
             cc.log(`直接进入房间：${th.args.type}==${th.args.roomId}`);
             th.room.room_number = th.args.roomId;
+            th.wc.show("正在加入游戏...");
             if (th.args.type == "nn") {
                 th.webSocketManager.connectGameServer(
                     {
@@ -82,11 +83,9 @@ cc.Class({
     },
     onEnable() {
         cc.log("Hall onEnable");
-        cc.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     },
     start() {
         cc.log("Hall start");
-        cc.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     },
     initEventHandlers() {
         cc.log("Hall initEventHandlers()");
@@ -101,7 +100,6 @@ cc.Class({
 
         this.node.on("CreateRoom", () => {
             cc.log("<<<===[CreateRoom] Hall");
-            th.wc.hide();
             this.createGame.active = false;
             this.selectGame.active = false;
             this.topToBottomAnim(this.selectGame);
@@ -112,6 +110,7 @@ cc.Class({
                 th.alert.show("提示", "房间已经关闭");
                 return;
             }
+            th.wc.hide();
             this.joinOrLook.getComponent("JoinOrLook").show(th.gametype);
         });
     },

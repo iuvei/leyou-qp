@@ -118,9 +118,11 @@ cc.Class({
             });
         };
         th.initRoom = function () {
-            if (th.room.banker_mode == 1) {
+            if (th.room.banker_mode == 1 || th.room.banker_mode == 3 || th.room.banker_mode == 4 || th.room.banker_mode == 5) {
+                //自由抢庄
                 th.myself.needLookCount = 2;
             } else if (th.room.banker_mode == 2) {
+                //名牌抢庄
                 th.myself.needLookCount = 1;
             }
         };
@@ -134,7 +136,9 @@ cc.Class({
                 player.card_type = 0;
                 player.combo_array = [];
                 player.combo_point = 0;
-                player.is_banker = 0;
+                if (th.room.banker_mode != 5) {
+                    player.is_banker = 0;
+                }
             });
             th.initRoom();
         };

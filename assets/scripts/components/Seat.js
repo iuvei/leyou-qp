@@ -214,9 +214,7 @@ cc.Class({
             } , isbanker:${isbanker} , result:${this._isbanker != isbanker}`
         );
         if (this._isbanker != isbanker) {
-            cc.log("XXXXXXXXXXXXXXXXXXXXXXXthis._isbanker != isbanker");
             if (isbanker) {
-                cc.log("YYYYYYYYYYYYYYYYYYYYthiisbanker");
                 this.blink.node.active = true;
                 this.blink.node.scaleX = 1;
                 this.blink.node.scaleY = 0.9;
@@ -224,18 +222,10 @@ cc.Class({
                 this.blink.node.runAction(
                     cc.sequence(
                         cc.fadeIn(0),
-                        cc.spawn(cc.scaleTo(0.5, 1.3), cc.fadeOut(0.5)),
-                        cc.callFunc(target => {
-                            cc.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-                            this.banker.node.scale = 0.1;
-                            this.banker.node.active = true;
-                            this.banker.node.runAction(cc.scaleTo(0.3, 1));
-                            target.active = false;
-                        })
+                        cc.spawn(cc.scaleTo(0.5, 1.3), cc.fadeOut(0.5))
                     )
                 );
                 this.scheduleOnce(() => {
-                    cc.log("WWWWWWWWWWWWWWWWWWWWWWWWWW");
                     this.banker.node.active = true;
                     this.banker.node.scale = 0.1;
                     this.banker.node.runAction(cc.scaleTo(0.3, 1));

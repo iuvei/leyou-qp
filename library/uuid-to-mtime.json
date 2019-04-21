@@ -1550,38 +1550,38 @@
     "relativePath": "prefabs\\room_result_deatail_son_item.prefab"
   },
   "773fdc59-16c8-4da9-85ab-17e6569a9929": {
-    "asset": 1555686657577,
-    "meta": 1555686659494,
+    "asset": 1555845844050,
+    "meta": 1555846776527,
     "relativePath": "scripts\\components\\Hall.js"
   },
   "cd3cd798-fe2d-46e2-af68-80a4a8c8d20b": {
-    "asset": 1555693164491,
-    "meta": 1555693184336,
+    "asset": 1555845820733,
+    "meta": 1555846776563,
     "relativePath": "scripts\\WebSocketManager.js"
   },
-  "7c6aab36-91c1-46e4-a05f-a513e95220e6": {
-    "asset": 1555759411977,
-    "meta": 1555759749766,
-    "relativePath": "scripts\\Global.js"
-  },
-  "9184b79e-fddb-42aa-a1e9-86b7ade15603": {
-    "asset": 1555769904212,
-    "meta": 1555770023491,
-    "relativePath": "scripts\\components\\Seat.js"
-  },
   "8608a04d-802a-4813-a44e-502c70de13b0": {
-    "asset": 1555770100300,
-    "meta": 1555770100334,
+    "asset": 1555846948877,
+    "meta": 1555846948917,
     "relativePath": "scenes\\GameNN.fire"
   },
+  "a6e347c3-0be0-4072-9a17-4104c9b032de": {
+    "asset": 1555847178206,
+    "meta": 1555847183277,
+    "relativePath": "scripts\\components\\GameNN.js"
+  },
   "f9be6382-b731-458d-bf89-c3454c5dc999": {
-    "asset": 1555770413534,
-    "meta": 1555770415342,
+    "asset": 1555848413257,
+    "meta": 1555850737579,
     "relativePath": "scripts\\components\\CreateNN.js"
   },
-  "a6e347c3-0be0-4072-9a17-4104c9b032de": {
-    "asset": 1555770393981,
-    "meta": 1555770415345,
-    "relativePath": "scripts\\components\\GameNN.js"
+  "9184b79e-fddb-42aa-a1e9-86b7ade15603": {
+    "asset": 1555850513717,
+    "meta": 1555850737735,
+    "relativePath": "scripts\\components\\Seat.js"
+  },
+  "7c6aab36-91c1-46e4-a05f-a513e95220e6": {
+    "asset": 1555850583833,
+    "meta": 1555850737765,
+    "relativePath": "scripts\\Global.js"
   }
 }

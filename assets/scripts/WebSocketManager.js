@@ -94,7 +94,6 @@ cc.Class({
             cc.log("<<<===[PrepareJoinRoom] WebSocketManager:", data);
             th.room = Object.assign(th.room, data);
             this.dispatchEvent("PrepareJoinRoom", data);
-            th.wc.hide();
         });
 
         //加入房间
@@ -264,6 +263,13 @@ cc.Class({
             cc.log("<<<===[getCopyUrl] WebSocketManager:", data);
             th.room.copyurl = data.url;
             this.dispatchEvent("getCopyUrl", data);
+        });
+
+        //解散房间
+        th.ws.addHandler("BreakRoom", ({ data }) => {
+            cc.log("<<<===[BreakRoom] WebSocketManager:", data);
+            Object.assign(th.room, data);
+            this.dispatchEvent("BreakRoom", data);
         });
 
         //=========================================================

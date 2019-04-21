@@ -61,6 +61,7 @@ cc.Class((_cc$Class = {
         if (th.args.roomId && th.args.type) {
             cc.log("\u76F4\u63A5\u8FDB\u5165\u623F\u95F4\uFF1A" + th.args.type + "==" + th.args.roomId);
             th.room.room_number = th.args.roomId;
+            th.wc.show("正在加入游戏...");
             if (th.args.type == "nn") {
                 th.webSocketManager.connectGameServer({
                     ip: "47.96.177.207",
@@ -85,11 +86,9 @@ cc.Class((_cc$Class = {
     },
     onEnable: function onEnable() {
         cc.log("Hall onEnable");
-        cc.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     },
     start: function start() {
         cc.log("Hall start");
-        cc.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     },
     initEventHandlers: function initEventHandlers() {
         var _this = this;
@@ -106,7 +105,6 @@ cc.Class((_cc$Class = {
 
         this.node.on("CreateRoom", function () {
             cc.log("<<<===[CreateRoom] Hall");
-            th.wc.hide();
             _this.createGame.active = false;
             _this.selectGame.active = false;
             _this.topToBottomAnim(_this.selectGame);
@@ -117,6 +115,7 @@ cc.Class((_cc$Class = {
                 th.alert.show("提示", "房间已经关闭");
                 return;
             }
+            th.wc.hide();
             _this.joinOrLook.getComponent("JoinOrLook").show(th.gametype);
         });
     },
