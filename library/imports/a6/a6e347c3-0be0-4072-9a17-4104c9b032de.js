@@ -131,9 +131,14 @@ cc.Class({
         this.node.on("UpdateAccountStatus", function (player) {
             cc.log("<<<===[UpdateAccountStatus] GmaeNN", player);
             _this2.initSingleSeat(player);
-            if (player.account_id == th.myself.account_id) {
-                _this2.refreshOptions();
+            if (!th.myself.isPlayer) {
                 _this2.initSingleSeat(player);
+            } else {
+                if (player.account_id == th.getMyselfAccountId()) {
+                    //th.myself.account_id 因观战修改成th.getMyselfAccountId()
+                    _this2.refreshOptions();
+                    _this2.initSingleSeat(player);
+                }
             }
         });
         this.node.on("GameStart", function (data) {
@@ -141,6 +146,10 @@ cc.Class({
             _this2.initRoomInfo();
             _this2.setCountdown(data.limit_time, "游戏开始了");
             _this2.refreshOptions();
+            //如果观战
+            if (!th.myself.isPlayer) {
+                _this2.showPokers();
+            }
         });
         this.node.on("MyCards", function (player) {
             cc.log("<<<===[MyCards] GmaeNN", player);
@@ -199,7 +208,8 @@ cc.Class({
         this.node.on("UpdateAccountMultiples", function (player) {
             cc.log("<<<===[UpdateAccountMultiples] GmaeNN:", player);
             _this2.initSingleSeat(player);
-            if (player.account_id == th.myself.account_id) {
+            if (player.account_id == th.getMyselfAccountId()) {
+                //th.myself.account_id 因观战修改成th.getMyselfAccountId()
                 _this2.refreshOptions();
             }
         });
@@ -242,6 +252,13 @@ cc.Class({
             }
 
             _this2.setCountdown(data.limit_time, "摊牌开始了");
+
+            _this2.scheduleOnce(function () {
+                //如果时间到还没摊牌就摊牌
+                if (th.getMyselfPlayer().account_status == 7) {
+                    _this2.onShowClicked();
+                }
+            }, data.limit_time);
 
             data.data.forEach(function (item) {
                 var player = th.getPlayerById(item.account_id);
@@ -564,12 +581,14 @@ cc.Class({
     },
     onChanganbaocunClicked: function onChanganbaocunClicked() {
         cc.log("长按保存....");
+        th.webCaptureScreen();
     },
     showNiuType: function showNiuType(player) {
         var index = th.getLocalIndex(player.serial_num - 1);
         var nodeSeat = this.nodeSeats[index];
         var nodePoker = this.nodePokers[index];
-        if (player.account_id != th.myself.account_id) {
+        if (player.account_id != th.getMyselfAccountId()) {
+            //th.myself.account_id 因观战修改成th.getMyselfAccountId()
             //TODO 显示牛几
             var niuType = th.pokerManager.getNiuSprite(player.card_type, player.combo_point);
             niuType.x = nodeSeat.x > 0 ? -160 : 150;
@@ -607,6 +626,15 @@ cc.Class({
 
         cc.log("room_status, banker_mode :", room_status, banker_mode);
         if (room_status == 2) {
+            //如果观战
+            if (!th.myself.isPlayer) {
+                th.room.players.forEach(function (player) {
+                    player.cards = new Array(5).fill(-1);
+                });
+                cc.log("观战:", th.room);
+                this.showPokers();
+                return;
+            }
             if (banker_mode == 1 || banker_mode == 2 || banker_mode == 3 || banker_mode == 4) {
                 //是自由抢庄或者明牌抢庄直接发牌
                 //通比牛牛也直接发
@@ -629,6 +657,8 @@ cc.Class({
             var index = th.getLocalIndex(player.serial_num - 1);
             this.componentSeats[index].setBanker(true);
         }
+        cc.log("th.myself.isPlayer:,", th.myself.isPlayer);
+        this.node.getChildByName("icon_look").active = !th.myself.isPlayer;
     },
     initMtpBtn: function initMtpBtn() {
         var _th$room$bet_type_arr = _slicedToArray(th.room.bet_type_arr, 4),
@@ -742,6 +772,7 @@ cc.Class({
         }
         var players = th.room.players;
         for (var _i = 0; _i < players.length; ++_i) {
+            cc.log("name:" + players[_i].nickname);
             this.initSingleSeat(players[_i]);
         }
     },
@@ -773,11 +804,11 @@ cc.Class({
                 /*
                 //闲家倍数
                 if (player.is_banker == 1) {
-                this.componentSeats[index].setMultiples(
-                    player.multiples != 0 ? "x" + player.multiples : ""
-                );
+                    this.componentSeats[index].setMultiples(
+                        player.multiples != 0 ? "x" + player.multiples : ""
+                    );
                 } else {
-                this.componentSeats[index].setMultiples(null);
+                    this.componentSeats[index].setMultiples(null);
                 }
                 */
             } else if (player.account_status == 7) {

@@ -135,6 +135,7 @@ cc.Class({
             var data = _ref8.data;
 
             cc.log("<<<===[GuestRoom] WebSocketManager:", data);
+            th.initRoom();
             th.getRoomCopyUrl();
             Object.assign(th.room, data);
             var sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";

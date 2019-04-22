@@ -121,7 +121,6 @@ cc.Class(_defineProperty({
         th.ws.send(JSON.stringify(params));
     },
     onLookClicked: function onLookClicked(traget) {
-        return;
         cc.log("onLookClicked");
         th.wc.show("正在加入房间...");
         var params = {

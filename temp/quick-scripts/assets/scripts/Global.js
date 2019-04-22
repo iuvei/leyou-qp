@@ -77,40 +77,32 @@ cc.Class({
             });
         };
         th.getLocalIndex = function (index) {
-            if (!th.myself.isPlayer) {
-                return 0;
-            }
             var total = Number(th.room.max_count);
             var rindex = (Number(index) - th.getMyselfSeatIndex() + total) % total;
             return rindex;
         };
         th.getSeatIndexById = function (account_id) {
-            if (!th.myself.isPlayer) {
-                return 0;
-            }
             var player = this.getPlayerById(account_id);
             return player.serial_num - 1;
         };
-        th.getMyselfSeatIndex = function () {
-            if (!th.myself.isPlayer) {
-                return 0;
-            }
-            var player = this.getPlayerById(th.myself.account_id);
-            return Number(player.serial_num) - 1;
-        };
         th.getMyselfPlayer = function () {
             if (!th.myself.isPlayer) {
-                return null;
+                return th.room.players[0]; //如果观战选每一个人当视角
+            } else {
+                var player = this.getPlayerById(th.myself.account_id);
+                return player;
             }
-            var player = this.getPlayerById(th.myself.account_id);
-            return player;
+        };
+        th.getMyselfSeatIndex = function () {
+            var player = th.getMyselfPlayer();
+            return Number(player.serial_num) - 1;
         };
         th.getMyselfLocalIndex = function () {
-            if (!th.myself.isPlayer) {
-                return 0;
-            }
             var player = this.getMyselfPlayer();
             return this.getLocalIndex(player.serial_num - 1);
+        };
+        th.getMyselfAccountId = function () {
+            return th.getMyselfPlayer().account_id;
         };
         th.getBankerPlayer = function () {
             return this.room.players.find(function (player) {
@@ -234,7 +226,7 @@ cc.Class({
         th.audioManager.init();
 
         //播放背景音乐
-        th.audioManager.playBGM("background.mp3");
+        //th.audioManager.playBGM("background.mp3");
 
         var WebSocketManager = require("WebSocketManager");
         th.webSocketManager = new WebSocketManager();

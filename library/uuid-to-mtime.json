@@ -974,11 +974,6 @@
     "meta": 1555153044004,
     "relativePath": "resources\\sounds\\timeup_alarm.mp3"
   },
-  "f27bd7be-6ddd-4428-8210-01720f30c4ef": {
-    "asset": 1555695189408,
-    "meta": 1555695189512,
-    "relativePath": "scenes\\Hall.fire"
-  },
   "4980b7e0-f215-4e72-b8fc-9079523ed6b5": {
     "asset": 1555224796956,
     "meta": 1555224797014,
@@ -1228,11 +1223,6 @@
     "asset": 1555419019253,
     "meta": 1555419997956,
     "relativePath": "scripts\\PokerManager.js"
-  },
-  "d872e7b6-6483-4d8d-8feb-71339f8be7eb": {
-    "asset": 1555426360637,
-    "meta": 1555426753444,
-    "relativePath": "scripts\\components\\JoinOrLook.js"
   },
   "303279e9-f753-41a3-8832-ca4b6accd681": {
     "asset": 1555434818125,
@@ -1554,21 +1544,6 @@
     "meta": 1555846776527,
     "relativePath": "scripts\\components\\Hall.js"
   },
-  "cd3cd798-fe2d-46e2-af68-80a4a8c8d20b": {
-    "asset": 1555845820733,
-    "meta": 1555846776563,
-    "relativePath": "scripts\\WebSocketManager.js"
-  },
-  "8608a04d-802a-4813-a44e-502c70de13b0": {
-    "asset": 1555846948877,
-    "meta": 1555846948917,
-    "relativePath": "scenes\\GameNN.fire"
-  },
-  "a6e347c3-0be0-4072-9a17-4104c9b032de": {
-    "asset": 1555847178206,
-    "meta": 1555847183277,
-    "relativePath": "scripts\\components\\GameNN.js"
-  },
   "f9be6382-b731-458d-bf89-c3454c5dc999": {
     "asset": 1555848413257,
     "meta": 1555850737579,
@@ -1579,9 +1554,39 @@
     "meta": 1555850737735,
     "relativePath": "scripts\\components\\Seat.js"
   },
+  "d872e7b6-6483-4d8d-8feb-71339f8be7eb": {
+    "asset": 1555851767118,
+    "meta": 1555851768601,
+    "relativePath": "scripts\\components\\JoinOrLook.js"
+  },
+  "f27bd7be-6ddd-4428-8210-01720f30c4ef": {
+    "asset": 1555852112629,
+    "meta": 1555852652372,
+    "relativePath": "scenes\\Hall.fire"
+  },
   "7c6aab36-91c1-46e4-a05f-a513e95220e6": {
-    "asset": 1555850583833,
-    "meta": 1555850737765,
+    "asset": 1555857202789,
+    "meta": 1555857206375,
     "relativePath": "scripts\\Global.js"
+  },
+  "cd3cd798-fe2d-46e2-af68-80a4a8c8d20b": {
+    "asset": 1555858310885,
+    "meta": 1555858313381,
+    "relativePath": "scripts\\WebSocketManager.js"
+  },
+  "bde17992-bc7e-47c2-95cb-ff03b81cc4f5": {
+    "asset": 1555859200308,
+    "meta": 1555859200371,
+    "relativePath": "texture\\Game\\icon_look.png"
+  },
+  "8608a04d-802a-4813-a44e-502c70de13b0": {
+    "asset": 1555860593341,
+    "meta": 1555860593389,
+    "relativePath": "scenes\\GameNN.fire"
+  },
+  "a6e347c3-0be0-4072-9a17-4104c9b032de": {
+    "asset": 1555859839286,
+    "meta": 1555859850954,
+    "relativePath": "scripts\\components\\GameNN.js"
   }
 }

@@ -112,6 +112,7 @@ cc.Class({
         //加入观战
         th.ws.addHandler("GuestRoom", ({ data }) => {
             cc.log("<<<===[GuestRoom] WebSocketManager:", data);
+            th.initRoom();
             th.getRoomCopyUrl();
             Object.assign(th.room, data);
             let sceneName = th.gametype == "nn" ? "GameNN" : "GameZJH";
