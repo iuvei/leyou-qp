@@ -2,6 +2,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        bg1: cc.Sprite,
+        bg2: cc.Sprite,
+        bg3: cc.Sprite,
+
         seatPrefab: cc.Prefab,
 
         baseNode: cc.Node,
@@ -53,13 +57,27 @@ cc.Class({
         resultDetailSonItemPrefab: cc.Prefab,
 
         btnCaptureScreen: cc.Button,
-        btnTest: cc.Button,
 
         holdTimeEclipse: 0, //用来检测长按
         holdClick: false,
 
+        auotReadyToggle: cc.Toggle,
+        //其他各种窗口
+        chatWin: cc.Node,
+        copyRoomUrlWin: cc.Node,
+        guanzhanWin: cc.Node,
+        settingWin: cc.Node,
+        fangzuobiWin: cc.Node,
+        guizeWin: cc.Node,
+        moreWin: cc.Node,
+
+        lblId: cc.Label,
+        lblAnhao: cc.Label,
+
         _countdownEndTime: 0, //倒计时剩余时间
-        _isPlay: true //用来播放倒计时声音
+        _isPlay: true, //用来播放倒计时声音
+
+        _bgImgIdx: 0
     },
 
     onLoad: function() {
@@ -92,6 +110,10 @@ cc.Class({
     },
     start() {
         cc.log("GameNN start");
+        this.bg1.node.active = this._bgImgIdx == 0;
+        this.bg2.node.active = this._bgImgIdx == 1;
+        this.bg3.node.active = this._bgImgIdx == 2;
+        this.onFangzuobiClicked();
     },
     initEventHandlers() {
         cc.log("GameNN initEventHandlers()");
@@ -131,6 +153,13 @@ cc.Class({
         });
         this.node.on("GameStart", data => {
             cc.log("<<<===[GameStart] GmaeNN", data);
+            //第一局开始动画
+            if (th.room.game_num == 1) {
+                this.node
+                    .getChildByName("OpenGameAnim")
+                    .getComponent("OpenGameAnim")
+                    .show();
+            }
             this.initRoomInfo();
             this.setCountdown(data.limit_time, "游戏开始了");
             this.refreshOptions();
@@ -156,6 +185,7 @@ cc.Class({
         //开始游戏,闲家选倍数
         this.node.on("StartBet", data => {
             cc.log("<<<===[StartBet] GmaeNN:", data);
+            this.nodeOptions.active = false;
             this.setCountdown(data.limit_time, "投注开始了");
             //抢庄account_ID数据
             //"grab_array": ["31", "18"],
@@ -258,13 +288,14 @@ cc.Class({
 
             this.setCountdown(data.limit_time, "摊牌开始了");
 
+            /*
             this.scheduleOnce(() => {
                 //如果时间到还没摊牌就摊牌
                 if (th.getMyselfPlayer().account_status == 7) {
                     this.onShowClicked();
                 }
             }, data.limit_time);
-
+            */
             data.data.forEach(item => {
                 let player = th.getPlayerById(item.account_id);
                 this.initSingleSeat(player);
@@ -274,117 +305,60 @@ cc.Class({
         //摊牌
         this.node.on("UpdateAccountShow", player => {
             cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
-            const index = th.getLocalIndex(player.serial_num - 1);
-            const nodePoker = this.nodePokers[index];
-            const nodeSeat = this.nodeSeats[index];
-            let pokers = nodePoker.children;
-
-            // 大于0为有牛
-            let hasNiu =
-                th.getNiuIndex(player.card_type, player.combo_point) > 0;
-            let cards = hasNiu > 0 ? player.combo_array : player.cards;
-            //如果不是自己
-            //(isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y +i * (isMyself ? 110 : 30),
-            // isMyself ? -25 : 0,
-            let isMyself = th.getMyselfLocalIndex() == index;
-            let firstX = isMyself ? 100 : nodeSeat.x > 0 ? -210 : 90;
-            let firstY = isMyself ? -25 : 0;
-            let offset = isMyself ? 110 : 30;
-            pokers.forEach((poker, index) => {
-                poker.runAction(
-                    cc.sequence(
-                        cc.moveTo(0.3, cc.v2(firstX, firstY)),
-                        cc.callFunc(target => {
-                            target.addChild(
-                                th.pokerManager.getPokerSpriteById(cards[index])
-                            );
-                        }),
-                        cc.moveTo(
-                            0.3,
-                            cc.v2(
-                                firstX +
-                                    nodePoker.y +
-                                    index * offset +
-                                    (hasNiu && index > 2 ? 15 : 0),
-                                firstY
-                            )
-                        )
-                    )
-                );
-            });
-            this.showNiuType(player);
+            this.tangpai(player);
         });
 
         //结果
         this.node.on("Win", data => {
             cc.log("<<<===[Win] GmaeNN:", data);
+            this.nodeOptions.active = false;
+            //找到没有摊牌的人摊牌
+            let tpPlayers = th.room.players.filter(
+                player => player.account_status == 7
+            );
+            tpPlayers.forEach(player => {
+                this.tangpai(player);
+            });
+            this.sprWaitShow.node.active = false;
+            this.spriteClickLookPai.node.active = false;
+
             //赢的人
             //let win = data.winner_array;
             //输的人
             //let lose = data.loser_array;
-            this.scheduleOnce(() => {
-                this.nodeAmins.removeAllChildren();
+            this.scheduleOnce(
+                () => {
+                    this.nodeAmins.removeAllChildren();
 
-                cc.log("TODO 飞筹码效果");
-                //通比牛牛先飞向最大的人，否则先飞向庄
-                let tagerPalyer =
-                    th.room.banker_mode == 4
-                        ? th.getPlayerById(data.winner_array[0].account_id)
-                        : th.getBankerPlayer();
+                    cc.log("TODO 飞筹码效果");
+                    //通比牛牛先飞向最大的人，否则先飞向庄
+                    let tagerPalyer =
+                        th.room.banker_mode == 4
+                            ? th.getPlayerById(data.winner_array[0].account_id)
+                            : th.getBankerPlayer();
 
-                const seatxy = th.getSeatXY();
-                const index = th.getLocalIndex(tagerPalyer.serial_num - 1);
-                let [tx, ty] = seatxy[index];
-                //输得的人先飞向tagerPalyer
-                th.audioManager.playSFX("coin.mp3");
-                data.loser_array.forEach(loser => {
-                    if (loser.account_id != tagerPalyer.account_id) {
-                        const player = th.getPlayerById(loser.account_id);
-                        const index = th.getLocalIndex(player.serial_num - 1);
-                        let [x, y] = seatxy[index];
-                        for (let i = 0; i < 5; i++) {
-                            let coin = cc.instantiate(this.coinPrefab);
-                            coin.x = x;
-                            coin.y = y;
-                            this.nodeAmins.addChild(coin);
-                            coin.runAction(
-                                cc.sequence(
-                                    cc.delayTime(0.1 + i * 0.05),
-                                    cc
-                                        .moveTo(0.5, cc.v2(tx, ty))
-                                        .easing(cc.easeSineOut()),
-                                    cc.callFunc(target => {
-                                        target.removeFromParent();
-                                    })
-                                )
-                            );
-                        }
-                    }
-                });
-                let loserCount = data.loser_array.filter(
-                    loser => loser.account_id != tagerPalyer.account_id
-                ).length;
-                //this.nodeAmins.removeAllChildren();
-                this.scheduleOnce(() => {
-                    //tagerPalyer输得的人先飞向赢的人
+                    const seatxy = th.getSeatXY();
+                    const index = th.getLocalIndex(tagerPalyer.serial_num - 1);
+                    let [tx, ty] = seatxy[index];
+                    //输得的人先飞向tagerPalyer
                     th.audioManager.playSFX("coin.mp3");
-                    data.winner_array.forEach(winer => {
-                        if (winer.account_id != tagerPalyer.account_id) {
-                            const player = th.getPlayerById(winer.account_id);
+                    data.loser_array.forEach(loser => {
+                        if (loser.account_id != tagerPalyer.account_id) {
+                            const player = th.getPlayerById(loser.account_id);
                             const index = th.getLocalIndex(
                                 player.serial_num - 1
                             );
                             let [x, y] = seatxy[index];
                             for (let i = 0; i < 5; i++) {
                                 let coin = cc.instantiate(this.coinPrefab);
-                                coin.x = tx;
-                                coin.y = ty;
+                                coin.x = x;
+                                coin.y = y;
                                 this.nodeAmins.addChild(coin);
                                 coin.runAction(
                                     cc.sequence(
                                         cc.delayTime(0.1 + i * 0.05),
                                         cc
-                                            .moveTo(0.5, cc.v2(x, y))
+                                            .moveTo(0.5, cc.v2(tx, ty))
                                             .easing(cc.easeSineOut()),
                                         cc.callFunc(target => {
                                             target.removeFromParent();
@@ -394,49 +368,96 @@ cc.Class({
                             }
                         }
                     });
-                }, 0.1 + 0.5 + loserCount * 0.05);
+                    let loserCount = data.loser_array.filter(
+                        loser => loser.account_id != tagerPalyer.account_id
+                    ).length;
+                    //this.nodeAmins.removeAllChildren();
+                    this.scheduleOnce(() => {
+                        //tagerPalyer输得的人先飞向赢的人
+                        th.audioManager.playSFX("coin.mp3");
+                        data.winner_array.forEach(winer => {
+                            if (winer.account_id != tagerPalyer.account_id) {
+                                const player = th.getPlayerById(
+                                    winer.account_id
+                                );
+                                const index = th.getLocalIndex(
+                                    player.serial_num - 1
+                                );
+                                let [x, y] = seatxy[index];
+                                for (let i = 0; i < 5; i++) {
+                                    let coin = cc.instantiate(this.coinPrefab);
+                                    coin.x = tx;
+                                    coin.y = ty;
+                                    this.nodeAmins.addChild(coin);
+                                    coin.runAction(
+                                        cc.sequence(
+                                            cc.delayTime(0.1 + i * 0.05),
+                                            cc
+                                                .moveTo(0.5, cc.v2(x, y))
+                                                .easing(cc.easeSineOut()),
+                                            cc.callFunc(target => {
+                                                target.removeFromParent();
+                                            })
+                                        )
+                                    );
+                                }
+                            }
+                        });
+                    }, 0.1 + 0.5 + loserCount * 0.05);
 
-                let winerCount = data.winner_array.filter(
-                    winner => winner.account_id != tagerPalyer.account_id
-                ).length;
+                    let winerCount = data.winner_array.filter(
+                        winner => winner.account_id != tagerPalyer.account_id
+                    ).length;
 
-                let offsetCount = loserCount + winerCount;
-                cc.log("==================offsetCount:", offsetCount);
+                    let offsetCount = loserCount + winerCount;
+                    cc.log("==================offsetCount:", offsetCount);
 
-                this.scheduleOnce(() => {
-                    let score_board = data.score_board;
-                    let account_ids = Object.keys(score_board);
-                    cc.log("AccountIds:", account_ids);
-                    account_ids.forEach(account_id => {
-                        const player = th.getPlayerById(account_id);
-                        player.account_score = score_board[account_id];
-                        const index = th.getLocalIndex(player.serial_num - 1);
-                        this.componentSeats[index].setScoreAnim(
-                            player.account_score
-                        );
-                    });
-                }, 0.1 + 0.5 + offsetCount * 0.05 + 0.5);
+                    this.scheduleOnce(() => {
+                        let score_board = data.score_board;
+                        let account_ids = Object.keys(score_board);
+                        cc.log("AccountIds:", account_ids);
+                        account_ids.forEach(account_id => {
+                            const player = th.getPlayerById(account_id);
+                            player.account_score = score_board[account_id];
+                            const index = th.getLocalIndex(
+                                player.serial_num - 1
+                            );
+                            this.componentSeats[index].setScoreAnim(
+                                player.account_score
+                            );
+                        });
+                    }, 0.1 + 0.5 + offsetCount * 0.05 + 0.5);
 
-                this.scheduleOnce(() => {
-                    th.clear();
-                    th.room.players.forEach(player => {
-                        const index = th.getLocalIndex(player.serial_num - 1);
-                        this.componentSeats[index].setBanker(player.is_banker);
-                    });
-                    this.nodePokers.forEach(node => {
-                        node.removeAllChildren();
-                    });
-                    th.room.players.forEach(player => {
-                        this.initSingleSeat(player);
-                    });
-                    this.refreshOptions();
-                    if (th.room.game_num == th.room.total_num) {
-                        cc.log("done........................");
-                        th.wc.show("下在获取战绩");
-                        this.toConnectApi();
-                    }
-                }, 0.1 + 0.5 + offsetCount * 0.05 + 3);
-            }, 1);
+                    this.scheduleOnce(() => {
+                        th.clear();
+                        th.room.players.forEach(player => {
+                            const index = th.getLocalIndex(
+                                player.serial_num - 1
+                            );
+                            this.componentSeats[index].setBanker(
+                                player.is_banker
+                            );
+                        });
+                        this.nodePokers.forEach(node => {
+                            node.removeAllChildren();
+                        });
+                        th.room.players.forEach(player => {
+                            this.initSingleSeat(player);
+                        });
+                        this.refreshOptions();
+                        if (th.room.game_num == th.room.total_num) {
+                            cc.log("done........................");
+                            th.wc.show("下在获取战绩");
+                            this.toConnectApi();
+                        } else {
+                            if (this.auotReadyToggle.isChecked) {
+                                this.onReadyClicked();
+                            }
+                        }
+                    }, 0.1 + 0.5 + offsetCount * 0.05 + 3);
+                },
+                1 + tpPlayers.length > 0 ? 2 : 0
+            );
         });
 
         //战绩
@@ -573,19 +594,29 @@ cc.Class({
                     playerNode
                         .getChildByName("lbl_name")
                         .getComponent("cc.Label").string = item.name + "";
-                    playerNode
-                        .getChildByName("lbl_mtp")
-                        .getComponent("cc.Label").string = item.chip + "";
-                    playerNode
-                        .getChildByName("lbl_score")
-                        .getComponent("cc.Label").string = item.score + "";
-                    playerNode
-                        .getChildByName("lbl_niu")
-                        .getComponent("cc.Label").string =
-                        item.card_type_str + "";
                     playerNode.getChildByName("icon_banker").active =
                         item.is_banker == 1;
 
+                    if (item.is_join == 1) {
+                        playerNode
+                            .getChildByName("lbl_mtp")
+                            .getComponent("cc.Label").string = item.chip + "";
+                        playerNode
+                            .getChildByName("lbl_score")
+                            .getComponent("cc.Label").string = item.score + "";
+                        playerNode
+                            .getChildByName("lbl_niu")
+                            .getComponent("cc.Label").string =
+                            item.card_type_str + "";
+                        let pokerNode = playerNode.getChildByName("pokers");
+                        item.player_cards.forEach(card => {
+                            pokerNode.addChild(
+                                th.pokerManager.getPokerSpriteById(card)
+                            );
+                        });
+                    } else {
+                        playerNode.getChildByName("lbl_nojoin").active = true;
+                    }
                     let headimg = playerNode
                         .getChildByName("headImg")
                         .getComponent("cc.Sprite");
@@ -607,12 +638,6 @@ cc.Class({
                         }
                     );
 
-                    let pokerNode = playerNode.getChildByName("pokers");
-                    item.player_cards.forEach(card => {
-                        pokerNode.addChild(
-                            th.pokerManager.getPokerSpriteById(card)
-                        );
-                    });
                     playersNode.addChild(playerNode);
                 });
                 resultDetailNode.addChild(roundNode);
@@ -646,6 +671,73 @@ cc.Class({
             }
             //Object.assign(th.room, data);
         });
+        //暗号设置返回
+        this.node.on("setIndividuality", data => {
+            cc.log("<<<===[setIndividuality] GameNN:", data);
+            this.initAnhaoAndId();
+        });
+
+        this.node.on("StartLimitTime", data => {
+            cc.log("<<<===[StartLimitTime] GameNN:", data);
+            this.setCountdown(data.limit_time);
+        });
+        this.node.on("BroadcastVoice", data => {
+            cc.log("<<<===[BroadcastVoice] GameNN:", data);
+            const player = th.getPlayerById(data.account_id);
+            const index = th.getLocalIndex(player.serial_num - 1);
+            let firstChar = data.voice_num.substr(0, 1);
+            let idx = Number(data.voice_num.substr(1));
+            cc.log("firstCar idx:", firstChar, idx);
+            if (firstChar == "e") {
+                //表情
+                this.componentSeats[index].setEmoji(idx + 1);
+            } else {
+                //语音
+                this.componentSeats[index].setQuickVoice(idx + 1);
+                this.componentSeats[index].setChat(th.chattxt[idx]);
+            }
+        });
+    },
+    tangpai(player) {
+        cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
+        const index = th.getLocalIndex(player.serial_num - 1);
+        const nodePoker = this.nodePokers[index];
+        const nodeSeat = this.nodeSeats[index];
+        let pokers = nodePoker.children;
+
+        // 大于0为有牛
+        let hasNiu = th.getNiuIndex(player.card_type, player.combo_point) > 0;
+        let cards = hasNiu > 0 ? player.combo_array : player.cards;
+        //如果不是自己
+        //(isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y +i * (isMyself ? 110 : 30),
+        // isMyself ? -25 : 0,
+        let isMyself = th.getMyselfLocalIndex() == index;
+        let firstX = isMyself ? 100 : nodeSeat.x > 0 ? -210 : 90;
+        let firstY = isMyself ? -25 : 0;
+        let offset = isMyself ? 110 : 30;
+        pokers.forEach((poker, index) => {
+            poker.runAction(
+                cc.sequence(
+                    cc.moveTo(0.3, cc.v2(firstX, firstY)),
+                    cc.callFunc(target => {
+                        target.addChild(
+                            th.pokerManager.getPokerSpriteById(cards[index])
+                        );
+                    }),
+                    cc.moveTo(
+                        0.3,
+                        cc.v2(
+                            firstX +
+                                nodePoker.y +
+                                index * offset +
+                                (hasNiu && index > 2 ? 15 : 0),
+                            firstY
+                        )
+                    )
+                )
+            );
+        });
+        this.showNiuType(player);
     },
     onResultCloseClicked() {
         th.wc.show("正在返回大厅。。。");
@@ -715,6 +807,7 @@ cc.Class({
         this.nodeCountdown.active = false;
         this.spriteClickLookPai.node.active = false;
         this.initRoomInfo();
+        this.initAnhaoAndId();
         this.initSeat();
         this.initMtpBtn();
         this.refreshOptions();
@@ -884,6 +977,14 @@ cc.Class({
             th.room.total_num
         }局 底分：${th.room.base_score}分`;
     },
+    initAnhaoAndId() {
+        this.lblAnhao.string =
+            "暗号：" +
+            (th.myself.individuality == "" || th.myself.individuality == null
+                ? "自定义暗号"
+                : th.myself.individuality);
+        this.lblId.string = "ID:" + th.myself.account_id;
+    },
     initSeat() {
         const seatsxy = th.getSeatXY();
         for (let i = 0; i < seatsxy.length; i++) {
@@ -949,7 +1050,10 @@ cc.Class({
                     this.componentSeats[index].setMultiples(null);
                 }
                 */
-            } else if (player.account_status == 7) {
+            } else if (
+                player.account_status == 7 ||
+                player.account_status == 8
+            ) {
                 //未摊牌
                 this.componentSeats[index].setMultiples(
                     player.is_banker == 1 ? null : "x" + player.multiples
@@ -960,14 +1064,8 @@ cc.Class({
         }
     },
     onCopyCliecked: function(targer, data) {
-        /*
-        let address = `${th.href}?roomId=${th.room.room_number}&type=${
-            th.gametype
-        }`;
-        */
-        let result = th.webCopyString(th.room.copyurl);
-        cc.log("address:", th.room.copyurl);
-        th.msg.show(result ? "复制成功！" : "复制失败");
+        th.audioManager.playSFX("click.m4a");
+        this.copyRoomUrlWin.getComponent("CopyRoomUrl").show();
     },
     onBankerMultiplesClicked: function(targer, value) {
         let multiples = 1;
@@ -1054,42 +1152,27 @@ cc.Class({
         });
     },
     onChatClicked(targer) {
-        /*
-        this.node.getChildByName("Poker_Ghost")
-        .runAction(cc.sequence(cc.rotateBy(0,0,-180),cc.rotateBy(0.5,0,90), cc.callFunc((targer)=>{
-            cc.log("换派",targer);
-            targer.getChildByName("bg_back").active=false;;
-        }),cc.rotateBy(0.5,0,90)) )
-         let poker = th.pokerManager.getPokerSpriteById("A1");
-        this.node.getChildByName("Poker_Back").addChild(poker);
-        this.node.addChild(th.pokerManager.getNiuSprite(4, 0));
-        this.setCountdown(10, "TEST.....");
-        */
-        cc.log(th.room);
+        th.audioManager.playSFX("click.mp3");
+        this.chatWin.active = true;
     },
     onMoreClicked(targer) {
-        let seat = this.componentSeats[0];
-        seat.setChat("伙右伙历伙");
-        seat.setReady(true);
-        seat.setOffline(true);
-        seat.setScore("-8888");
-        seat.setUserName("我的名字");
-        seat.setCountdown(10);
+        th.audioManager.playSFX("click.mp3");
+        this.moreWin.active = true;
+    },
+    onMoreCloseClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
+        this.moreWin.active = false;
     },
     onThemeClicked(targer) {
-        let seat = this.componentSeats[0];
-        seat.setChat("伙右伙历伙伙右伙历伙");
-        seat.setReady(false);
-        seat.setOffline(true);
-        seat.setScore("+8888");
-        seat.setCountdown(0);
+        th.audioManager.playSFX("click.mp3");
+        this._bgImgIdx = (this._bgImgIdx + 1) % 3;
+        this.bg1.node.active = this._bgImgIdx == 0;
+        this.bg2.node.active = this._bgImgIdx == 1;
+        this.bg3.node.active = this._bgImgIdx == 2;
     },
     onLookClicked(targer) {
-        cc.log("onLookClickedonLookClickedonLookClickedonLookClicked");
-        let result = th.webCopyString(
-            "onLookClickedonLookClickedonLookClickedonLookClickedCopy"
-        );
-        th.msg.show(result ? "复制成功！" : "复制失败");
+        th.audioManager.playSFX("click.mp3");
+        this.guanzhanWin.getComponent("Guanzhan").show();
     },
     onPokerClicked(targer, value) {
         cc.log("Poker", targer.target.pokerId, value);
@@ -1099,6 +1182,20 @@ cc.Class({
             th.myself.needLookCount = th.myself.needLookCount - 1;
             this.refreshOptions();
         }
+    },
+    onSettingClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
+        this.settingWin.active = true;
+        this.moreWin.active = false;
+    },
+    onGuizeClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
+        this.guizeWin.getComponent("Guize").show(th.gametype);
+        this.moreWin.active = false;
+    },
+    onFangzuobiClicked() {
+        th.audioManager.playSFX("click.mp3");
+        this.fangzuobiWin.getComponent("Fangzuobi").show();
     },
     onXiazhuang(targer) {
         th.alert.show(
@@ -1272,7 +1369,7 @@ cc.Class({
                 .getChildByName("lbl_title")
                 .getComponent("cc.Label").string = content;
         } else {
-            this.nodeCountdown.getChildByName("lbl_title").node.active = false;
+            this.nodeCountdown.getChildByName("lbl_title").active = false;
         }
         this._countdownEndTime = Date.now() + num * 1000;
         this._alertStartTime = Date.now() + (num - 3) * 1000;

@@ -42,7 +42,8 @@ cc.Class({
         _isFangzhu: false,
         _isbanker: false,
         _lastChatTime: -1,
-        _lastCountdownTime: -1
+        _lastCountdownTime: -1,
+        _multiples: null
     },
 
     onLoad: function onLoad() {
@@ -261,12 +262,16 @@ cc.Class({
     },
 
     setMultiples: function setMultiples(content) {
+        if (this._multiples == content) {
+            return;
+        }
         if (!content) {
             this.multiples.getComponent(cc.Label).string = "";
             this.multiples.node.active = false;
             return;
         }
         cc.log(this._userName + ", multiples: " + content);
+        this._multiples = content;
         this.multiples.node.active = true;
         if (this.multiples) {
             var x = this.node.x;
@@ -281,32 +286,27 @@ cc.Class({
             this.multiples.getComponent(cc.Label).string = content;
             this.multiples.node.scale = 0.1;
             this.multiples.node.active = true;
-            this.multiples.node.runAction(cc.scaleTo(0.3, 1.5));
+            this.multiples.node.runAction(cc.scaleTo(0.3, 1.3));
         }
     },
 
-    setQuickVoice: function setQuickVoice(fileName) {
+    setQuickVoice: function setQuickVoice(idx) {
         if (this._sex == 1) {
-            th.audioManager.playSFX("chat/man/Speak/M_" + fileName);
+            th.audioManager.playSFX("qc/qc" + idx);
         } else {
-            th.audioManager.playSFX("chat/women/Speak/W_" + fileName);
+            th.audioManager.playSFX("qc/qc" + idx);
         }
     },
 
     setEmoji: function setEmoji(idx) {
+        var _this4 = this;
+
         if (this.emoji) {
-            this.chat.node.active = false;
             this.emoji.node.active = true;
-            var texture = cc.textureCache.addImage(cc.url.raw("resources/images/emoji/emoji" + idx + ".png"));
-            //cc.log(texture);
-            //cc.log(this.emoji.node.getComponent(cc.Sprite));
-            //cc.log(this.emoji.spriteFrame);
-            this.emoji.node.getComponent(cc.Sprite).spriteFrame.setTexture(texture);
-            /*
-            cc.loader.loadRes("emoji"+idx,cc.SpriteFrame,function (err,spriteFrame) {
-                this.emoji.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-            }.bind(this));
-            */
+
+            this.emoji.getComponent("cc.Animation").play("emoji" + idx, function () {
+                _this4.emoji.node.active = false;
+            });
             this._lastChatTime = 3;
         }
     },

@@ -322,6 +322,28 @@ cc.Class({
             _this.dispatchEvent("BreakRoom", data);
         });
 
+        //设置暗号
+        th.ws.addHandler("setIndividuality", function (_ref22) {
+            var data = _ref22.data;
+
+            cc.log("<<<===[setIndividuality] WebSocketManager:", data);
+            Object.assign(th.myself, data);
+            _this.dispatchEvent("setIndividuality", data);
+        });
+
+        th.ws.addHandler("StartLimitTime", function (_ref23) {
+            var data = _ref23.data;
+
+            cc.log("<<<===[StartLimitTime] WebSocketManager:", data);
+            _this.dispatchEvent("StartLimitTime", data);
+        });
+        th.ws.addHandler("BroadcastVoice", function (_ref24) {
+            var data = _ref24.data;
+
+            cc.log("<<<===[BroadcastVoice] WebSocketManager:", data);
+            _this.dispatchEvent("BroadcastVoice", data);
+        });
+
         //=========================================================
         //炸金花消息写在这下面。
     },
@@ -354,12 +376,12 @@ cc.Class({
         );
     },
     */
-    connectGameServer: function connectGameServer(_ref22, callback) {
+    connectGameServer: function connectGameServer(_ref25, callback) {
         var _this2 = this;
 
-        var ip = _ref22.ip,
-            port = _ref22.port,
-            namespace = _ref22.namespace;
+        var ip = _ref25.ip,
+            port = _ref25.port,
+            namespace = _ref25.namespace;
 
         th.ws.close();
         th.ws.ip = ip;

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "txt_copy",
+    "texture": "8078b114-8c8a-499d-a5a8-7e6adc12b48b",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      77,
+      32
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      77,
+      32
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -10,7 +10,7 @@ cc.Class({
         selectNN: cc.Node,
         selectZJH: cc.Node,
         voiceToggle: cc.Toggle,
-        fangzuobi: cc.Node,
+        fangzuobiWin: cc.Node,
         bangdingshouji: cc.Node,
         sendfangka: cc.Node,
         zhanjitongji: cc.Node,
@@ -158,30 +158,17 @@ cc.Class({
 
     update: function(dt) {},
     //房卡
-    onFangkaChecked: function(trager) {
-        /*
-        th.ws.send(
-            JSON.stringify({
-                operation: "getUserInfo",
-                session: "YWQ4MTBlOGM1NzcxZjNmNTJiMTY3ZTMzZmRiZmY4YjI=",
-                data: {
-                    token: ""
-                }
-            })
-        );
-        return;
-        */
-        th.wc.show("正在加载。。。");
-        cc.director.loadScene("GameNN", () => {
-            th.wc.hide();
-        });
-    },
+    onFangkaChecked: function(trager) {},
     //防作弊
     onFzbChecked: function(trager) {
+        /*
         th.audioManager.playSFX("click.mp3");
         this.fangzuobi.x = 0;
         this.fangzuobi.y = 0;
         this.fangzuobi.active = true;
+        */
+        th.audioManager.playSFX("click.mp3");
+        this.fangzuobiWin.getComponent("Fangzuobi").show();
     },
     //防作弊关闭
     onFzbCloseChecked: function(trager) {

@@ -1,70 +1,70 @@
-2019-04-21T12:51:22.143Z - normal: Load ~/.CocosCreator/settings.json
-2019-04-21T12:51:23.362Z - normal: Initializing Asset Database
-2019-04-21T12:51:23.370Z - normal: checking language setting...
-2019-04-21T12:51:23.370Z - normal: Language: zh
-2019-04-21T12:51:24.585Z - success: preview server running at http://localhost:7456
-2019-04-21T12:51:24.588Z - success: protocol editor-framework registered
-2019-04-21T12:51:24.588Z - success: protocol app registered
-2019-04-21T12:51:24.588Z - success: protocol theme registered
-2019-04-21T12:51:24.589Z - success: protocol packages registered
-2019-04-21T12:51:24.589Z - success: protocol uuid registerred
-2019-04-21T12:51:24.589Z - success: protocol db registerred
-2019-04-21T12:51:24.589Z - success: protocol thumbnail registerred
-2019-04-21T12:51:24.589Z - success: protocol unpack registerred
-2019-04-21T12:51:24.589Z - success: protocol disable-commonjs registerred
-2019-04-21T12:51:24.783Z - normal: connected!
-2019-04-21T12:51:24.785Z - normal: Check project D:\Workspaces_CocosCreator\leyou-github
-2019-04-21T12:51:24.787Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou-github
-2019-04-21T12:51:25.509Z - normal: Initializing Cocos2d
-2019-04-21T12:51:26.542Z - normal: Initializing engine extends
-2019-04-21T12:51:26.579Z - success: asset-db-debugger loaded
-2019-04-21T12:51:26.590Z - success: baidu-adapter loaded
-2019-04-21T12:51:26.604Z - success: code-editor loaded
-2019-04-21T12:51:26.609Z - success: color-picker loaded
-2019-04-21T12:51:26.764Z - success: fb-audience-network loaded
-2019-04-21T12:51:26.890Z - success: fb-live-stream loaded
-2019-04-21T12:51:26.903Z - success: google-play-instant loaded
-2019-04-21T12:51:26.923Z - success: huawei-runtime loaded
-2019-04-21T12:51:26.926Z - success: jsb-adapter loaded
-2019-04-21T12:51:26.935Z - success: oppo-runtime loaded
-2019-04-21T12:51:26.942Z - success: package-manager loaded
-2019-04-21T12:51:27.131Z - success: qqplay-adapter loaded
-2019-04-21T12:51:27.135Z - success: runtime-dev-tools loaded
-2019-04-21T12:51:27.142Z - success: sdkbox loaded
-2019-04-21T12:51:27.147Z - success: tester loaded
-2019-04-21T12:51:27.150Z - success: ui-grid loaded
-2019-04-21T12:51:27.153Z - success: ui-kit-preview-extra loaded
-2019-04-21T12:51:27.156Z - success: ui-kit-preview loaded
-2019-04-21T12:51:27.159Z - success: ui-kit loaded
-2019-04-21T12:51:27.162Z - success: ui-tree loaded
-2019-04-21T12:51:27.171Z - success: vivo-runtime loaded
-2019-04-21T12:51:27.172Z - success: weapp-adapter loaded
-2019-04-21T12:51:27.217Z - success: assets loaded
-2019-04-21T12:51:27.220Z - success: builder loaded
-2019-04-21T12:51:27.673Z - success: cocos-services loaded
-2019-04-21T12:51:27.679Z - success: console loaded
-2019-04-21T12:51:27.731Z - success: fb-instant-games loaded
-2019-04-21T12:51:27.733Z - success: google-instant-games loaded
-2019-04-21T12:51:27.740Z - success: hierarchy loaded
-2019-04-21T12:51:27.743Z - success: inspector loaded
-2019-04-21T12:51:27.745Z - success: keystore loaded
-2019-04-21T12:51:27.752Z - success: node-library loaded
-2019-04-21T12:51:27.754Z - success: package-asset loaded
-2019-04-21T12:51:27.756Z - success: preferences loaded
-2019-04-21T12:51:27.758Z - success: project-exporter loaded
-2019-04-21T12:51:27.760Z - success: project-importer loaded
-2019-04-21T12:51:27.763Z - success: project-settings loaded
-2019-04-21T12:51:27.769Z - success: scene loaded
-2019-04-21T12:51:27.771Z - success: simulator-debugger loaded
-2019-04-21T12:51:27.773Z - success: sprite-editor loaded
-2019-04-21T12:51:27.779Z - success: store loaded
-2019-04-21T12:51:27.788Z - success: timeline loaded
-2019-04-21T12:51:27.793Z - success: bitmap-font loaded
-2019-04-21T12:51:31.367Z - normal: Loading packages
-2019-04-21T12:51:31.379Z - normal: Watching packages
-2019-04-21T12:51:32.186Z - info: Cocos Services load base data!
-2019-04-21T12:51:32.584Z - normal: Run Application
-2019-04-21T15:20:52.234Z - normal: Start building with options : {
+2019-04-24T12:36:00.257Z - normal: Load ~/.CocosCreator/settings.json
+2019-04-24T12:36:01.503Z - normal: Initializing Asset Database
+2019-04-24T12:36:01.512Z - normal: checking language setting...
+2019-04-24T12:36:01.512Z - normal: Language: zh
+2019-04-24T12:36:03.714Z - success: preview server running at http://localhost:7456
+2019-04-24T12:36:03.717Z - success: protocol editor-framework registered
+2019-04-24T12:36:03.717Z - success: protocol app registered
+2019-04-24T12:36:03.717Z - success: protocol theme registered
+2019-04-24T12:36:03.717Z - success: protocol packages registered
+2019-04-24T12:36:03.717Z - success: protocol uuid registerred
+2019-04-24T12:36:03.718Z - success: protocol db registerred
+2019-04-24T12:36:03.718Z - success: protocol thumbnail registerred
+2019-04-24T12:36:03.718Z - success: protocol unpack registerred
+2019-04-24T12:36:03.718Z - success: protocol disable-commonjs registerred
+2019-04-24T12:36:03.895Z - normal: connected!
+2019-04-24T12:36:03.896Z - normal: Check project D:\Workspaces_CocosCreator\leyou-github
+2019-04-24T12:36:03.899Z - normal: Initializing project D:\Workspaces_CocosCreator\leyou-github
+2019-04-24T12:36:04.680Z - normal: Initializing Cocos2d
+2019-04-24T12:36:07.425Z - normal: Initializing engine extends
+2019-04-24T12:36:07.814Z - success: asset-db-debugger loaded
+2019-04-24T12:36:07.818Z - success: baidu-adapter loaded
+2019-04-24T12:36:07.942Z - success: code-editor loaded
+2019-04-24T12:36:07.947Z - success: color-picker loaded
+2019-04-24T12:36:08.192Z - success: fb-audience-network loaded
+2019-04-24T12:36:08.334Z - success: fb-live-stream loaded
+2019-04-24T12:36:08.354Z - success: google-play-instant loaded
+2019-04-24T12:36:08.387Z - success: huawei-runtime loaded
+2019-04-24T12:36:08.388Z - success: jsb-adapter loaded
+2019-04-24T12:36:08.419Z - success: oppo-runtime loaded
+2019-04-24T12:36:08.425Z - success: package-manager loaded
+2019-04-24T12:36:08.828Z - success: qqplay-adapter loaded
+2019-04-24T12:36:08.830Z - success: runtime-dev-tools loaded
+2019-04-24T12:36:08.849Z - success: sdkbox loaded
+2019-04-24T12:36:08.855Z - success: tester loaded
+2019-04-24T12:36:08.870Z - success: ui-grid loaded
+2019-04-24T12:36:08.873Z - success: ui-kit-preview-extra loaded
+2019-04-24T12:36:08.891Z - success: ui-kit-preview loaded
+2019-04-24T12:36:08.893Z - success: ui-kit loaded
+2019-04-24T12:36:08.896Z - success: ui-tree loaded
+2019-04-24T12:36:08.917Z - success: vivo-runtime loaded
+2019-04-24T12:36:08.918Z - success: weapp-adapter loaded
+2019-04-24T12:36:08.967Z - success: assets loaded
+2019-04-24T12:36:08.970Z - success: builder loaded
+2019-04-24T12:36:09.515Z - success: cocos-services loaded
+2019-04-24T12:36:09.520Z - success: console loaded
+2019-04-24T12:36:09.566Z - success: fb-instant-games loaded
+2019-04-24T12:36:09.568Z - success: google-instant-games loaded
+2019-04-24T12:36:09.574Z - success: hierarchy loaded
+2019-04-24T12:36:09.588Z - success: inspector loaded
+2019-04-24T12:36:09.589Z - success: keystore loaded
+2019-04-24T12:36:09.595Z - success: node-library loaded
+2019-04-24T12:36:09.597Z - success: package-asset loaded
+2019-04-24T12:36:09.599Z - success: preferences loaded
+2019-04-24T12:36:09.601Z - success: project-exporter loaded
+2019-04-24T12:36:09.604Z - success: project-importer loaded
+2019-04-24T12:36:09.607Z - success: project-settings loaded
+2019-04-24T12:36:09.616Z - success: scene loaded
+2019-04-24T12:36:09.619Z - success: simulator-debugger loaded
+2019-04-24T12:36:09.622Z - success: sprite-editor loaded
+2019-04-24T12:36:09.627Z - success: store loaded
+2019-04-24T12:36:09.632Z - success: timeline loaded
+2019-04-24T12:36:09.639Z - success: bitmap-font loaded
+2019-04-24T12:36:13.688Z - info: Cocos Services load base data!
+2019-04-24T12:36:22.382Z - normal: Loading packages
+2019-04-24T12:36:22.392Z - normal: Watching packages
+2019-04-24T12:36:23.897Z - normal: Run Application
+2019-04-24T14:47:42.691Z - normal: Start building with options : {
   "actualPlatform": "web-mobile",
   "android-instant": {
     "REMOTE_SERVER_ROOT": "",
@@ -137,18 +137,21 @@
   "projectName": "leyou",
   "debugBuildWorker": false
 }
-2019-04-21T15:20:52.238Z - normal: Building D:\Workspaces_CocosCreator\leyou-github
-2019-04-21T15:20:52.238Z - normal: Destination D:\Workspaces_CocosCreator\leyou-github\build\web-mobile
-2019-04-21T15:20:52.570Z - normal: Delete D:\Workspaces_CocosCreator\leyou-github\build\web-mobile\subpackages/**/*,D:\Workspaces_CocosCreator\leyou-github\build\web-mobile\**\*
-2019-04-21T15:20:57.129Z - normal: Start building assets
-2019-04-21T15:20:57.129Z - normal: Start spawn build-worker
-2019-04-21T15:20:58.152Z - normal: Finish spawn build-worker
-2019-04-21T15:20:58.152Z - normal: Start init build-worker
-2019-04-21T15:21:02.193Z - normal: Finish init build-worker
-2019-04-21T15:21:02.193Z - normal: Start build-assets in worker
-2019-04-21T15:21:06.738Z - normal: Finish build-assets in worker
-2019-04-21T15:21:06.749Z - normal: Finish building assets
-2019-04-21T15:21:06.958Z - normal: Start building plugin scripts
-2019-04-21T15:21:06.987Z - normal: Generating main.js from D:\CocosCreator2.0.9\resources\static\build-templates\shares\main.js
-2019-04-21T15:21:07.012Z - normal: Generating html from D:\CocosCreator2.0.9\resources\static\build-templates\web-mobile\template\index.html
-2019-04-21T15:21:08.049Z - normal: Built to "D:\Workspaces_CocosCreator\leyou-github\build\web-mobile" successfully
+2019-04-24T14:47:42.695Z - normal: Building D:\Workspaces_CocosCreator\leyou-github
+2019-04-24T14:47:42.695Z - normal: Destination D:\Workspaces_CocosCreator\leyou-github\build\web-mobile
+2019-04-24T14:47:43.562Z - normal: Delete D:\Workspaces_CocosCreator\leyou-github\build\web-mobile\subpackages/**/*,D:\Workspaces_CocosCreator\leyou-github\build\web-mobile\**\*
+2019-04-24T14:47:48.159Z - normal: Start building assets
+2019-04-24T14:47:48.159Z - normal: Start spawn build-worker
+2019-04-24T14:47:49.665Z - normal: Finish spawn build-worker
+2019-04-24T14:47:49.666Z - normal: Start init build-worker
+2019-04-24T14:47:53.711Z - normal: Finish init build-worker
+2019-04-24T14:47:53.711Z - normal: Start build-assets in worker
+2019-04-24T14:47:58.370Z - normal: Finish build-assets in worker
+2019-04-24T14:47:58.377Z - normal: Finish building assets
+2019-04-24T14:47:58.658Z - normal: Start building plugin scripts
+2019-04-24T14:47:58.693Z - normal: Generating main.js from D:\CocosCreator2.0.9\resources\static\build-templates\shares\main.js
+2019-04-24T14:47:58.717Z - normal: Generating html from D:\CocosCreator2.0.9\resources\static\build-templates\web-mobile\template\index.html
+2019-04-24T14:47:59.888Z - normal: Built to "D:\Workspaces_CocosCreator\leyou-github\build\web-mobile" successfully
+2019-04-24T15:35:50.629Z - warn: The Node referenced by component "Hall" is invalid. Detailed information:
+Node path: "Canvas"
+

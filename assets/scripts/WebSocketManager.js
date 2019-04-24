@@ -273,6 +273,22 @@ cc.Class({
             this.dispatchEvent("BreakRoom", data);
         });
 
+        //设置暗号
+        th.ws.addHandler("setIndividuality", ({ data }) => {
+            cc.log("<<<===[setIndividuality] WebSocketManager:", data);
+            Object.assign(th.myself, data);
+            this.dispatchEvent("setIndividuality", data);
+        });
+
+        th.ws.addHandler("StartLimitTime", ({ data }) => {
+            cc.log("<<<===[StartLimitTime] WebSocketManager:", data);
+            this.dispatchEvent("StartLimitTime", data);
+        });
+        th.ws.addHandler("BroadcastVoice", ({ data }) => {
+            cc.log("<<<===[BroadcastVoice] WebSocketManager:", data);
+            this.dispatchEvent("BroadcastVoice", data);
+        });
+
         //=========================================================
         //炸金花消息写在这下面。
     },

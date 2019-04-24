@@ -20,7 +20,7 @@ cc.Class((_cc$Class = {
         selectNN: cc.Node,
         selectZJH: cc.Node,
         voiceToggle: cc.Toggle,
-        fangzuobi: cc.Node,
+        fangzuobiWin: cc.Node,
         bangdingshouji: cc.Node,
         sendfangka: cc.Node,
         zhanjitongji: cc.Node,
@@ -150,28 +150,15 @@ cc.Class((_cc$Class = {
     }
 }), _defineProperty(_cc$Class, "start", function start() {
     //cc.log("Hall start.");
-}), _defineProperty(_cc$Class, "update", function update(dt) {}), _defineProperty(_cc$Class, "onFangkaChecked", function onFangkaChecked(trager) {
+}), _defineProperty(_cc$Class, "update", function update(dt) {}), _defineProperty(_cc$Class, "onFangkaChecked", function onFangkaChecked(trager) {}), _defineProperty(_cc$Class, "onFzbChecked", function onFzbChecked(trager) {
     /*
-    th.ws.send(
-        JSON.stringify({
-            operation: "getUserInfo",
-            session: "YWQ4MTBlOGM1NzcxZjNmNTJiMTY3ZTMzZmRiZmY4YjI=",
-            data: {
-                token: ""
-            }
-        })
-    );
-    return;
-    */
-    th.wc.show("正在加载。。。");
-    cc.director.loadScene("GameNN", function () {
-        th.wc.hide();
-    });
-}), _defineProperty(_cc$Class, "onFzbChecked", function onFzbChecked(trager) {
     th.audioManager.playSFX("click.mp3");
     this.fangzuobi.x = 0;
     this.fangzuobi.y = 0;
     this.fangzuobi.active = true;
+    */
+    th.audioManager.playSFX("click.mp3");
+    this.fangzuobiWin.getComponent("Fangzuobi").show();
 }), _defineProperty(_cc$Class, "onFzbCloseChecked", function onFzbCloseChecked(trager) {
     th.audioManager.playSFX("click.mp3");
     this.fangzuobi.active = false;

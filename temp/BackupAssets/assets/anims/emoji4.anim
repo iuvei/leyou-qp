@@ -1,0 +1,31 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "emoji4",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5,
+  "sample": 4,
+  "speed": 1,
+  "wrapMode": "2",
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "b865304f-c783-413f-ad4c-3cf1d88e5ae8"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "79cc6953-85b0-4f18-b63c-261014072ef2"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

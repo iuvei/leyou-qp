@@ -1,0 +1,31 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "emoji5",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5,
+  "sample": 4,
+  "speed": 1,
+  "wrapMode": "2",
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "59240d9a-4230-4188-8730-4bfe67fa3b4a"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "12d7818e-ef4a-4224-a6df-54c12f716f08"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

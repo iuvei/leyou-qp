@@ -97,6 +97,28 @@ cc.Class({
                 [-305, -260]
             ]
         };
+        th.chattxt = [
+            "快准备，开始了",
+            "大家好，很高兴见到各位",
+            "别跟我抢庄",
+            "快一点吧，我等的花也谢了",
+            "我当年横扫澳门五条街",
+            "算你牛逼",
+            "我给你们送温暖了",
+            "你的牌打的太好了",
+            "这牌有毒",
+            "手抖了，不好意思哈",
+            "老铁666啊",
+            "我墙都不扶，就服你",
+            "不要走，决战到天亮",
+            "输的裤衩都没了",
+            "谢谢老板",
+            "搏一搏，单车变摩托",
+            "快点下注，一会就没有机会了",
+            "底牌亮起来，绝对吓死你",
+            "我加注了，你敢不敢跟",
+            "我通杀全场这些钱都是我的"
+        ];
         th.getNiuIndex = function(cardType, comboPoint) {
             cardType = Number(cardType);
             let index = 0;
@@ -276,7 +298,7 @@ cc.Class({
         th.audioManager.init();
 
         //播放背景音乐
-        //th.audioManager.playBGM("background.mp3");
+        th.audioManager.playBGM("background.mp3");
 
         const WebSocketManager = require("WebSocketManager");
         th.webSocketManager = new WebSocketManager();

@@ -10,6 +10,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        bg1: cc.Sprite,
+        bg2: cc.Sprite,
+        bg3: cc.Sprite,
+
         seatPrefab: cc.Prefab,
 
         baseNode: cc.Node,
@@ -61,13 +65,27 @@ cc.Class({
         resultDetailSonItemPrefab: cc.Prefab,
 
         btnCaptureScreen: cc.Button,
-        btnTest: cc.Button,
 
         holdTimeEclipse: 0, //用来检测长按
         holdClick: false,
 
+        auotReadyToggle: cc.Toggle,
+        //其他各种窗口
+        chatWin: cc.Node,
+        copyRoomUrlWin: cc.Node,
+        guanzhanWin: cc.Node,
+        settingWin: cc.Node,
+        fangzuobiWin: cc.Node,
+        guizeWin: cc.Node,
+        moreWin: cc.Node,
+
+        lblId: cc.Label,
+        lblAnhao: cc.Label,
+
         _countdownEndTime: 0, //倒计时剩余时间
-        _isPlay: true //用来播放倒计时声音
+        _isPlay: true, //用来播放倒计时声音
+
+        _bgImgIdx: 0
     },
 
     onLoad: function onLoad() {
@@ -102,6 +120,10 @@ cc.Class({
     },
     start: function start() {
         cc.log("GameNN start");
+        this.bg1.node.active = this._bgImgIdx == 0;
+        this.bg2.node.active = this._bgImgIdx == 1;
+        this.bg3.node.active = this._bgImgIdx == 2;
+        this.onFangzuobiClicked();
     },
     initEventHandlers: function initEventHandlers() {
         var _this2 = this;
@@ -143,6 +165,10 @@ cc.Class({
         });
         this.node.on("GameStart", function (data) {
             cc.log("<<<===[GameStart] GmaeNN", data);
+            //第一局开始动画
+            if (th.room.game_num == 1) {
+                _this2.node.getChildByName("OpenGameAnim").getComponent("OpenGameAnim").show();
+            }
             _this2.initRoomInfo();
             _this2.setCountdown(data.limit_time, "游戏开始了");
             _this2.refreshOptions();
@@ -163,6 +189,7 @@ cc.Class({
         //开始游戏,闲家选倍数
         this.node.on("StartBet", function (data) {
             cc.log("<<<===[StartBet] GmaeNN:", data);
+            _this2.nodeOptions.active = false;
             _this2.setCountdown(data.limit_time, "投注开始了");
             //抢庄account_ID数据
             //"grab_array": ["31", "18"],
@@ -253,13 +280,14 @@ cc.Class({
 
             _this2.setCountdown(data.limit_time, "摊牌开始了");
 
-            _this2.scheduleOnce(function () {
+            /*
+            this.scheduleOnce(() => {
                 //如果时间到还没摊牌就摊牌
                 if (th.getMyselfPlayer().account_status == 7) {
-                    _this2.onShowClicked();
+                    this.onShowClicked();
                 }
             }, data.limit_time);
-
+            */
             data.data.forEach(function (item) {
                 var player = th.getPlayerById(item.account_id);
                 _this2.initSingleSeat(player);
@@ -269,32 +297,23 @@ cc.Class({
         //摊牌
         this.node.on("UpdateAccountShow", function (player) {
             cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
-            var index = th.getLocalIndex(player.serial_num - 1);
-            var nodePoker = _this2.nodePokers[index];
-            var nodeSeat = _this2.nodeSeats[index];
-            var pokers = nodePoker.children;
-
-            // 大于0为有牛
-            var hasNiu = th.getNiuIndex(player.card_type, player.combo_point) > 0;
-            var cards = hasNiu > 0 ? player.combo_array : player.cards;
-            //如果不是自己
-            //(isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y +i * (isMyself ? 110 : 30),
-            // isMyself ? -25 : 0,
-            var isMyself = th.getMyselfLocalIndex() == index;
-            var firstX = isMyself ? 100 : nodeSeat.x > 0 ? -210 : 90;
-            var firstY = isMyself ? -25 : 0;
-            var offset = isMyself ? 110 : 30;
-            pokers.forEach(function (poker, index) {
-                poker.runAction(cc.sequence(cc.moveTo(0.3, cc.v2(firstX, firstY)), cc.callFunc(function (target) {
-                    target.addChild(th.pokerManager.getPokerSpriteById(cards[index]));
-                }), cc.moveTo(0.3, cc.v2(firstX + nodePoker.y + index * offset + (hasNiu && index > 2 ? 15 : 0), firstY))));
-            });
-            _this2.showNiuType(player);
+            _this2.tangpai(player);
         });
 
         //结果
         this.node.on("Win", function (data) {
             cc.log("<<<===[Win] GmaeNN:", data);
+            _this2.nodeOptions.active = false;
+            //找到没有摊牌的人摊牌
+            var tpPlayers = th.room.players.filter(function (player) {
+                return player.account_status == 7;
+            });
+            tpPlayers.forEach(function (player) {
+                _this2.tangpai(player);
+            });
+            _this2.sprWaitShow.node.active = false;
+            _this2.spriteClickLookPai.node.active = false;
+
             //赢的人
             //let win = data.winner_array;
             //输的人
@@ -401,9 +420,13 @@ cc.Class({
                         cc.log("done........................");
                         th.wc.show("下在获取战绩");
                         _this2.toConnectApi();
+                    } else {
+                        if (_this2.auotReadyToggle.isChecked) {
+                            _this2.onReadyClicked();
+                        }
                     }
                 }, 0.1 + 0.5 + offsetCount * 0.05 + 3);
-            }, 1);
+            }, 1 + tpPlayers.length > 0 ? 2 : 0);
         });
 
         //战绩
@@ -501,11 +524,19 @@ cc.Class({
 
                     playerNode.getChildByName("lbl_id").getComponent("cc.Label").string = players[item.name].account_id + "";
                     playerNode.getChildByName("lbl_name").getComponent("cc.Label").string = item.name + "";
-                    playerNode.getChildByName("lbl_mtp").getComponent("cc.Label").string = item.chip + "";
-                    playerNode.getChildByName("lbl_score").getComponent("cc.Label").string = item.score + "";
-                    playerNode.getChildByName("lbl_niu").getComponent("cc.Label").string = item.card_type_str + "";
                     playerNode.getChildByName("icon_banker").active = item.is_banker == 1;
 
+                    if (item.is_join == 1) {
+                        playerNode.getChildByName("lbl_mtp").getComponent("cc.Label").string = item.chip + "";
+                        playerNode.getChildByName("lbl_score").getComponent("cc.Label").string = item.score + "";
+                        playerNode.getChildByName("lbl_niu").getComponent("cc.Label").string = item.card_type_str + "";
+                        var pokerNode = playerNode.getChildByName("pokers");
+                        item.player_cards.forEach(function (card) {
+                            pokerNode.addChild(th.pokerManager.getPokerSpriteById(card));
+                        });
+                    } else {
+                        playerNode.getChildByName("lbl_nojoin").active = true;
+                    }
                     var headimg = playerNode.getChildByName("headImg").getComponent("cc.Sprite");
 
                     cc.loader.load({
@@ -519,10 +550,6 @@ cc.Class({
                         }
                     });
 
-                    var pokerNode = playerNode.getChildByName("pokers");
-                    item.player_cards.forEach(function (card) {
-                        pokerNode.addChild(th.pokerManager.getPokerSpriteById(card));
-                    });
                     playersNode.addChild(playerNode);
                 });
                 resultDetailNode.addChild(roundNode);
@@ -551,6 +578,56 @@ cc.Class({
             }
             //Object.assign(th.room, data);
         });
+        //暗号设置返回
+        this.node.on("setIndividuality", function (data) {
+            cc.log("<<<===[setIndividuality] GameNN:", data);
+            _this2.initAnhaoAndId();
+        });
+
+        this.node.on("StartLimitTime", function (data) {
+            cc.log("<<<===[StartLimitTime] GameNN:", data);
+            _this2.setCountdown(data.limit_time);
+        });
+        this.node.on("BroadcastVoice", function (data) {
+            cc.log("<<<===[BroadcastVoice] GameNN:", data);
+            var player = th.getPlayerById(data.account_id);
+            var index = th.getLocalIndex(player.serial_num - 1);
+            var firstChar = data.voice_num.substr(0, 1);
+            var idx = Number(data.voice_num.substr(1));
+            cc.log("firstCar idx:", firstChar, idx);
+            if (firstChar == "e") {
+                //表情
+                _this2.componentSeats[index].setEmoji(idx + 1);
+            } else {
+                //语音
+                _this2.componentSeats[index].setQuickVoice(idx + 1);
+                _this2.componentSeats[index].setChat(th.chattxt[idx]);
+            }
+        });
+    },
+    tangpai: function tangpai(player) {
+        cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
+        var index = th.getLocalIndex(player.serial_num - 1);
+        var nodePoker = this.nodePokers[index];
+        var nodeSeat = this.nodeSeats[index];
+        var pokers = nodePoker.children;
+
+        // 大于0为有牛
+        var hasNiu = th.getNiuIndex(player.card_type, player.combo_point) > 0;
+        var cards = hasNiu > 0 ? player.combo_array : player.cards;
+        //如果不是自己
+        //(isMyself ? 100 : seat.x > 0 ? -210 : 90) + basePokers.y +i * (isMyself ? 110 : 30),
+        // isMyself ? -25 : 0,
+        var isMyself = th.getMyselfLocalIndex() == index;
+        var firstX = isMyself ? 100 : nodeSeat.x > 0 ? -210 : 90;
+        var firstY = isMyself ? -25 : 0;
+        var offset = isMyself ? 110 : 30;
+        pokers.forEach(function (poker, index) {
+            poker.runAction(cc.sequence(cc.moveTo(0.3, cc.v2(firstX, firstY)), cc.callFunc(function (target) {
+                target.addChild(th.pokerManager.getPokerSpriteById(cards[index]));
+            }), cc.moveTo(0.3, cc.v2(firstX + nodePoker.y + index * offset + (hasNiu && index > 2 ? 15 : 0), firstY))));
+        });
+        this.showNiuType(player);
     },
     onResultCloseClicked: function onResultCloseClicked() {
         th.wc.show("正在返回大厅。。。");
@@ -614,6 +691,7 @@ cc.Class({
         this.nodeCountdown.active = false;
         this.spriteClickLookPai.node.active = false;
         this.initRoomInfo();
+        this.initAnhaoAndId();
         this.initSeat();
         this.initMtpBtn();
         this.refreshOptions();
@@ -754,6 +832,10 @@ cc.Class({
     initRoomInfo: function initRoomInfo() {
         this.lblRoomInfo.string = th.room.game_num + "/" + th.room.total_num + "\u5C40 \u5E95\u5206\uFF1A" + th.room.base_score + "\u5206";
     },
+    initAnhaoAndId: function initAnhaoAndId() {
+        this.lblAnhao.string = "暗号：" + (th.myself.individuality == "" || th.myself.individuality == null ? "自定义暗号" : th.myself.individuality);
+        this.lblId.string = "ID:" + th.myself.account_id;
+    },
     initSeat: function initSeat() {
         var seatsxy = th.getSeatXY();
         for (var i = 0; i < seatsxy.length; i++) {
@@ -811,7 +893,7 @@ cc.Class({
                     this.componentSeats[index].setMultiples(null);
                 }
                 */
-            } else if (player.account_status == 7) {
+            } else if (player.account_status == 7 || player.account_status == 8) {
                 //未摊牌
                 this.componentSeats[index].setMultiples(player.is_banker == 1 ? null : "x" + player.multiples);
             } else {
@@ -820,14 +902,8 @@ cc.Class({
         }
     },
     onCopyCliecked: function onCopyCliecked(targer, data) {
-        /*
-        let address = `${th.href}?roomId=${th.room.room_number}&type=${
-            th.gametype
-        }`;
-        */
-        var result = th.webCopyString(th.room.copyurl);
-        cc.log("address:", th.room.copyurl);
-        th.msg.show(result ? "复制成功！" : "复制失败");
+        th.audioManager.playSFX("click.m4a");
+        this.copyRoomUrlWin.getComponent("CopyRoomUrl").show();
     },
     onBankerMultiplesClicked: function onBankerMultiplesClicked(targer, value) {
         var multiples = 1;
@@ -914,40 +990,27 @@ cc.Class({
         });
     },
     onChatClicked: function onChatClicked(targer) {
-        /*
-        this.node.getChildByName("Poker_Ghost")
-        .runAction(cc.sequence(cc.rotateBy(0,0,-180),cc.rotateBy(0.5,0,90), cc.callFunc((targer)=>{
-            cc.log("换派",targer);
-            targer.getChildByName("bg_back").active=false;;
-        }),cc.rotateBy(0.5,0,90)) )
-         let poker = th.pokerManager.getPokerSpriteById("A1");
-        this.node.getChildByName("Poker_Back").addChild(poker);
-        this.node.addChild(th.pokerManager.getNiuSprite(4, 0));
-        this.setCountdown(10, "TEST.....");
-        */
-        cc.log(th.room);
+        th.audioManager.playSFX("click.mp3");
+        this.chatWin.active = true;
     },
     onMoreClicked: function onMoreClicked(targer) {
-        var seat = this.componentSeats[0];
-        seat.setChat("伙右伙历伙");
-        seat.setReady(true);
-        seat.setOffline(true);
-        seat.setScore("-8888");
-        seat.setUserName("我的名字");
-        seat.setCountdown(10);
+        th.audioManager.playSFX("click.mp3");
+        this.moreWin.active = true;
+    },
+    onMoreCloseClicked: function onMoreCloseClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
+        this.moreWin.active = false;
     },
     onThemeClicked: function onThemeClicked(targer) {
-        var seat = this.componentSeats[0];
-        seat.setChat("伙右伙历伙伙右伙历伙");
-        seat.setReady(false);
-        seat.setOffline(true);
-        seat.setScore("+8888");
-        seat.setCountdown(0);
+        th.audioManager.playSFX("click.mp3");
+        this._bgImgIdx = (this._bgImgIdx + 1) % 3;
+        this.bg1.node.active = this._bgImgIdx == 0;
+        this.bg2.node.active = this._bgImgIdx == 1;
+        this.bg3.node.active = this._bgImgIdx == 2;
     },
     onLookClicked: function onLookClicked(targer) {
-        cc.log("onLookClickedonLookClickedonLookClickedonLookClicked");
-        var result = th.webCopyString("onLookClickedonLookClickedonLookClickedonLookClickedCopy");
-        th.msg.show(result ? "复制成功！" : "复制失败");
+        th.audioManager.playSFX("click.mp3");
+        this.guanzhanWin.getComponent("Guanzhan").show();
     },
     onPokerClicked: function onPokerClicked(targer, value) {
         cc.log("Poker", targer.target.pokerId, value);
@@ -957,6 +1020,20 @@ cc.Class({
             th.myself.needLookCount = th.myself.needLookCount - 1;
             this.refreshOptions();
         }
+    },
+    onSettingClicked: function onSettingClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
+        this.settingWin.active = true;
+        this.moreWin.active = false;
+    },
+    onGuizeClicked: function onGuizeClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
+        this.guizeWin.getComponent("Guize").show(th.gametype);
+        this.moreWin.active = false;
+    },
+    onFangzuobiClicked: function onFangzuobiClicked() {
+        th.audioManager.playSFX("click.mp3");
+        this.fangzuobiWin.getComponent("Fangzuobi").show();
     },
     onXiazhuang: function onXiazhuang(targer) {
         th.alert.show("下庄提示", "下庄之后，将当前战绩进行结算。是否确定下庄？", function () {
@@ -1086,7 +1163,7 @@ cc.Class({
         if (content) {
             this.nodeCountdown.getChildByName("lbl_title").getComponent("cc.Label").string = content;
         } else {
-            this.nodeCountdown.getChildByName("lbl_title").node.active = false;
+            this.nodeCountdown.getChildByName("lbl_title").active = false;
         }
         this._countdownEndTime = Date.now() + num * 1000;
         this._alertStartTime = Date.now() + (num - 3) * 1000;

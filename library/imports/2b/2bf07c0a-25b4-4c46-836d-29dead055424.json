@@ -1,0 +1,20 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "open_anim.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "open1": {
+      "__uuid__": "e46ece6b-bab0-485e-af83-57d58f1ec4ed"
+    },
+    "open2": {
+      "__uuid__": "946e9dd0-5a77-46f6-ba22-63fd6f24acd3"
+    },
+    "open3": {
+      "__uuid__": "fbcf94bd-bdc2-47a1-b729-98447e33500a"
+    },
+    "open4": {
+      "__uuid__": "b24d1f0a-5f70-45f3-afc0-33e253f29c22"
+    }
+  }
+}

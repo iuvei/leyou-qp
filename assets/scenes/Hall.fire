@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.1,
-      "y": 0.1,
+      "x": 0.2957941943829545,
+      "y": 0.2957941943829545,
       "z": 1
     },
     "_quat": {
@@ -79304,9 +79304,7 @@
     "voiceToggle": {
       "__id__": 553
     },
-    "fangzuobi": {
-      "__id__": 678
-    },
+    "fangzuobiWin": null,
     "bangdingshouji": {
       "__id__": 712
     },
@@ -79342,6 +79340,8 @@
     },
     "createNNComponent": null,
     "createZJHComponent": null,
+    "openAtlas": null,
+    "nodeAmins": null,
     "selectGame": null,
     "createGame": null,
     "joinOrLook": {
