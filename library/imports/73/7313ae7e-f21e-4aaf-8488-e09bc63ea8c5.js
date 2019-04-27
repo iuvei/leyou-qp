@@ -60,11 +60,37 @@ cc.Class({
     },
 
     onJoinClicked: function onJoinClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
         cc.log("onJoinClicked");
+        cc.log("onJoinClicked");
+        th.wc.show("正在加入房间...");
+        var params = {
+            operation: "JoinRoom", //操作标志
+            account_id: th.myself.account_id, //用户id};
+            session: th.sign,
+            data: {
+                room_number: th.room.room_number
+            }
+        };
+        cc.log("===>>>[JoinRoom] JoinOrLook:", params);
+        th.ws.send(JSON.stringify(params));
     },
     onLookClicked: function onLookClicked(targer) {
+        th.audioManager.playSFX("click.mp3");
         cc.log("onLookClicked");
+        th.wc.show("正在加入房间...");
+        var params = {
+            operation: "GuestRoom", //操作标志
+            account_id: th.myself.account_id, //用户account_id};
+            session: th.sign,
+            data: {
+                room_number: th.room.room_number
+            }
+        };
+        cc.log("===>>>[GuestRoom] JoinOrLook:", params);
+        th.ws.send(JSON.stringify(params));
     },
+
     onEnable: function onEnable() {}
 });
 

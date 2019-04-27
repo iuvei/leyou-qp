@@ -207,7 +207,6 @@ cc.Class({
     setBanker: function setBanker(isbanker) {
         var _this3 = this;
 
-        cc.log("name: " + this._userName + " , this._isbanker:" + this._isbanker + " , isbanker:" + isbanker + " , result:" + (this._isbanker != isbanker));
         if (this._isbanker != isbanker) {
             if (isbanker) {
                 this.blink.node.active = true;
@@ -322,7 +321,7 @@ cc.Class({
             this.btnNull.node.active = false;
         } else {
             this.setUserName("--");
-            this.setScore("--");
+            this.setScore(0);
             this.setHeadImgUrl(null);
             this.userNode.active = false;
             this.btnNull.node.active = true;

@@ -114,6 +114,8 @@ cc.Class({
         this.node.on("captureScreenLongClicked", function (data) {
             _this.onChanganbaocunClicked();
         });
+
+        th.myself.isInRoom = true;
     },
     onEnable: function onEnable() {
         cc.log("GameNN onEnable");
@@ -123,7 +125,9 @@ cc.Class({
         this.bg1.node.active = this._bgImgIdx == 0;
         this.bg2.node.active = this._bgImgIdx == 1;
         this.bg3.node.active = this._bgImgIdx == 2;
-        this.onFangzuobiClicked();
+        if (!th.myself.isInRoom) {
+            this.onFangzuobiClicked();
+        }
     },
     initEventHandlers: function initEventHandlers() {
         var _this2 = this;
@@ -594,7 +598,6 @@ cc.Class({
             var index = th.getLocalIndex(player.serial_num - 1);
             var firstChar = data.voice_num.substr(0, 1);
             var idx = Number(data.voice_num.substr(1));
-            cc.log("firstCar idx:", firstChar, idx);
             if (firstChar == "e") {
                 //表情
                 _this2.componentSeats[index].setEmoji(idx + 1);
@@ -604,6 +607,173 @@ cc.Class({
                 _this2.componentSeats[index].setChat(th.chattxt[idx]);
             }
         });
+        //换作为
+        this.node.on("SwapSeat", function (_ref) {
+            var oldPlayer = _ref.oldPlayer,
+                newPlayer = _ref.newPlayer;
+
+            cc.log("<<<===[SwapSeat] GameNN:", oldPlayer, newPlayer);
+            if (newPlayer.account_id == th.getMyselfAccountId()) {
+                cc.log("\u81EA\u5DF1\u6362\u4F4D\u7F6E\uFF0C\u5F00\u59CB\u52A8\u753B:" + oldPlayer.serial_num + " => " + newPlayer.serial_num);
+                var oldIndex = th.getLocalIndex(oldPlayer.serial_num - 1);
+                cc.log("oldIndex:", oldIndex, oldPlayer.serial_num - 1);
+                _this2.componentSeats[oldIndex].setInfo(null);
+                //转动动画：
+
+                var turn = oldPlayer.serial_num - newPlayer.serial_num;
+                cc.log("\u8981\u8F6C\u52A8\u7684\u6B21\u65701\uFF1A" + turn);
+
+                if (Math.abs(turn) > _this2.nodeSeats.length) {
+                    turn = turn % _this2.nodeSeats.length;
+                }
+                cc.log("\u8981\u8F6C\u52A8\u7684\u6B21\u65702\uFF1A" + turn);
+                cc.log("\u8F6C\u52A8\u524D\u7684nodeSeat");
+                _this2.nodeSeats.forEach(function (nodeSeat, index) {
+                    cc.log(index, ", seat.seatIndex = i ,", nodeSeat.seatIndex);
+                });
+
+                _this2.componentSeats = _this2.moveElement(_this2.componentSeats, turn);
+                _this2.nodeSeats = _this2.moveElement(_this2.nodeSeats, turn);
+                _this2.nodePokers = _this2.moveElement(_this2.nodePokers, turn);
+
+                cc.log("\u8F6C\u52A8\u540E\u7684nodeSeat");
+                _this2.nodeSeats.forEach(function (nodeSeat, index) {
+                    cc.log(index, ", seat.seatIndex = i, ", nodeSeat.seatIndex);
+                    nodeSeat.seatIndex = index;
+                });
+                var seatsxy = th.getSeatXY();
+
+                for (var i = 0; i < _this2.nodeSeats.length; i++) {
+                    var _seatsxy$i = _slicedToArray(seatsxy[i], 2),
+                        x = _seatsxy$i[0],
+                        y = _seatsxy$i[1];
+
+                    _this2.nodeSeats[i].runAction(cc.moveTo(0.3, cc.v2(x, y)));
+                }
+                /*
+                this.nodeSeats.forEach((nodeSeat, index) => {
+                    let [x, y] = seatsxy[index];
+                    cc.log("FFFFFFFFFFFFFF:", x, y, nodeSeat);
+                    nodeSeat.runAction(cc.moveTo(0.3, cc.v2(x, y)));
+                });
+                */
+                _this2.scheduleOnce(function () {
+                    var player = th.getPlayerById(newPlayer.account_id);
+                    player.serial_num = newPlayer.serial_num;
+                    _this2.initSingleSeat(player);
+                }, 0.3);
+            } else {
+                cc.log("别人换位置，直接清空");
+                var _oldIndex = th.getLocalIndex(oldPlayer.serial_num - 1);
+                _this2.componentSeats[_oldIndex].setInfo(null);
+                //let newIndex = th.getLocalIndex(newPlayer.serial_num - 1);
+                var player = th.getPlayerById(newPlayer.account_id);
+                player.serial_num = newPlayer.serial_num;
+                _this2.initSingleSeat(player);
+            }
+        });
+        //断线
+        this.node.on("disconnect", function () {
+            cc.log("<<<===[disconnect] GameNN:");
+            th.alert.show("提示", "与服务器已断开。点击确定重连!!!", function () {
+                th.webSocketManager.connectGameServer({
+                    ip: "47.96.177.207",
+                    port: 10000,
+                    namespace: "gamebdn"
+                }, function () {
+                    var params = {
+                        operation: th.myself.isPlayer ? "JoinRoom" : "GuestRoom", //操作标志
+                        account_id: th.myself.account_id, //用户id};
+                        session: th.sign,
+                        data: {
+                            room_number: th.room.room_number
+                        }
+                    };
+                    cc.log("===>>>[JoinRoom] JoinOrLook:", params);
+                    th.ws.send(JSON.stringify(params));
+                });
+            }, true);
+            /*
+            th.wc.show("与服务器断开。正在重连。。。。");
+            th.webSocketManager.connectGameServer(
+                {
+                    ip: "47.96.177.207",
+                    port: 10000,
+                    namespace: "gamebdn"
+                },
+                () => {
+                    const params = {
+                        operation: th.myself.isPlayer
+                            ? "JoinRoom"
+                            : "GuestRoom", //操作标志
+                        account_id: th.myself.account_id, //用户id};
+                        session: th.sign,
+                        data: {
+                            room_number: th.room.room_number
+                        }
+                    };
+                    cc.log("===>>>[JoinRoom] JoinOrLook:", params);
+                    th.ws.send(JSON.stringify(params));
+                }
+            );
+            */
+        });
+    },
+    moveElement: function moveElement(arr, n) {
+        if (Math.abs(n) > arr.length) n = n % arr.length;
+        return arr.slice(-n).concat(arr.slice(0, -n));
+    },
+    initView: function initView() {
+        cc.log("GameNN initView");
+        this.nodeCountdown.active = false;
+        this.spriteClickLookPai.node.active = false;
+        this.initRoomInfo();
+        this.initAnhaoAndId();
+        this.initSeat();
+        this.initMtpBtn();
+        this.refreshOptions();
+        cc.log("InitView:", th.room);
+        cc.log("InitView:", th.myself);
+        var _th$room = th.room,
+            room_status = _th$room.room_status,
+            banker_mode = _th$room.banker_mode,
+            account_status = _th$room.account_status;
+
+        cc.log("room_status, banker_mode :", room_status, banker_mode);
+        if (room_status == 2) {
+            //如果观战
+            if (!th.myself.isPlayer) {
+                th.room.players.forEach(function (player) {
+                    player.cards = new Array(5).fill(-1);
+                });
+                cc.log("观战:", th.room);
+                this.showPokers();
+                return;
+            }
+            if (banker_mode == 1 || banker_mode == 2 || banker_mode == 3 || banker_mode == 4) {
+                //是自由抢庄或者明牌抢庄直接发牌
+                //通比牛牛也直接发
+                //转庄牛牛也直接发
+                cc.log("自由抢庄或者明牌抢庄直接发牌");
+                var _player = th.getMyselfPlayer();
+                _player.cards = th.room.cards;
+                this.showPokers();
+            } else if (banker_mode == 5 && account_status >= 6) {
+                cc.log("固定庄家发牌");
+                //固定庄家闲家下注时才发牌
+                var _player2 = th.getMyselfPlayer();
+                _player2.cards = th.room.cards;
+                this.showPokers();
+            }
+        }
+        //是不是有庄
+        var player = th.getBankerPlayer();
+        if (player) {
+            var index = th.getLocalIndex(player.serial_num - 1);
+            this.componentSeats[index].setBanker(true);
+        }
+        cc.log("th.myself.isPlayer:,", th.myself.isPlayer);
+        this.node.getChildByName("icon_look").active = !th.myself.isPlayer;
     },
     tangpai: function tangpai(player) {
         cc.log("<<<===[UpdateAccountShow] GmaeNN:", player);
@@ -685,58 +855,6 @@ cc.Class({
         var niuIndex = th.getNiuIndex(player.card_type, player.combo_point);
         var mp3Name = "bull" + niuIndex + ".m4a";
         th.audioManager.playSFX(mp3Name);
-    },
-    initView: function initView() {
-        cc.log("GameNN initView");
-        this.nodeCountdown.active = false;
-        this.spriteClickLookPai.node.active = false;
-        this.initRoomInfo();
-        this.initAnhaoAndId();
-        this.initSeat();
-        this.initMtpBtn();
-        this.refreshOptions();
-        cc.log("InitView:", th.room);
-        cc.log("InitView:", th.myself);
-        var _th$room = th.room,
-            room_status = _th$room.room_status,
-            banker_mode = _th$room.banker_mode,
-            account_status = _th$room.account_status;
-
-        cc.log("room_status, banker_mode :", room_status, banker_mode);
-        if (room_status == 2) {
-            //如果观战
-            if (!th.myself.isPlayer) {
-                th.room.players.forEach(function (player) {
-                    player.cards = new Array(5).fill(-1);
-                });
-                cc.log("观战:", th.room);
-                this.showPokers();
-                return;
-            }
-            if (banker_mode == 1 || banker_mode == 2 || banker_mode == 3 || banker_mode == 4) {
-                //是自由抢庄或者明牌抢庄直接发牌
-                //通比牛牛也直接发
-                //转庄牛牛也直接发
-                cc.log("自由抢庄或者明牌抢庄直接发牌");
-                var _player = th.getMyselfPlayer();
-                _player.cards = th.room.cards;
-                this.showPokers();
-            } else if (banker_mode == 5 && account_status >= 6) {
-                cc.log("固定庄家发牌");
-                //固定庄家闲家下注时才发牌
-                var _player2 = th.getMyselfPlayer();
-                _player2.cards = th.room.cards;
-                this.showPokers();
-            }
-        }
-        //是不是有庄
-        var player = th.getBankerPlayer();
-        if (player) {
-            var index = th.getLocalIndex(player.serial_num - 1);
-            this.componentSeats[index].setBanker(true);
-        }
-        cc.log("th.myself.isPlayer:,", th.myself.isPlayer);
-        this.node.getChildByName("icon_look").active = !th.myself.isPlayer;
     },
     initMtpBtn: function initMtpBtn() {
         var _th$room$bet_type_arr = _slicedToArray(th.room.bet_type_arr, 4),
@@ -839,9 +957,9 @@ cc.Class({
     initSeat: function initSeat() {
         var seatsxy = th.getSeatXY();
         for (var i = 0; i < seatsxy.length; i++) {
-            var _seatsxy$i = _slicedToArray(seatsxy[i], 2),
-                x = _seatsxy$i[0],
-                y = _seatsxy$i[1];
+            var _seatsxy$i2 = _slicedToArray(seatsxy[i], 2),
+                x = _seatsxy$i2[0],
+                y = _seatsxy$i2[1];
 
             var seat = cc.instantiate(this.seatPrefab);
             seat.x = x;
@@ -851,6 +969,13 @@ cc.Class({
             this.nodeSeats.push(seat);
             this.componentSeats.push(seat.getComponent("Seat"));
             this.nodePokers.push(seat.getChildByName("info").getChildByName("pokers"));
+            var btnNull = seat.getChildByName("btn_null");
+            var clickEventHandler = new cc.Component.EventHandler();
+            clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
+            clickEventHandler.component = "GameNN"; //这个是代码文件名
+            clickEventHandler.handler = "onSeatClicked";
+            //clickEventHandler.customEventData = realPokerId;
+            btnNull.getComponent(cc.Button).clickEvents.push(clickEventHandler);
         }
         var players = th.room.players;
         for (var _i = 0; _i < players.length; ++_i) {
@@ -859,6 +984,26 @@ cc.Class({
         }
     },
 
+    onSeatClicked: function onSeatClicked(targer, value) {
+        var seatIndex = targer.target.parent.seatIndex;
+        var remoteIndex = th.getRemoteIndex(seatIndex);
+        var myself = th.getMyselfPlayer();
+        cc.log("座位点击:", seatIndex, remoteIndex, th.room.players);
+        if (th.myself.isPlayer && myself.account_status == 0) {
+            cc.log(myself.nickname + " \u4ECE " + myself.serial_num + " \u6362\u5230 " + remoteIndex);
+            var params = {
+                operation: "SwapSeat", //操作标志
+                account_id: th.myself.account_id, //用户account_id};
+                session: th.sign,
+                data: {
+                    room_number: th.room.room_number,
+                    serial_num: remoteIndex
+                }
+            };
+            cc.log("===>>>[SwapSeat] GameNN:", params);
+            th.ws.send(JSON.stringify(params));
+        }
+    },
     initSingleSeat: function initSingleSeat(player) {
         var index = th.getLocalIndex(player.serial_num - 1);
         this.componentSeats[index].setInfo(player.account_id, player.nickname, player.account_score, player.headimgurl, player.sex);
@@ -902,7 +1047,7 @@ cc.Class({
         }
     },
     onCopyCliecked: function onCopyCliecked(targer, data) {
-        th.audioManager.playSFX("click.m4a");
+        th.audioManager.playSFX("click.mp3");
         this.copyRoomUrlWin.getComponent("CopyRoomUrl").show();
     },
     onBankerMultiplesClicked: function onBankerMultiplesClicked(targer, value) {

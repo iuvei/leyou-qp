@@ -20,7 +20,6 @@ var WS = cc.Class({
         addr: null,
         ws: null,
         handlers: {},
-        fnDisconnect: null,
         isPinging: false,
         lastSendTime: 0,
         lastRecieveTime: 0,
@@ -80,11 +79,13 @@ var WS = cc.Class({
                 cc.log("WebSocket instance error.");
                 fnError(error);
             };
-            var self = this;
             this.ws.onclose = function (event) {
-                cc.log("WebSocket instance closed.");
+                cc.log("WebSocket instance closed.", _this.handlers["disconnect"]);
                 _this.ws.connected = false;
                 _this.isPinging = false;
+                if (_this.handlers["disconnect"]) {
+                    _this.handlers["disconnect"]();
+                }
             };
         },
         heartbeat: function heartbeat() {

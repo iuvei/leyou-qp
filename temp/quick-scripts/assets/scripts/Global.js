@@ -30,7 +30,8 @@ cc.Class({
             account_ticket: 0, //房卡
             phone: "--------",
             isPlayer: false, //是不是玩家（不是玩家就是游客）， false=游客
-            needLookCount: 0 //只用为0才能点击摊牌  会在收到 ShowCard 设置
+            needLookCount: 0, //只用为0才能点击摊牌  会在收到 ShowCard 设置
+            isInRoom: false //是否在房间,观战也算
         };
         th.token = null;
         th.sign = null;
@@ -80,6 +81,11 @@ cc.Class({
         th.getLocalIndex = function (index) {
             var total = Number(th.room.max_count);
             var rindex = (Number(index) - th.getMyselfSeatIndex() + total) % total;
+            return rindex;
+        };
+        th.getRemoteIndex = function (index) {
+            var total = Number(th.room.max_count);
+            var rindex = (Number(index) + th.getMyselfSeatIndex()) % total + 1;
             return rindex;
         };
         th.getSeatIndexById = function (account_id) {

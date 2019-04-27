@@ -83,6 +83,8 @@ cc.Class((_cc$Class = {
                 cc.err("游戏类型错误：" + th.args.type);
             }
         }
+
+        th.myself.isInRoom = false;
     },
     onEnable: function onEnable() {
         cc.log("Hall onEnable");

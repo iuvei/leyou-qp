@@ -135,6 +135,7 @@ cc.Class({
             var data = _ref8.data;
 
             cc.log("<<<===[GuestRoom] WebSocketManager:", data);
+            //如果是换座位不用处理
             th.initRoom();
             th.getRoomCopyUrl();
             Object.assign(th.room, data);
@@ -337,51 +338,42 @@ cc.Class({
             cc.log("<<<===[StartLimitTime] WebSocketManager:", data);
             _this.dispatchEvent("StartLimitTime", data);
         });
+        //快捷语与表情
         th.ws.addHandler("BroadcastVoice", function (_ref24) {
             var data = _ref24.data;
 
             cc.log("<<<===[BroadcastVoice] WebSocketManager:", data);
             _this.dispatchEvent("BroadcastVoice", data);
         });
+        //换座位
+        th.ws.addHandler("SwapSeat", function (_ref25) {
+            var data = _ref25.data;
+
+            cc.log("<<<===[SwapSeat] WebSocketManager:", data);
+            var origin = th.getPlayerById(data.account_id);
+            var oldPlayer = Object.assign({}, origin);
+            var newPlayer = Object.assign({}, origin);
+            newPlayer.serial_num = data.serial_num;
+            _this.dispatchEvent("SwapSeat", {
+                oldPlayer: oldPlayer,
+                newPlayer: newPlayer
+            });
+        });
+
+        th.ws.addHandler("disconnect", function () {
+            cc.log("<<<===[disconnect] WebSocketManager:");
+            _this.dispatchEvent("disconnect");
+        });
 
         //=========================================================
         //炸金花消息写在这下面。
     },
-    /*
-    connectApiServer: function({ ip, port, namespace }) {
-        th.ws.close();
-        th.ws.ip = ip;
-        th.ws.port = port;
-        th.ws.addr = `ws://${ip}:${port}/${namespace}`;
-        th.ws.connect(
-            () => {
-                this.dispatchEvent("api_connect_success");
-                cc.log(
-                    `[连接成功] WebSocketManager :${ip}:${port}/${namespace}`
-                );
-                th.wc.show("正在获取TOKEN...");
-                let params = {
-                    operation: "getToken",
-                    data: { code: th.args.code }
-                };
-                cc.log("===>>>[getToken] WebSocketManager:", params);
-                th.ws.send(JSON.stringify(params));
-            },
-            () => {
-                cc.log(
-                    `[连接失败] WebSocketManager :${ip}:${port}/${namespace}`
-                );
-                th.alert.show("提示", "连接失败");
-            }
-        );
-    },
-    */
-    connectGameServer: function connectGameServer(_ref25, callback) {
-        var _this2 = this;
+    connectGameServer: function connectGameServer(_ref26, fnSuccess, fnError) {
+        var ip = _ref26.ip,
+            port = _ref26.port,
+            namespace = _ref26.namespace;
 
-        var ip = _ref25.ip,
-            port = _ref25.port,
-            namespace = _ref25.namespace;
+        var _this2 = this;
 
         th.ws.close();
         th.ws.ip = ip;
@@ -390,11 +382,17 @@ cc.Class({
         th.gametype = "nn";
         th.ws.connect(function () {
             _this2.dispatchEvent("game_connect_success");
-            callback();
+            if (fnSuccess) {
+                fnSuccess();
+            }
             cc.log("===WebSocketManager \u8FDE\u63A5\u6210\u529F:" + ip + ":" + port + "/" + namespace + "===");
         }, function () {
             cc.log("===WebSocketManager \u8FDE\u63A5\u5931\u8D25:" + ip + ":" + port + "/" + namespace + "===");
-            th.alert.show("提示", "\u8FDE\u63A5\u5931\u8D25:" + ip + ":" + port + "/" + namespace);
+            if (fnError) {
+                fnError();
+            } else {
+                th.alert.show("提示", "\u8FDE\u63A5\u5931\u8D25:" + ip + ":" + port + "/" + namespace);
+            }
         });
     }
 });
